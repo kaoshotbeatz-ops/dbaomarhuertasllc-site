@@ -89,17 +89,7 @@
       b.addEventListener('mouseleave', function(){ b.style.transform = ''; });
     });
 
-    // live-fluctuating hero metrics (subtle)
-    var bars = document.querySelectorAll('.hero-card .bar span[data-w]');
-    if(bars.length){
-      setInterval(function(){
-        bars.forEach(function(s){
-          var base = +s.getAttribute('data-w');
-          var jitter = base + (Math.sin(Date.now()/900 + base) * 1.5);
-          s.style.width = Math.max(0, Math.min(100, jitter)) + '%';
-        });
-      }, 1200);
-    }
+    // (live hero dashboard handled by its own module at the end of this file)
   }
 
   // contact form -> mailto
@@ -170,4 +160,58 @@
   document.querySelectorAll('.icon-box,.pmono,.brand-mark,.av,.grain,.aurora,#cursor-glow').forEach(function(el){
     el.setAttribute('aria-hidden','true');
   });
+})();
+
+/* ============ LIVE HERO DASHBOARD ============ */
+(function(){
+  var metrics = Array.prototype.slice.call(document.querySelectorAll('.hero-card [data-metric]'));
+  if(!metrics.length) return;
+  var root = document.documentElement;
+  function reduced(){ return (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) || root.classList.contains('a11y-nomotion'); }
+
+  // pool of practice metrics it cycles through (label, baseline %)
+  var POOL = [
+    ['CMDB & CSDM Health',88],['ITSM Maturity',86],['ITAM & SAM Readiness',92],
+    ['Discovery Coverage',90],['Service Mapping',84],['Event Management',89],
+    ['APM Coverage',82],['Integration Health',93],['Asset Compliance',87],
+    ['Change Success Rate',91],['Catalog Adoption',85]
+  ];
+  var poolIdx = 3;
+
+  function paint(el, label, val){
+    el.querySelector('.m-label').textContent = label;
+    el.querySelector('.m-fill').style.width = val + '%';
+    el.querySelector('.m-fill').setAttribute('data-base', val);
+    el.querySelector('.m-val').textContent = Math.round(val) + '%';
+  }
+  // initial fill
+  setTimeout(function(){
+    metrics.forEach(function(el){
+      paint(el, el.querySelector('.m-label').textContent, +el.querySelector('.m-fill').getAttribute('data-w'));
+    });
+  }, 400);
+
+  if(reduced()) return;
+
+  // jitter values every 2.5s (live monitoring feel)
+  setInterval(function(){
+    if(reduced()) return;
+    metrics.forEach(function(el){
+      var base = +(el.querySelector('.m-fill').getAttribute('data-base') || el.querySelector('.m-fill').getAttribute('data-w'));
+      var v = Math.max(72, Math.min(99, base + (Math.random()*3 - 1.5)));
+      el.querySelector('.m-fill').style.width = v + '%';
+      el.querySelector('.m-val').textContent = Math.round(v) + '%';
+    });
+  }, 2500);
+
+  // rotate one metric to a different practice every 5s (auto-changing)
+  setInterval(function(){
+    if(reduced()) return;
+    var el = metrics[poolIdx % metrics.length];
+    var pick = POOL[poolIdx % POOL.length];
+    poolIdx++;
+    el.style.transition = 'opacity .3s ease';
+    el.style.opacity = '.35';
+    setTimeout(function(){ paint(el, pick[0], pick[1]); el.style.opacity = '1'; }, 320);
+  }, 5000);
 })();
