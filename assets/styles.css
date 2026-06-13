@@ -418,3 +418,11 @@ html.a11y-nomotion *{ scroll-behavior:auto!important }
 .adv-chips span{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px 18px;font-weight:750;color:var(--ink);box-shadow:var(--shadow-sm)}
 .adv-chips span::before{content:"\2713";flex:none;width:24px;height:24px;border-radius:50%;background:var(--now);color:#06231a;display:grid;place-items:center;font-weight:900;font-size:13px}
 @media(max-width:900px){.advisor-grid{grid-template-columns:1fr}}
+
+/* ---------- Core values ---------- */
+.value-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:26px;box-shadow:var(--shadow-sm);transition:.25s ease;position:relative;overflow:hidden}
+.value-card::before{content:"";position:absolute;top:0;left:0;height:4px;width:100%;background:linear-gradient(90deg,var(--now),transparent)}
+.value-card:hover{transform:translateY(-5px);box-shadow:var(--shadow);border-color:#cdebc8}
+.vnum{font-size:34px;font-weight:900;letter-spacing:-.04em;color:var(--now-d);opacity:.55;line-height:1;margin-bottom:8px}
+.value-card h3{font-size:20px;margin:0 0 8px;color:var(--ink);letter-spacing:-.02em}
+.value-card p{margin:0;color:var(--muted)}
