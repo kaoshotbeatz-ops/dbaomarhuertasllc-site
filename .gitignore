@@ -1,0 +1,4 @@
+.ftp-credentials
+.github/
+deploy.sh
+.DS_Store
