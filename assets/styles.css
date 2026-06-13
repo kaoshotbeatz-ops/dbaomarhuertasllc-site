@@ -408,3 +408,13 @@ html.a11y-nomotion *{ scroll-behavior:auto!important }
 .mp-ic{flex:none;width:38px;height:38px;border-radius:10px;background:rgba(98,216,78,.15);border:1px solid rgba(98,216,78,.3);display:grid;place-items:center;color:var(--now);font-weight:900}
 .mp h4{margin:0 0 3px;font-size:15px;color:#fff}.mp p{margin:0;color:#aec6cd;font-size:13.5px}
 @media(max-width:900px){.move-grid{grid-template-columns:1fr}}
+
+/* ---------- The unorthodox advisor ---------- */
+.advisor-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:46px;align-items:center}
+.adv-lead{font-size:18.5px;line-height:1.65;color:#2b3a42;margin:0 0 18px;max-width:680px}
+.adv-lead strong{color:var(--ink)}
+.adv-close{font-size:21px;line-height:1.45;color:var(--ink);font-weight:800;letter-spacing:-.02em;border-left:4px solid var(--now);padding-left:18px;margin:6px 0 0}
+.adv-chips{display:flex;flex-direction:column;gap:12px}
+.adv-chips span{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px 18px;font-weight:750;color:var(--ink);box-shadow:var(--shadow-sm)}
+.adv-chips span::before{content:"\2713";flex:none;width:24px;height:24px;border-radius:50%;background:var(--now);color:#06231a;display:grid;place-items:center;font-weight:900;font-size:13px}
+@media(max-width:900px){.advisor-grid{grid-template-columns:1fr}}
