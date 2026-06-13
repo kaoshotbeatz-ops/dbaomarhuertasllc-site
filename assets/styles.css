@@ -395,3 +395,16 @@ html.a11y-nomotion *{ scroll-behavior:auto!important }
 .prose .story-sign{margin-top:30px;display:flex;flex-direction:column}
 .prose .story-sign .sig{font-size:24px;font-weight:900;letter-spacing:-.03em;color:var(--ink)}
 .prose .story-sign .role{color:var(--muted);font-size:14px;font-weight:600}
+
+/* ---------- Movement / mission ---------- */
+.movement{background:radial-gradient(60% 100% at 100% 0%,rgba(98,216,78,.16),transparent 60%),linear-gradient(135deg,#06231a,#04222f);color:#fff}
+.movement h2{color:#fff}.movement .kicker{color:var(--now-l)}
+.move-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:46px;align-items:start}
+.move-quote{font-size:clamp(22px,2.6vw,30px);font-weight:800;line-height:1.25;letter-spacing:-.02em;color:#fff;border-left:4px solid var(--now);padding-left:20px;margin:0 0 22px}
+.move-lead p{color:#cfe1e6;font-size:17.5px;line-height:1.6;margin:0 0 16px;max-width:640px}
+.move-close{color:#fff!important;font-size:19px!important}
+.move-pillars{display:grid;gap:14px}
+.mp{display:flex;gap:14px;align-items:flex-start;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:16px}
+.mp-ic{flex:none;width:38px;height:38px;border-radius:10px;background:rgba(98,216,78,.15);border:1px solid rgba(98,216,78,.3);display:grid;place-items:center;color:var(--now);font-weight:900}
+.mp h4{margin:0 0 3px;font-size:15px;color:#fff}.mp p{margin:0;color:#aec6cd;font-size:13.5px}
+@media(max-width:900px){.move-grid{grid-template-columns:1fr}}
