@@ -127,6 +127,27 @@ h2{font-size:clamp(33px,4.2vw,54px);line-height:1.03;letter-spacing:-.045em;colo
 .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
 .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
 
+/* ---------- Tribute: Michael Lombardo ---------- */
+.tribute{position:relative;overflow:hidden;padding:84px 0;background:radial-gradient(70% 90% at 80% 10%,rgba(45,120,255,.28),transparent 60%),linear-gradient(135deg,#041a3a,#06234f 55%,#02132b);color:#fff}
+.tribute::before{content:"";position:absolute;inset:0;background:radial-gradient(40% 60% at 18% 100%,rgba(98,216,78,.10),transparent 70%);pointer-events:none}
+.tribute-inner{position:relative;z-index:1;display:grid;grid-template-columns:1.25fr .75fr;gap:48px;align-items:center}
+.tr-eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#bcd4ff;margin-bottom:16px}
+.tr-flame{color:#9ec3ff;font-size:15px}
+.tr-name{font-size:clamp(32px,4.4vw,54px);font-weight:900;letter-spacing:-.04em;line-height:1;margin:0 0 10px;color:#fff}
+.tr-role{display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:17px;font-weight:700;color:#9ec3ff;margin-bottom:22px}
+.tr-role .tr-dot{opacity:.6}
+.tr-body{font-size:18px;line-height:1.6;color:#dce8ff;margin:0 0 18px;max-width:640px}
+.tr-body strong{color:#fff}
+.tr-quote{font-size:clamp(20px,2.4vw,28px);font-weight:800;letter-spacing:-.02em;color:#fff;border-left:4px solid #4f8cff;padding-left:18px;margin:0 0 26px}
+.tr-actions{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.tr-tag{font-weight:900;letter-spacing:-.01em;color:#9ec3ff;font-size:17px}
+.tr-photo{margin:0;border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,.18);box-shadow:0 40px 80px rgba(0,0,0,.4);background:#02112a;min-height:320px;display:grid;place-items:center}
+.tr-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.tr-photo-ph{display:grid;place-items:center;gap:10px;color:#4f8cff;text-align:center;padding:40px}
+.tr-photo-ph span{font-size:54px;line-height:1}
+.tr-photo-ph small{font-size:13px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:#7ea6e6}
+@media(max-width:900px){.tribute-inner{grid-template-columns:1fr}.tr-photo{min-height:240px}}
+
 /* ---------- Proof band ---------- */
 .proof-band{background:radial-gradient(60% 100% at 50% 0%,rgba(98,216,78,.07),transparent 70%),#fff}
 .proof-line{font-size:clamp(26px,3.2vw,42px);font-weight:900;letter-spacing:-.038em;line-height:1.16;color:var(--ink);margin:0 0 16px}
