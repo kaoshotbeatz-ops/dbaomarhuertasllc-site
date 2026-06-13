@@ -99,9 +99,14 @@
       e.preventDefault();
       var d = new FormData(form);
       var subject = encodeURIComponent('Website inquiry from ' + (d.get('name') || 'prospect'));
+      var nm = (d.get('name')||'').replace(/[<>]/g,'');
       var body = 'Name: ' + (d.get('name')||'') + '%0D%0AEmail: ' + (d.get('email')||'') +
                  '%0D%0ACompany: ' + (d.get('company')||'') + '%0D%0A%0D%0A' + (d.get('message')||'');
-      window.location.href = 'mailto:omar@dbaomarhuertasllc.com?subject=' + subject + '&body=' + body;
+      var s = form.querySelector('.form-status');
+      if(!s){ s = document.createElement('div'); s.className='form-status'; s.setAttribute('role','status'); form.appendChild(s); }
+      s.innerHTML = '✓ Thanks' + (nm ? (', ' + nm) : '') + '! Opening your email app to send to <strong>omar@dbaomarhuertasllc.com</strong>. If nothing opens, just email us there directly &mdash; we&rsquo;ll get right back to you.';
+      s.style.display = 'block';
+      try { window.location.href = 'mailto:omar@dbaomarhuertasllc.com?subject=' + subject + '&body=' + body; } catch(err){}
     });
   }
 })();

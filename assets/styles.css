@@ -470,3 +470,7 @@ html.a11y-nomotion *{ scroll-behavior:auto!important }
 .cost-stat strong{display:block;font-size:clamp(34px,4vw,52px);font-weight:900;letter-spacing:-.04em;line-height:1;color:var(--now-d)}
 .cost-stat span{display:block;margin-top:8px;color:var(--muted);font-weight:650;font-size:14px}
 @media(max-width:760px){.cost-stat{grid-template-columns:1fr;gap:24px}}
+
+/* ---------- Contact form status ---------- */
+.form-status{display:none;margin-top:14px;padding:14px 16px;border-radius:12px;background:rgba(98,216,78,.14);border:1px solid var(--now-d);color:var(--ink);font-weight:650;font-size:14.5px;line-height:1.55}
+.form-status strong{color:var(--now-d)}
