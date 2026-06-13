@@ -101,7 +101,7 @@
       var subject = encodeURIComponent('Website inquiry from ' + (d.get('name') || 'prospect'));
       var body = 'Name: ' + (d.get('name')||'') + '%0D%0AEmail: ' + (d.get('email')||'') +
                  '%0D%0ACompany: ' + (d.get('company')||'') + '%0D%0A%0D%0A' + (d.get('message')||'');
-      window.location.href = 'mailto:contact@dbaomarhuertasllc.com?subject=' + subject + '&body=' + body;
+      window.location.href = 'mailto:omar@dbaomarhuertasllc.com?subject=' + subject + '&body=' + body;
     });
   }
 })();
