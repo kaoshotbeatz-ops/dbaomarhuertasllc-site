@@ -144,6 +144,14 @@ h2{font-size:clamp(33px,4.2vw,54px);line-height:1.03;letter-spacing:-.045em;colo
 .spill h4{margin:0 0 4px;font-size:16px;color:#fff}
 .spill p{margin:0;color:#aec6cd;font-size:14px}
 
+/* ---------- Knowledge gallery ---------- */
+.kfig{margin:0;border-radius:var(--radius);overflow:hidden;position:relative;box-shadow:var(--shadow-sm);border:1px solid var(--line);background:#000}
+.kfig img{width:100%;height:340px;object-fit:cover;display:block;transition:.5s ease}
+.kfig:hover img{transform:scale(1.05)}
+.kfig figcaption{position:absolute;left:0;right:0;bottom:0;padding:40px 22px 18px;color:#fff;font-weight:700;font-size:15px;background:linear-gradient(transparent,rgba(4,16,20,.85))}
+.kfig .ky{display:inline-block;background:var(--now);color:#06231a;font-weight:900;font-size:13px;padding:2px 9px;border-radius:6px;margin-right:10px}
+@media(max-width:760px){.kfig img{height:240px}}
+
 /* ---------- Capability cards ---------- */
 .card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow-sm);transition:.25s ease;position:relative;overflow:hidden}
 .card:hover{transform:translateY(-5px);box-shadow:var(--shadow);border-color:#cdebc8}
