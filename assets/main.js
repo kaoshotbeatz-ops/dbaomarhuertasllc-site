@@ -92,20 +92,36 @@
     // (live hero dashboard handled by its own module at the end of this file)
   }
 
-  // contact form -> mailto
+  // contact form -> Web3Forms (real send, no email app) with mailto fallback
   var form = document.querySelector('[data-contact-form]');
   if(form){
-    form.addEventListener('submit', function(e){
+    function fstatus(){ var s=form.querySelector('.form-status'); if(!s){ s=document.createElement('div'); s.className='form-status'; s.setAttribute('role','status'); form.appendChild(s);} s.style.display='block'; return s; }
+    form.addEventListener('submit', async function(e){
       e.preventDefault();
       var d = new FormData(form);
-      var subject = encodeURIComponent('Website inquiry from ' + (d.get('name') || 'prospect'));
       var nm = (d.get('name')||'').replace(/[<>]/g,'');
+      var keyEl = form.querySelector('[name=access_key]');
+      var hasKey = keyEl && keyEl.value && keyEl.value.indexOf('PASTE') === -1;
+      var s = fstatus();
+      if(hasKey){
+        s.innerHTML = 'Sending…';
+        try{
+          d.set('subject', 'New website inquiry from ' + (nm||'a visitor'));
+          d.set('from_name', 'Omar Huertas LLC website');
+          var r = await fetch('https://api.web3forms.com/submit', { method:'POST', body:d });
+          var j = await r.json();
+          if(j.success){ s.innerHTML = '✓ Message sent' + (nm?(', '+nm):'') + ' &mdash; thank you! We&rsquo;ll get back to you shortly.'; form.reset(); }
+          else { throw new Error(j.message||'failed'); }
+        }catch(err){
+          s.innerHTML = 'Sorry, that didn&rsquo;t go through. Please email us directly at <strong>omar@dbaomarhuertasllc.com</strong>.';
+        }
+        return;
+      }
+      // Fallback (no key yet): mailto + clear confirmation
+      var subject = encodeURIComponent('Website inquiry from ' + (nm || 'prospect'));
       var body = 'Name: ' + (d.get('name')||'') + '%0D%0AEmail: ' + (d.get('email')||'') +
                  '%0D%0ACompany: ' + (d.get('company')||'') + '%0D%0A%0D%0A' + (d.get('message')||'');
-      var s = form.querySelector('.form-status');
-      if(!s){ s = document.createElement('div'); s.className='form-status'; s.setAttribute('role','status'); form.appendChild(s); }
-      s.innerHTML = '✓ Thanks' + (nm ? (', ' + nm) : '') + '! Opening your email app to send to <strong>omar@dbaomarhuertasllc.com</strong>. If nothing opens, just email us there directly &mdash; we&rsquo;ll get right back to you.';
-      s.style.display = 'block';
+      s.innerHTML = '✓ Thanks' + (nm ? (', ' + nm) : '') + '! Opening your email app to send to <strong>omar@dbaomarhuertasllc.com</strong>. If nothing opens, just email us there directly.';
       try { window.location.href = 'mailto:omar@dbaomarhuertasllc.com?subject=' + subject + '&body=' + body; } catch(err){}
     });
   }
