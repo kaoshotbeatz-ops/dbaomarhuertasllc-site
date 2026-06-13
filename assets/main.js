@@ -115,3 +115,59 @@
     });
   }
 })();
+
+/* ============ ACCESSIBILITY ============ */
+(function(){
+  var root = document.documentElement, store = window.localStorage;
+  // apply saved prefs
+  ['contrast','large','nomotion'].forEach(function(k){
+    if(store.getItem('a11y-'+k)==='1') root.classList.add('a11y-'+k);
+  });
+
+  // ensure main landmark + skip link
+  var main = document.querySelector('main'); if(main && !main.id) main.id='main';
+  var skip = document.createElement('a');
+  skip.className='skip-link'; skip.href='#main'; skip.textContent='Skip to content';
+  document.body.insertBefore(skip, document.body.firstChild);
+
+  // toolbar
+  var fab = document.createElement('button');
+  fab.className='a11y-fab'; fab.type='button';
+  fab.setAttribute('aria-label','Accessibility options'); fab.setAttribute('aria-expanded','false');
+  fab.innerHTML='&#9855;'; // wheelchair/accessibility glyph
+  var panel = document.createElement('div');
+  panel.className='a11y-panel'; panel.setAttribute('role','dialog'); panel.setAttribute('aria-label','Accessibility options');
+  panel.innerHTML =
+    '<h3>Accessibility</h3>'+
+    '<div class="a11y-opt"><span>High contrast</span><button data-k="contrast" aria-pressed="false">Off</button></div>'+
+    '<div class="a11y-opt"><span>Larger text</span><button data-k="large" aria-pressed="false">Off</button></div>'+
+    '<div class="a11y-opt"><span>Reduce motion</span><button data-k="nomotion" aria-pressed="false">Off</button></div>';
+  document.body.appendChild(fab); document.body.appendChild(panel);
+
+  function syncBtns(){
+    panel.querySelectorAll('button[data-k]').forEach(function(b){
+      var on = root.classList.contains('a11y-'+b.dataset.k);
+      b.setAttribute('aria-pressed', on?'true':'false'); b.textContent = on?'On':'Off';
+    });
+  }
+  function applyMotion(){
+    document.querySelectorAll('video').forEach(function(v){
+      if(root.classList.contains('a11y-nomotion')){ try{v.pause();}catch(e){} } else { try{v.play();}catch(e){} }
+    });
+  }
+  fab.addEventListener('click', function(){
+    var open = panel.classList.toggle('open'); fab.setAttribute('aria-expanded', open?'true':'false');
+  });
+  panel.addEventListener('click', function(e){
+    var b = e.target.closest('button[data-k]'); if(!b) return;
+    var cls='a11y-'+b.dataset.k, on=root.classList.toggle(cls);
+    store.setItem(cls, on?'1':'0'); syncBtns(); if(b.dataset.k==='nomotion') applyMotion();
+  });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape'){ panel.classList.remove('open'); fab.setAttribute('aria-expanded','false'); }});
+  syncBtns(); applyMotion();
+
+  // decorative icon boxes shouldn't be read
+  document.querySelectorAll('.icon-box,.pmono,.brand-mark,.av,.grain,.aurora,#cursor-glow').forEach(function(el){
+    el.setAttribute('aria-hidden','true');
+  });
+})();

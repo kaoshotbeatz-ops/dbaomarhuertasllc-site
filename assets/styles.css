@@ -331,3 +331,58 @@ textarea.input{min-height:150px;resize:vertical}
   .stat-row{grid-template-columns:1fr}
 }
 @media(prefers-reduced-motion:reduce){.hero .aurora,.marquee .track,.hc-head .tag::before{animation:none}}
+
+/* ============ ACCESSIBILITY ============ */
+:root{ --green-text:#1b7a32; }            /* AA-contrast green for small text on light */
+.kicker{ color:var(--green-text) }
+.tl-year{ color:var(--green-text) }
+.brandchip.ind:hover{ color:var(--ink) }
+
+/* Visible keyboard focus everywhere */
+a:focus-visible,button:focus-visible,[tabindex]:focus-visible,
+input:focus-visible,textarea:focus-visible,select:focus-visible,video:focus-visible,summary:focus-visible{
+  outline:3px solid var(--now-d); outline-offset:3px; border-radius:6px;
+}
+
+/* Skip link */
+.skip-link{position:fixed;left:12px;top:-60px;z-index:300;background:var(--ink);color:#fff;
+  padding:12px 18px;border-radius:10px;font-weight:800;transition:top .2s ease}
+.skip-link:focus{top:12px;outline:3px solid var(--now)}
+
+/* A11y toolbar */
+.a11y-fab{position:fixed;left:22px;bottom:22px;width:50px;height:50px;border-radius:50%;
+  background:var(--ink);color:#fff;border:0;display:grid;place-items:center;font-size:22px;cursor:pointer;
+  z-index:95;box-shadow:var(--shadow)}
+.a11y-fab:hover{background:var(--now-d);transform:translateY(-2px)}
+.a11y-panel{position:fixed;left:22px;bottom:84px;z-index:96;background:#fff;border:1px solid var(--line);
+  border-radius:16px;box-shadow:var(--shadow);padding:14px;width:248px;display:none}
+.a11y-panel.open{display:block}
+.a11y-panel h3{margin:0 0 10px;font-size:14px;color:var(--ink)}
+.a11y-opt{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 0;font-size:14px;font-weight:600;color:var(--ink)}
+.a11y-opt button{border:1px solid var(--line);background:#fff;border-radius:8px;padding:6px 12px;font-weight:800;cursor:pointer;color:var(--ink)}
+.a11y-opt button[aria-pressed="true"]{background:var(--now);border-color:var(--now-d);color:#06231a}
+
+/* High-contrast mode */
+html.a11y-contrast{ --muted:#33424a; --line:#9aa7ad; }
+html.a11y-contrast body{ background:#fff }
+html.a11y-contrast a:not(.btn):not(.brandchip){ text-decoration:underline }
+html.a11y-contrast .section-alt{ background:#eef3f5 }
+html.a11y-contrast .card,html.a11y-contrast .pillar,html.a11y-contrast .outcome,
+html.a11y-contrast .brandchip{ border-color:#5b6a70 }
+html.a11y-contrast .hero p.sub,html.a11y-contrast .hero-trust{ color:#eaf6ff }
+html.a11y-contrast .kicker{ color:#125c25 }
+
+/* Larger text */
+html.a11y-large{ font-size:118% }
+
+/* Pause motion (user toggle, same as reduced-motion) */
+html.a11y-nomotion .hero .aurora,html.a11y-nomotion .marquee .track,
+html.a11y-nomotion .tr-photo img,html.a11y-nomotion .tl-dot-now,
+html.a11y-nomotion #cursor-glow{ animation:none!important }
+html.a11y-nomotion .tr-video{ /* paused via JS */ }
+html.a11y-nomotion *{ scroll-behavior:auto!important }
+
+@media (prefers-contrast:more){
+  :root{ --muted:#33424a; --line:#8c999f }
+  a:not(.btn){ text-decoration:underline }
+}
