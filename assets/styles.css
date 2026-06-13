@@ -153,8 +153,10 @@ h2{font-size:clamp(33px,4.2vw,54px);line-height:1.03;letter-spacing:-.045em;colo
 .spill p{margin:0;color:#aec6cd;font-size:14px}
 
 /* ---------- Knowledge gallery ---------- */
-.kfig{margin:0;border-radius:var(--radius);overflow:hidden;position:relative;box-shadow:var(--shadow-sm);border:1px solid var(--line);background:#000}
-.kfig img{width:100%;height:340px;object-fit:cover;display:block;transition:.5s ease}
+.kgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+@media(max-width:900px){.kgrid{grid-template-columns:repeat(2,1fr)}}
+.kfig{margin:0;border-radius:16px;overflow:hidden;position:relative;box-shadow:var(--shadow-sm);border:1px solid var(--line);background:#000}
+.kfig img{width:100%;height:220px;object-fit:cover;display:block;transition:.5s ease}
 .kfig:hover img{transform:scale(1.05)}
 .kfig figcaption{position:absolute;left:0;right:0;bottom:0;padding:40px 22px 18px;color:#fff;font-weight:700;font-size:15px;background:linear-gradient(transparent,rgba(4,16,20,.85))}
 .kfig .ky{display:inline-block;background:var(--now);color:#06231a;font-weight:900;font-size:13px;padding:2px 9px;border-radius:6px;margin-right:10px}
