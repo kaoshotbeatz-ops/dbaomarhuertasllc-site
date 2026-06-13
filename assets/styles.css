@@ -451,3 +451,22 @@ html.a11y-nomotion *{ scroll-behavior:auto!important }
 /* ---------- Tribute personal note ---------- */
 .tr-note{font-style:italic;font-size:18px;line-height:1.65;color:#eaf2ff;border-top:1px solid rgba(255,255,255,.14);padding-top:20px;margin:22px 0 8px;max-width:660px}
 .tr-sign-name{font-weight:900;color:#fff;font-size:18px;margin:0 0 6px;letter-spacing:-.02em}
+
+/* ---------- Cost of wrong partner (comparison charts) ---------- */
+.cost-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+@media(max-width:860px){.cost-grid{grid-template-columns:1fr}}
+.cmp{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:var(--shadow-sm)}
+.cmp h4{margin:0 0 18px;font-size:16px;color:var(--ink);letter-spacing:-.01em}
+.cmp-row{margin-bottom:16px}
+.cmp-row:last-child{margin-bottom:0}
+.cmp-row .top{display:flex;justify-content:space-between;font-size:13px;font-weight:700;color:var(--muted);margin-bottom:6px}
+.cmp-row .top .v{color:var(--ink);font-weight:800}
+.cmp-bar{height:12px;background:#eef3f4;border-radius:999px;overflow:hidden}
+.cmp-fill{display:block;height:100%;width:0;border-radius:999px;transition:width 1.4s cubic-bezier(.2,.8,.2,1)}
+.cmp-fill.bad{background:linear-gradient(90deg,#e2574c,#f0a07a)}
+.cmp-fill.good{background:linear-gradient(90deg,var(--now-d),var(--now))}
+.cost-note{text-align:center;max-width:760px;margin:26px auto 0;font-size:14px;color:var(--muted)}
+.cost-stat{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:34px;text-align:center}
+.cost-stat strong{display:block;font-size:clamp(34px,4vw,52px);font-weight:900;letter-spacing:-.04em;line-height:1;color:var(--now-d)}
+.cost-stat span{display:block;margin-top:8px;color:var(--muted);font-weight:650;font-size:14px}
+@media(max-width:760px){.cost-stat{grid-template-columns:1fr;gap:24px}}

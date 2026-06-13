@@ -32,7 +32,7 @@
       if(!entry.isIntersecting) return;
       var t = entry.target;
       t.classList.add('visible');
-      t.querySelectorAll('.bar span[data-w]').forEach(function(s){ s.style.width = s.getAttribute('data-w') + '%'; });
+      t.querySelectorAll('[data-w]').forEach(function(s){ s.style.width = s.getAttribute('data-w') + '%'; });
       var num = t.querySelector('[data-count]');
       if(num && !num._counted){ num._counted = true; animateCount(num); }
       obs.unobserve(t);
