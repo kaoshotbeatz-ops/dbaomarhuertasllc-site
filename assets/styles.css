@@ -426,3 +426,9 @@ html.a11y-nomotion *{ scroll-behavior:auto!important }
 .vnum{font-size:34px;font-weight:900;letter-spacing:-.04em;color:var(--now-d);opacity:.55;line-height:1;margin-bottom:8px}
 .value-card h3{font-size:20px;margin:0 0 8px;color:var(--ink);letter-spacing:-.02em}
 .value-card p{margin:0;color:var(--muted)}
+
+/* ---------- Values scrolling marquee ---------- */
+.values-marquee{border:0;padding:8px 0 26px}
+.values-marquee .m-item{font-size:clamp(20px,2.4vw,30px);font-weight:900;letter-spacing:-.03em;color:var(--ink);gap:40px}
+.values-marquee .m-item::after{background:var(--now)}
+.values-marquee .m-item span::after{content:""}
