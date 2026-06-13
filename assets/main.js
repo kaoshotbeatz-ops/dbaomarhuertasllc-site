@@ -45,6 +45,63 @@
     document.querySelectorAll('.hero-card .bar span[data-w]').forEach(function(s){ s.style.width = s.getAttribute('data-w') + '%'; });
   }, 350);
 
+  // ---------- Next-level interactions ----------
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // scroll progress bar
+  var prog = document.createElement('div'); prog.id = 'scroll-progress'; document.body.appendChild(prog);
+  // back-to-top
+  var top = document.createElement('button'); top.className = 'to-top'; top.setAttribute('aria-label','Back to top'); top.innerHTML = '&uarr;';
+  top.addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); });
+  document.body.appendChild(top);
+  function onScrollFx(){
+    var st = window.scrollY, h = document.documentElement.scrollHeight - window.innerHeight;
+    prog.style.width = (h > 0 ? (st/h*100) : 0) + '%';
+    top.classList.toggle('show', st > 600);
+  }
+  onScrollFx(); window.addEventListener('scroll', onScrollFx, {passive:true});
+
+  if(!reduce){
+    // cursor glow
+    var glow = document.createElement('div'); glow.id = 'cursor-glow'; document.body.appendChild(glow);
+    window.addEventListener('mousemove', function(e){
+      glow.style.left = e.clientX + 'px'; glow.style.top = e.clientY + 'px'; glow.style.opacity = '1';
+    }, {passive:true});
+    window.addEventListener('mouseout', function(){ glow.style.opacity = '0'; });
+
+    // 3D tilt on cards
+    document.querySelectorAll('.card,.pillar,.outcome').forEach(function(el){
+      el.classList.add('tilt');
+      el.addEventListener('mousemove', function(e){
+        var r = el.getBoundingClientRect();
+        var px = (e.clientX - r.left)/r.width - .5, py = (e.clientY - r.top)/r.height - .5;
+        el.style.transform = 'perspective(900px) rotateX(' + (-py*5) + 'deg) rotateY(' + (px*5) + 'deg) translateY(-5px)';
+      });
+      el.addEventListener('mouseleave', function(){ el.style.transform = ''; });
+    });
+
+    // magnetic primary buttons
+    document.querySelectorAll('.btn-primary').forEach(function(b){
+      b.addEventListener('mousemove', function(e){
+        var r = b.getBoundingClientRect();
+        b.style.transform = 'translate(' + ((e.clientX-r.left-r.width/2)*.22) + 'px,' + ((e.clientY-r.top-r.height/2)*.30) + 'px)';
+      });
+      b.addEventListener('mouseleave', function(){ b.style.transform = ''; });
+    });
+
+    // live-fluctuating hero metrics (subtle)
+    var bars = document.querySelectorAll('.hero-card .bar span[data-w]');
+    if(bars.length){
+      setInterval(function(){
+        bars.forEach(function(s){
+          var base = +s.getAttribute('data-w');
+          var jitter = base + (Math.sin(Date.now()/900 + base) * 1.5);
+          s.style.width = Math.max(0, Math.min(100, jitter)) + '%';
+        });
+      }, 1200);
+    }
+  }
+
   // contact form -> mailto
   var form = document.querySelector('[data-contact-form]');
   if(form){
