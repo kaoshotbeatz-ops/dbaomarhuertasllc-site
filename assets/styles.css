@@ -153,6 +153,14 @@ h2{font-size:clamp(33px,4.2vw,54px);line-height:1.03;letter-spacing:-.045em;colo
 .spill p{margin:0;color:#aec6cd;font-size:14px}
 
 /* ---------- Knowledge gallery ---------- */
+.kfeature{position:relative;margin:0 0 14px;border-radius:20px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow);background:#000}
+.kfeature img{width:100%;height:440px;object-fit:cover;display:block;transition:.6s ease}
+.kfeature:hover img{transform:scale(1.04)}
+.kfeature figcaption{position:absolute;left:0;right:0;bottom:0;padding:60px 34px 30px;display:flex;flex-direction:column;gap:8px;background:linear-gradient(transparent,rgba(4,16,20,.9))}
+.kfeature .kf-tag{align-self:flex-start;background:var(--now);color:#06231a;font-weight:900;font-size:12px;letter-spacing:.04em;padding:5px 12px;border-radius:999px;text-transform:uppercase}
+.kfeature .kf-title{color:#fff;font-size:clamp(26px,3.4vw,40px);font-weight:900;letter-spacing:-.035em;line-height:1}
+.kfeature .kf-sub{color:#d7e9ef;font-size:16px;max-width:680px}
+@media(max-width:760px){.kfeature img{height:300px}.kfeature figcaption{padding:48px 20px 22px}}
 .kgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
 @media(max-width:900px){.kgrid{grid-template-columns:repeat(2,1fr)}}
 .kfig{margin:0;border-radius:16px;overflow:hidden;position:relative;box-shadow:var(--shadow-sm);border:1px solid var(--line);background:#000}
