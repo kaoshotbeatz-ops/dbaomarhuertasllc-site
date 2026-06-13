@@ -386,3 +386,12 @@ html.a11y-nomotion *{ scroll-behavior:auto!important }
   :root{ --muted:#33424a; --line:#8c999f }
   a:not(.btn){ text-decoration:underline }
 }
+
+/* ---------- Our Story page (long-form) ---------- */
+.prose{max-width:760px;margin:0 auto}
+.prose p{font-size:19px;line-height:1.7;color:#2b3a42;margin:0 0 20px}
+.prose p strong{color:var(--ink)}
+.prose p:first-of-type{font-size:22px;line-height:1.6;color:var(--ink)}
+.prose .story-sign{margin-top:30px;display:flex;flex-direction:column}
+.prose .story-sign .sig{font-size:24px;font-weight:900;letter-spacing:-.03em;color:var(--ink)}
+.prose .story-sign .role{color:var(--muted);font-size:14px;font-weight:600}
