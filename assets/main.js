@@ -131,7 +131,7 @@
 (function(){
   var root = document.documentElement, store = window.localStorage;
   // apply saved prefs
-  ['contrast','large','nomotion'].forEach(function(k){
+  ['contrast','large','nomotion','dark'].forEach(function(k){
     if(store.getItem('a11y-'+k)==='1') root.classList.add('a11y-'+k);
   });
 
@@ -150,6 +150,7 @@
   panel.className='a11y-panel'; panel.setAttribute('role','dialog'); panel.setAttribute('aria-label','Accessibility options');
   panel.innerHTML =
     '<h3>Accessibility</h3>'+
+    '<div class="a11y-opt"><span>Dark mode</span><button data-k="dark" aria-pressed="false">Off</button></div>'+
     '<div class="a11y-opt"><span>High contrast</span><button data-k="contrast" aria-pressed="false">Off</button></div>'+
     '<div class="a11y-opt"><span>Larger text</span><button data-k="large" aria-pressed="false">Off</button></div>'+
     '<div class="a11y-opt"><span>Reduce motion</span><button data-k="nomotion" aria-pressed="false">Off</button></div>';

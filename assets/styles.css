@@ -495,3 +495,30 @@ html.a11y-nomotion *{ scroll-behavior:auto!important }
 .cmdb-stat strong{color:#fff}
 @media(prefers-reduced-motion:reduce){.cmdb-radar,.cmdb-links line,.cmdb-nodes .ping,.cmdb-nodes .node{animation:none}}
 html.a11y-nomotion .cmdb-radar,html.a11y-nomotion .cmdb-links line,html.a11y-nomotion .cmdb-nodes .ping,html.a11y-nomotion .cmdb-nodes .node{animation:none}
+
+/* ---------- Dark mode ---------- */
+html.a11y-dark{ --ink:#e9eff1; --muted:#9fb6bd; --line:#203038; --bg:#0c1820; }
+html.a11y-dark body{ background:#0a141b; }
+html.a11y-dark .site-header{ background:rgba(10,20,27,.82); }
+html.a11y-dark .nav-links{ color:#c4d2d8; }
+html.a11y-dark .brand,html.a11y-dark .brand-lock .b-name{ color:var(--ink); }
+html.a11y-dark .partner-pill{ background:#11212a; color:var(--ink); }
+html.a11y-dark .section-alt{ background:#0e1c24; }
+html.a11y-dark .card,html.a11y-dark .pillar,html.a11y-dark .outcome,html.a11y-dark .value-card,html.a11y-dark .cmp,html.a11y-dark .kfig{ background:#10202a; border-color:#22343d; }
+html.a11y-dark .brandchip{ background:#10202a; border-color:#22343d; color:var(--ink); }
+html.a11y-dark .brandchip.ind{ background:transparent; }
+html.a11y-dark .capability-cloud span{ background:#10202a; border-color:#22343d; color:var(--ink); }
+html.a11y-dark .marquee,html.a11y-dark .trust{ background:#0a141b; border-color:#203038; }
+html.a11y-dark .marquee .m-item{ color:var(--ink); }
+html.a11y-dark .proof-band{ background:radial-gradient(60% 100% at 50% 0%,rgba(98,216,78,.10),transparent 70%),#0a141b; }
+html.a11y-dark .input{ background:#10202a; color:var(--ink); border-color:#2a3c45; }
+html.a11y-dark .input::placeholder{ color:#7d929a; }
+html.a11y-dark .prose p{ color:#c6d4da; }
+html.a11y-dark .prose p:first-of-type{ color:var(--ink); }
+html.a11y-dark .tl-title{ color:var(--ink); }
+html.a11y-dark .btn-outline{ color:var(--ink); border-color:#3a4c55; }
+html.a11y-dark .btn-light{ background:#10202a; color:var(--ink); border-color:#2a3c45; }
+html.a11y-dark .a11y-panel{ background:#10202a; color:var(--ink); border-color:#22343d; }
+html.a11y-dark .a11y-opt{ color:var(--ink); }
+html.a11y-dark .a11y-opt button{ background:#16262f; color:var(--ink); border-color:#2a3c45; }
+html.a11y-dark .a11y-opt button[aria-pressed="true"]{ background:var(--now); color:#06231a; }
