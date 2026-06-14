@@ -616,3 +616,7 @@ html.a11y-dark .legal-toc a{color:#84f06f}
 .exp-note{max-width:840px;margin:30px auto 0;text-align:center;color:var(--muted);font-size:15px;line-height:1.6}
 .exp-note a{color:var(--green-text);font-weight:700;white-space:nowrap}
 html.a11y-dark .exp-note a{color:#84f06f}
+
+/* footer social icons */
+.footer .soc-link{display:inline-flex;align-items:center;gap:8px}
+.footer .li-ic{width:16px;height:16px;fill:currentColor;flex:none}
