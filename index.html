@@ -40,10 +40,23 @@
       <div class="hero-trust"><span class="av"><i></i><i></i><i></i></span>At ServiceNow Knowledge every year since 2017</div>
     </div>
     <div class="hero-card reveal">
-      <div class="hc-head"><span>Platform health</span><span class="tag">Live</span></div>
-      <div class="metric" data-metric><div class="metric-top"><span class="m-label">CMDB &amp; CSDM Health</span><span class="m-val">88%</span></div><div class="bar"><span class="m-fill" data-w="88"></span></div></div>
-      <div class="metric" data-metric><div class="metric-top"><span class="m-label">ITSM Maturity</span><span class="m-val">86%</span></div><div class="bar"><span class="m-fill" data-w="86"></span></div></div>
-      <div class="metric" data-metric><div class="metric-top"><span class="m-label">ITAM &amp; SAM Readiness</span><span class="m-val">92%</span></div><div class="bar"><span class="m-fill" data-w="92"></span></div></div>
+      <div class="hc-head"><span>Live CMDB &middot; Discovery</span><span class="tag">Live</span></div>
+      <div class="cmdb-viz" aria-hidden="true">
+        <div class="cmdb-radar"></div>
+        <svg viewBox="0 0 320 232" preserveAspectRatio="xMidYMid meet">
+          <g class="cmdb-rings"><circle cx="160" cy="116" r="48"/><circle cx="160" cy="116" r="90"/><circle cx="160" cy="116" r="132"/></g>
+          <g class="cmdb-links">
+            <line x1="160" y1="116" x2="70" y2="52"/><line x1="160" y1="116" x2="222" y2="46"/><line x1="160" y1="116" x2="272" y2="92"/><line x1="160" y1="116" x2="282" y2="150"/><line x1="160" y1="116" x2="150" y2="196"/><line x1="160" y1="116" x2="46" y2="120"/><line x1="160" y1="116" x2="206" y2="106"/><line x1="160" y1="116" x2="116" y2="148"/>
+            <line x1="70" y1="52" x2="130" y2="38"/><line x1="130" y1="38" x2="222" y2="46"/><line x1="272" y1="92" x2="282" y2="150"/><line x1="282" y1="150" x2="222" y2="184"/><line x1="222" y1="184" x2="150" y2="196"/><line x1="150" y1="196" x2="80" y2="178"/><line x1="80" y1="178" x2="46" y2="120"/><line x1="222" y1="46" x2="206" y2="106"/><line x1="206" y1="106" x2="236" y2="146"/><line x1="116" y1="148" x2="80" y2="178"/>
+          </g>
+          <g class="cmdb-nodes">
+            <circle class="node" cx="70" cy="52" r="5"/><circle class="node" cx="130" cy="38" r="4.5"/><circle class="node" cx="222" cy="46" r="5"/><circle class="node" cx="272" cy="92" r="4.5"/><circle class="node" cx="282" cy="150" r="5"/><circle class="node" cx="222" cy="184" r="4.5"/><circle class="node" cx="150" cy="196" r="5"/><circle class="node" cx="80" cy="178" r="4.5"/><circle class="node" cx="46" cy="120" r="5"/><circle class="node" cx="206" cy="106" r="4.5"/><circle class="node" cx="116" cy="148" r="4.5"/><circle class="node" cx="236" cy="146" r="4.5"/>
+            <circle class="hub" cx="160" cy="116" r="8"/>
+            <circle class="ping" cx="160" cy="116" r="5"/><circle class="ping p2" cx="222" cy="46" r="5"/><circle class="ping p3" cx="80" cy="178" r="5"/>
+          </g>
+        </svg>
+        <div class="cmdb-stat"><strong id="ci-count">12,847</strong> CIs mapped &middot; <strong>99.2%</strong> healthy</div>
+      </div>
       <div class="hc-chips"><span>ITSM</span><span>ITAM</span><span>CMDB</span><span>CSDM</span><span>APM</span><span>Service Mapping</span><span>Event Mgmt</span><span>HAM/SAM</span></div>
     </div>
   </div>

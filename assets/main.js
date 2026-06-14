@@ -236,3 +236,12 @@
     setTimeout(function(){ paint(el, pick[0], pick[1]); el.style.opacity = '1'; }, 320);
   }, 5000);
 })();
+
+/* ============ CMDB CI counter ============ */
+(function(){
+  var el=document.getElementById('ci-count'); if(!el) return;
+  var root=document.documentElement;
+  function reduced(){ return (window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)||root.classList.contains('a11y-nomotion'); }
+  var n=12847;
+  setInterval(function(){ if(reduced()) return; n += Math.floor(Math.random()*6); el.textContent = n.toLocaleString(); }, 2600);
+})();
