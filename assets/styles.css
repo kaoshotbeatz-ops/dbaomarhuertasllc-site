@@ -579,3 +579,13 @@ html.a11y-dark .hero-card{ box-shadow:0 50px 90px rgba(0,0,0,.5),0 0 40px rgba(9
 
 @media(prefers-reduced-motion:reduce){ html.a11y-dark::before{ animation:none; } }
 html.a11y-nomotion.a11y-dark::before{ animation:none; }
+
+/* dark-mode: Why-me + cost section adaptions */
+html.a11y-dark .adv-lead{ color:#c6d4da; }
+html.a11y-dark .adv-lead strong{ color:#fff; }
+html.a11y-dark .adv-close{ color:var(--ink); }
+html.a11y-dark .adv-chips span{ background:linear-gradient(160deg,#12222c,#0c1722); border-color:rgba(98,216,78,.18); color:var(--ink); }
+html.a11y-dark .adv-chips span:hover{ border-color:rgba(98,216,78,.5); box-shadow:0 0 22px rgba(98,216,78,.16); }
+html.a11y-dark .cmp-bar{ background:#0a1620; }
+html.a11y-dark .cmp h4{ color:var(--ink); }
+html.a11y-dark .proof-sub,html.a11y-dark .cost-note,html.a11y-dark .ai-close{ color:#9fb6bd; }
