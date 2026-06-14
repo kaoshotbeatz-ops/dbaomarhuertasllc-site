@@ -522,3 +522,13 @@ html.a11y-dark .a11y-panel{ background:#10202a; color:var(--ink); border-color:#
 html.a11y-dark .a11y-opt{ color:var(--ink); }
 html.a11y-dark .a11y-opt button{ background:#16262f; color:var(--ink); border-color:#2a3c45; }
 html.a11y-dark .a11y-opt button[aria-pressed="true"]{ background:var(--now); color:#06231a; }
+
+/* dark-mode fix: components that use --ink as a BACKGROUND must stay dark */
+html.a11y-dark .stats,
+html.a11y-dark .section-dark,
+html.a11y-dark .utility-bar{ background:#06101a; }
+html.a11y-dark .story{ background:radial-gradient(60% 80% at 90% 0%,rgba(98,216,78,.12),transparent 60%),#06101a; }
+html.a11y-dark .btn-dark,
+html.a11y-dark .to-top,
+html.a11y-dark .a11y-fab{ background:#1a2b34; }
+html.a11y-dark .section-dark h2{ color:#fff; }
