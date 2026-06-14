@@ -82,7 +82,8 @@ body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-ser
 
 /* closed book = only the cover, centered */
 .book.closed .leaf:not(:first-child){opacity:0;pointer-events:none}
-.book.closed{transform:translateX(-25%)}
+.book.closed .leaf:first-child{width:100%}
+.book.closed .leaf:first-child .face.cover{border-radius:var(--radius)}
 .book{transition:transform .8s cubic-bezier(.2,.7,.2,1)}
 
 /* ===== facing (left) page — the book's verso ===== */
@@ -139,7 +140,7 @@ tr:nth-child(even) td{background:#faf8f2}
 .metric-row .m .l{font-size:10px;font-weight:700;color:var(--muted);margin-top:3px}
 
 /* COVER / BACK (full navy pages) */
-.cover,.back-cover{background:linear-gradient(135deg,#04222f,#0a3a4d 60%,#071d28);color:#fff;justify-content:space-between;padding:40px 38px;border-radius:0 var(--radius) var(--radius) 0}
+.leaf .face.cover,.leaf .face.back-cover{background:linear-gradient(135deg,#04222f,#0a3a4d 60%,#071d28)!important;color:#fff;justify-content:space-between;padding:40px 38px;border-radius:0 var(--radius) var(--radius) 0}
 .cover .c-aurora,.back-cover .bc-aurora{position:absolute;inset:0;z-index:0;pointer-events:none}
 .cover .c-aurora{background:radial-gradient(45% 45% at 82% 10%,rgba(16,185,129,.34),transparent 70%),radial-gradient(45% 55% at 10% 96%,rgba(5,150,105,.22),transparent 70%)}
 .back-cover .bc-aurora{background:radial-gradient(45% 45% at 18% 12%,rgba(16,185,129,.28),transparent 70%)}
