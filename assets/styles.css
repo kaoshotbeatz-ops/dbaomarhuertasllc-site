@@ -611,3 +611,8 @@ html.a11y-dark .cmdb-stat{ color:#dff1de; }
 html.a11y-dark .legal-toc{background:#0e1c24;border-color:#22343d}
 html.a11y-dark .legal-toc a{color:#84f06f}
 @media(max-width:640px){.legal-toc ol{columns:1}}
+
+/* expertise footnote */
+.exp-note{max-width:840px;margin:30px auto 0;text-align:center;color:var(--muted);font-size:15px;line-height:1.6}
+.exp-note a{color:var(--green-text);font-weight:700;white-space:nowrap}
+html.a11y-dark .exp-note a{color:#84f06f}
