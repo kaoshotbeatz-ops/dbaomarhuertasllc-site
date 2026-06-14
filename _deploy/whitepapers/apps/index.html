@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Omar Huertas LLC — App Registry</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--now:#10b981;--now-d:#059669;--now-l:#6ee7b7;--ink:#0a1418;--navy:#04222f;--navy-2:#0a3a4d;--muted:#5a6c75;--line:#e6ecef;--bg:#f4f8f9}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:#eaf7f8;
+  background:radial-gradient(40% 50% at 85% 8%,rgba(16,185,129,.22),transparent 70%),radial-gradient(40% 60% at 12% 100%,rgba(5,150,105,.16),transparent 70%),linear-gradient(135deg,#04222f,#0a3a4d 60%,#071d28);
+  background-attachment:fixed;min-height:100vh;-webkit-font-smoothing:antialiased}
+.grain{position:fixed;inset:0;z-index:0;opacity:.5;pointer-events:none;background-image:radial-gradient(rgba(255,255,255,.04) 1px,transparent 1px);background-size:4px 4px}
+.wrap{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:22px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:30px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:11px}
+.brand-mark{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,var(--navy),var(--now));display:grid;place-items:center;color:#fff;font-size:14px;font-weight:900;box-shadow:0 8px 20px rgba(5,150,105,.35)}
+.b-name{font-weight:800;font-size:16px}.b-sub{font-size:10px;font-weight:800;letter-spacing:.09em;color:var(--now-l);text-transform:uppercase}
+.toplinks{display:flex;gap:10px;align-items:center}
+.tl{display:inline-flex;align-items:center;gap:7px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.06);color:#eaf7f8;border-radius:999px;padding:8px 14px;font-size:12px;font-weight:800;text-decoration:none;transition:.2s ease}
+.tl:hover{background:rgba(16,185,129,.16);border-color:rgba(16,185,129,.5)}
+.tl.pill{border-color:rgba(16,185,129,.4);background:rgba(16,185,129,.10);color:#d6ffce}
+.hero{margin-bottom:30px}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--now-l);margin-bottom:14px}
+h1{font-size:clamp(34px,6vw,58px);font-weight:900;letter-spacing:-.05em;line-height:1;margin-bottom:16px}
+h1 .accent{background:linear-gradient(120deg,var(--now),var(--now-l));-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{font-size:17px;color:#d3e7ee;max-width:660px;line-height:1.55}
+.section-label{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--now-l);margin:26px 0 12px;display:flex;align-items:center;gap:10px}
+.section-label::after{content:"";flex:1;height:1px;background:rgba(255,255,255,.14)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.card{display:block;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:18px;text-decoration:none;color:inherit;transition:.22s ease;backdrop-filter:blur(8px)}
+.card:hover{transform:translateY(-4px);border-color:rgba(16,185,129,.5);background:rgba(16,185,129,.08);box-shadow:0 24px 50px rgba(0,0,0,.3)}
+.card .tag{font-size:10px;font-weight:800;letter-spacing:.10em;text-transform:uppercase;color:var(--now-l);margin-bottom:9px;display:block}
+.card h3{font-size:18px;font-weight:850;letter-spacing:-.02em;margin-bottom:6px}
+.card h3 b{color:var(--now-l)}
+.card p{font-size:12px;color:#bcd6de;line-height:1.5}
+.card .go{margin-top:12px;font-size:12px;font-weight:800;color:var(--now)}
+footer{margin:38px 0 10px;padding-top:18px;border-top:1px solid rgba(255,255,255,.14);font-size:11px;color:#9fbcc6;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+<div class="wrap">
+  <div class="top">
+    <a class="brand" href="https://dbaomarhuertasllc.com" style="color:#eaf7f8;text-decoration:none">
+      <span class="brand-mark">OH</span>
+      <span><div class="b-name">Omar Huertas LLC</div><div class="b-sub">Native Apps</div></span>
+    </a>
+    <div class="toplinks">
+      <a class="tl" href="../index.html">&larr; ServiceFleet Library</a>
+      <span class="tl pill">App Registry</span>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="eyebrow">App Registry · Interactive Flip&#8209;Books</div>
+    <h1>The <span class="accent">App</span> Registry</h1>
+    <p class="sub">Every Omar Huertas LLC app and suite &mdash; what it is, what it does, and how it works &mdash; as branded, page&#8209;turning white papers. Click any app to open its flip&#8209;book.</p>
+  </div>
+
+  <div class="section-label">Mission &amp; Community</div>
+  <div class="grid">
+    <a class="card" href="App-SWAMP.html"><span class="tag">Accountability</span><h3><b>SWAMP</b></h3><p>Measuring overrepresentation in positions of power with data and transparency.</p><span class="go">Open &rarr;</span></a>
+    <a class="card" href="App-BlackWallStreet.html"><span class="tag">Community</span><h3>Black Wall <b>Street</b></h3><p>A dignified digital home for the Greensboro community&#8209;development movement.</p><span class="go">Open &rarr;</span></a>
+    <a class="card" href="App-REI-Training-Hub.html"><span class="tag">Education</span><h3>REI Training <b>Hub</b></h3><p>The official learning &amp; registration platform for the Racial Equity Institute.</p><span class="go">Open &rarr;</span></a>
+    <a class="card" href="App-CivicPulse.html"><span class="tag">Civic</span><h3>Civic<b>Pulse</b></h3><p>Civic accountability &mdash; your ballot, your representatives, your community.</p><span class="go">Open &rarr;</span></a>
+  </div>
+
+  <div class="section-label">Business</div>
+  <div class="grid">
+    <a class="card" href="App-Huertas-Hub.html"><span class="tag">Brand App</span><h3>Huertas <b>Hub</b></h3><p>Client portal &amp; admin command center &mdash; projects, events, scheduling.</p><span class="go">Open &rarr;</span></a>
+  </div>
+
+  <div class="section-label">Lifestyle &amp; Consumer</div>
+  <div class="grid">
+    <a class="card" href="App-GrowThatGarden.html"><span class="tag">Gardening</span><h3>Grow That <b>Garden</b></h3><p>Organic gardening &amp; an offline AI cookbook in one.</p><span class="go">Open &rarr;</span></a>
+    <a class="card" href="App-LeafLore.html"><span class="tag">Education · 21+</span><h3>Leaf<b>Lore</b></h3><p>Responsible cannabis education, offline and private.</p><span class="go">Open &rarr;</span></a>
+    <a class="card" href="App-MixThatCocktail.html"><span class="tag">Drinks · 21+</span><h3>Mix That <b>Cocktail</b></h3><p>Your pocket bartender &mdash; what is in your bar, what you can make.</p><span class="go">Open &rarr;</span></a>
+    <a class="card" href="App-Lifestyle-Suite.html"><span class="tag">Suite · 4 Apps</span><h3>Lifestyle <b>Apps</b></h3><p>ManThatGrass, DrinkMyCraft, FarmThatLand &amp; RaiseThatBaby.</p><span class="go">Open &rarr;</span></a>
+  </div>
+
+  <div class="section-label">Suites &amp; Creative</div>
+  <div class="grid">
+    <a class="card" href="App-DevKidz-Suite.html"><span class="tag">Suite · 11 Apps</span><h3>Dev<b>Kidz</b></h3><p>Hands&#8209;on learning games that teach kids real skills by doing.</p><span class="go">Open &rarr;</span></a>
+    <a class="card" href="App-KAOS-Audio-Suite.html"><span class="tag">Suite · Music</span><h3>KAOS <b>Audio</b></h3><p>Instruments, analog warmth, a channel strip, a beat machine &amp; a DAW.</p><span class="go">Open &rarr;</span></a>
+    <a class="card" href="App-AI-Suite.html"><span class="tag">Suite · 10 Apps</span><h3>On&#8209;Device <b>AI</b></h3><p>Useful, private AI that runs on your device &mdash; no cloud required.</p><span class="go">Open &rarr;</span></a>
+  </div>
+
+  <footer>
+    Copyright &copy; 2026 Omar Huertas LLC. All rights reserved. &nbsp;&middot;&nbsp; omar@dbaomarhuertasllc.com &nbsp;&middot;&nbsp; dbaomarhuertasllc.com<br>
+    App names and trademarks are the property of their respective owners.
+  </footer>
+</div>
+</body>
+</html>
