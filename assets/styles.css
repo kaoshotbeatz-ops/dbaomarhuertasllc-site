@@ -532,3 +532,50 @@ html.a11y-dark .btn-dark,
 html.a11y-dark .to-top,
 html.a11y-dark .a11y-fab{ background:#1a2b34; }
 html.a11y-dark .section-dark h2{ color:#fff; }
+
+/* ============ DARK MODE — PREMIUM GLOW ============ */
+html.a11y-dark{ background:#06101a; }
+html.a11y-dark body{ background:transparent; }
+/* animated aurora backdrop */
+html.a11y-dark::before{ content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background:
+    radial-gradient(45% 40% at 12% 2%,rgba(98,216,78,.13),transparent 60%),
+    radial-gradient(42% 42% at 100% 24%,rgba(54,132,255,.10),transparent 60%),
+    radial-gradient(60% 55% at 50% 106%,rgba(98,216,78,.08),transparent 60%),
+    #06101a;
+  animation:darkAurora 20s ease-in-out infinite alternate; }
+@keyframes darkAurora{ to{ transform:scale(1.08) translateY(-16px); } }
+/* subtle dot grid */
+html.a11y-dark::after{ content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.5;
+  background-image:radial-gradient(rgba(255,255,255,.025) 1px,transparent 1px);background-size:24px 24px; }
+
+/* glowing accents */
+html.a11y-dark .kicker{ color:#84f06f; text-shadow:0 0 16px rgba(98,216,78,.45); }
+html.a11y-dark h1 .accent,html.a11y-dark .hl,html.a11y-dark .hl-g,html.a11y-dark .oc-punch .hl{ filter:drop-shadow(0 0 16px rgba(98,216,78,.4)); }
+html.a11y-dark .stat-big .num,html.a11y-dark .vnum,html.a11y-dark .o-num,html.a11y-dark .cost-stat strong{ filter:drop-shadow(0 0 14px rgba(98,216,78,.35)); }
+
+/* glassy glowing cards */
+html.a11y-dark .card,html.a11y-dark .pillar,html.a11y-dark .outcome,html.a11y-dark .value-card,html.a11y-dark .cmp,html.a11y-dark .kfig{
+  background:linear-gradient(160deg,#12222c,#0b1620); border-color:rgba(98,216,78,.16);
+  box-shadow:0 12px 34px rgba(0,0,0,.45); }
+html.a11y-dark .card:hover,html.a11y-dark .pillar:hover,html.a11y-dark .outcome:hover,html.a11y-dark .value-card:hover{
+  border-color:rgba(98,216,78,.55); box-shadow:0 20px 54px rgba(0,0,0,.55),0 0 0 1px rgba(98,216,78,.22),0 0 34px rgba(98,216,78,.14); }
+html.a11y-dark .brandchip{ background:linear-gradient(160deg,#12222c,#0c1722); border-color:rgba(98,216,78,.18); }
+html.a11y-dark .brandchip:hover{ border-color:var(--now); box-shadow:0 0 22px rgba(98,216,78,.2); }
+html.a11y-dark .capability-cloud span:hover{ box-shadow:0 0 22px rgba(98,216,78,.2); }
+
+/* buttons glow */
+html.a11y-dark .btn-primary{ box-shadow:0 0 0 1px rgba(98,216,78,.4),0 12px 30px rgba(51,178,74,.45),0 0 30px rgba(98,216,78,.28); }
+html.a11y-dark .partner-pill{ border-color:rgba(98,216,78,.3); box-shadow:0 0 18px rgba(98,216,78,.1); }
+
+/* header + dividers */
+html.a11y-dark .site-header{ background:rgba(6,16,26,.72); backdrop-filter:blur(18px); }
+html.a11y-dark .site-header.scrolled{ border-bottom-color:rgba(98,216,78,.18); box-shadow:0 8px 30px rgba(0,0,0,.5); }
+html.a11y-dark .marquee,html.a11y-dark .trust{ background:rgba(6,16,26,.6); border-color:rgba(98,216,78,.12); }
+html.a11y-dark .marquee .m-item{ text-shadow:0 0 14px rgba(98,216,78,.18); }
+
+/* topology card pops */
+html.a11y-dark .hero-card{ box-shadow:0 50px 90px rgba(0,0,0,.5),0 0 40px rgba(98,216,78,.08); }
+
+@media(prefers-reduced-motion:reduce){ html.a11y-dark::before{ animation:none; } }
+html.a11y-nomotion.a11y-dark::before{ animation:none; }
