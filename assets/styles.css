@@ -589,3 +589,14 @@ html.a11y-dark .adv-chips span:hover{ border-color:rgba(98,216,78,.5); box-shado
 html.a11y-dark .cmp-bar{ background:#0a1620; }
 html.a11y-dark .cmp h4{ color:var(--ink); }
 html.a11y-dark .proof-sub,html.a11y-dark .cost-note,html.a11y-dark .ai-close{ color:#9fb6bd; }
+
+/* dark-mode: stronger contrast / readability */
+html.a11y-dark{ --muted:#c2d2d9; }
+html.a11y-dark .card,html.a11y-dark .pillar,html.a11y-dark .outcome,html.a11y-dark .value-card,html.a11y-dark .cmp,html.a11y-dark .kfig{ background:linear-gradient(160deg,#17282f,#10202a); border-color:rgba(98,216,78,.22); }
+html.a11y-dark .card p,html.a11y-dark .pillar p,html.a11y-dark .outcome p,html.a11y-dark .value-card p,html.a11y-dark .section-head p,html.a11y-dark .lead{ color:#cdd9df; }
+html.a11y-dark .card h3,html.a11y-dark .pillar h3,html.a11y-dark .outcome h3,html.a11y-dark .value-card h3,html.a11y-dark .cmp h4{ color:#f1f5f6; }
+html.a11y-dark .adv-lead,html.a11y-dark .prose p{ color:#dbe6ea; }
+html.a11y-dark h2,html.a11y-dark .proof-line,html.a11y-dark .tl-title,html.a11y-dark .adv-close{ color:#f3f7f8; }
+html.a11y-dark .nav-links{ color:#dbe6ea; }
+html.a11y-dark .brandchip,html.a11y-dark .capability-cloud span{ color:#eef4f5; }
+html.a11y-dark .cmdb-stat{ color:#dff1de; }
