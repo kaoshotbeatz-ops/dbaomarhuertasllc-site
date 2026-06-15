@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The ServiceNow Lexicon — by Omar Huertas LLC — Omar Huertas LLC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --now:#2f6df6;--now-d:#2456c9;--now-l:#8fb4ff;--glow:47,109,246;--glow-d:36,86,201;
+  --ink:#0a1418;--ink-2:#142329;--navy:#04162f;--navy-2:#0c2f5a;
+  --muted:#5a6c75;--line:#e6ecef;--bg:#f4f8f9;
+  --paper:#fcfaf5;--paper-2:#f4f0e6;
+  --radius:8px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);
+  background:
+   radial-gradient(50% 50% at 85% 5%,rgba(var(--glow),.20),transparent 70%),
+   radial-gradient(45% 60% at 10% 100%,rgba(var(--glow-d),.16),transparent 70%),
+   linear-gradient(135deg,#04162f,#0c2f5a 60%,#06142a);
+  background-attachment:fixed;min-height:100vh;display:flex;flex-direction:column;align-items:center;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden}
+.grain{position:fixed;inset:0;z-index:0;opacity:.5;pointer-events:none;
+  background-image:radial-gradient(rgba(255,255,255,.04) 1px,transparent 1px);background-size:4px 4px}
+
+/* top bar */
+.topbar{position:relative;z-index:5;width:100%;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:14px 22px;color:#eaf7f8}
+.brand{display:flex;align-items:center;gap:11px}
+.brand-mark{width:40px;height:40px;border-radius:11px;background:linear-gradient(135deg,var(--navy),var(--now));display:grid;place-items:center;color:#fff;font-size:13px;font-weight:900;box-shadow:0 8px 20px rgba(var(--glow-d),.35)}
+.brand-lock{display:flex;flex-direction:column;line-height:1.12}
+.brand-lock .b-name{font-weight:800;font-size:15px;letter-spacing:-.02em}
+.brand-lock .b-sub{font-size:10px;font-weight:800;letter-spacing:.09em;color:var(--now-l);text-transform:uppercase}
+.partner-pill{display:inline-flex;align-items:center;gap:7px;border:1px solid rgba(var(--glow),.4);background:rgba(var(--glow),.10);border-radius:999px;padding:7px 13px;font-size:12px;font-weight:800;color:#dce8ff}
+.partner-pill .pp-dot{width:8px;height:8px;border-radius:50%;background:var(--now);box-shadow:0 0 0 3px rgba(var(--glow),.22)}
+.toplink{display:inline-flex;align-items:center;gap:7px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.06);color:#eaf7f8;border-radius:999px;padding:7px 14px;font-size:12px;font-weight:800;text-decoration:none}
+@media(max-width:640px){.partner-pill{display:none}}
+
+#progress{position:relative;z-index:5;width:min(1100px,94vw);height:4px;border-radius:999px;background:rgba(255,255,255,.14);overflow:hidden;margin:2px 0 14px}
+#progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--now-d),var(--now),var(--now-l));box-shadow:0 0 12px rgba(var(--glow),.6);transition:width .5s cubic-bezier(.2,.8,.2,1)}
+
+/* ===== BOOK STAGE ===== */
+.stage{position:relative;z-index:5;width:min(1180px,96vw);flex:1;display:flex;align-items:center;justify-content:center;padding:6px 0 12px;perspective:3000px}
+/* hardcover boards sitting behind the pages */
+.bookwrap{position:relative;width:100%;max-height:82vh;aspect-ratio:1.46/1;display:flex;align-items:center;justify-content:center;
+  transform-style:preserve-3d;transition:transform .9s cubic-bezier(.2,.7,.2,1)}
+.bookwrap::before{ /* cover boards */
+  content:"";position:absolute;inset:-14px -16px -16px -16px;border-radius:12px;
+  background:linear-gradient(135deg,#0a2350,#06173a 55%,#040d22);
+  box-shadow:0 50px 90px rgba(0,0,0,.55),inset 0 0 0 1px rgba(var(--glow),.18);
+  z-index:0}
+.book{position:relative;width:100%;height:100%;z-index:1}
+/* center spine */
+.book::after{content:"";position:absolute;top:1.5%;bottom:1.5%;left:50%;width:30px;transform:translateX(-50%);z-index:40;pointer-events:none;
+  background:linear-gradient(90deg,rgba(0,0,0,0),rgba(0,0,0,.22) 38%,rgba(0,0,0,.30) 50%,rgba(0,0,0,.22) 62%,rgba(0,0,0,0));border-radius:4px}
+.book.closed::after{opacity:0}
+
+/* a leaf = one physical sheet, occupies the RIGHT half, hinged at the spine (its left edge) */
+.leaf{position:absolute;top:0;right:0;width:50%;height:100%;transform-origin:left center;transform-style:preserve-3d;
+  transition:transform .95s cubic-bezier(.34,.62,.28,1)}
+.leaf.turned{transform:rotateY(-180deg)}
+.leaf .face{position:absolute;inset:0;backface-visibility:hidden;overflow:hidden;border-radius:0 var(--radius) var(--radius) 0;
+  display:flex;flex-direction:column;background:var(--paper);box-shadow:0 1px 0 rgba(0,0,0,.04)}
+.leaf .face.front{z-index:2}
+.leaf .face.back{transform:rotateY(180deg);border-radius:var(--radius) 0 0 var(--radius)}
+/* page-edge thickness on outer side of the right page */
+.leaf .face.front::before{content:"";position:absolute;top:0;bottom:0;right:0;width:8px;z-index:30;pointer-events:none;
+  background:repeating-linear-gradient(90deg,#e9e3d4,#e9e3d4 1px,#fcfaf5 1px,#fcfaf5 3px)}
+/* page-edge thickness on outer (left) side of the verso page */
+.leaf .face.back::before{content:"";position:absolute;top:0;bottom:0;left:0;width:8px;z-index:30;pointer-events:none;
+  background:repeating-linear-gradient(270deg,#e9e3d4,#e9e3d4 1px,#fcfaf5 1px,#fcfaf5 3px)}
+.leaf .face.back.cover::before,.leaf .face.back.back-cover::before{display:none}
+/* spine + curl shading */
+.leaf .face::after{content:"";position:absolute;inset:0;z-index:25;pointer-events:none;opacity:1;
+  background:linear-gradient(90deg,rgba(0,0,0,.16),rgba(0,0,0,0) 14%)}
+.leaf .face.back::after{background:linear-gradient(270deg,rgba(0,0,0,.16),rgba(0,0,0,0) 14%)}
+/* lift + sweeping highlight while a leaf is mid-turn */
+.leaf.tn{box-shadow:0 40px 80px rgba(0,0,0,.45)}
+.leaf.tn .face.front::after{animation:curl .95s ease}
+@keyframes curl{0%{background:linear-gradient(90deg,rgba(0,0,0,.16),transparent 14%)}
+  45%{background:linear-gradient(105deg,rgba(0,0,0,.05),rgba(255,255,255,.28) 30%,rgba(0,0,0,.22) 60%,transparent 80%)}
+  100%{background:linear-gradient(90deg,rgba(0,0,0,.16),transparent 14%)}}
+
+/* closed book = only the cover, centered */
+.book.closed .leaf:not(:first-child){opacity:0;pointer-events:none}
+.book.closed .leaf:first-child{width:100%}
+.book.closed .leaf:first-child .face.cover{border-radius:var(--radius)}
+.book{transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+
+/* ===== facing (left) page — the book's verso ===== */
+.facing{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
+  background:linear-gradient(135deg,var(--paper),var(--paper-2));color:var(--ink);text-align:center;padding:40px}
+.facing .f-mark{width:48px;height:48px;border-radius:13px;background:linear-gradient(135deg,var(--navy),var(--now));display:grid;place-items:center;color:#fff;font-weight:900;font-size:15px;box-shadow:0 10px 24px rgba(var(--glow-d),.3)}
+.facing .f-word{font-family:Fraunces,Georgia,serif;font-size:26px;font-weight:700;line-height:1.05;color:var(--ink-2);letter-spacing:-.01em}
+.facing .f-word b{color:var(--now-d)}
+.facing .f-rule{width:54px;height:3px;border-radius:999px;background:linear-gradient(90deg,var(--now-d),var(--now-l))}
+.facing .f-sub{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.facing .f-num{position:absolute;bottom:26px;font-family:Fraunces,Georgia,serif;font-size:13px;color:var(--muted)}
+
+/* ===== page chrome (right / recto content) ===== */
+.p-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 30px 0 34px;flex:0 0 auto}
+.p-head .ph-brand{display:flex;align-items:center;gap:9px}
+.p-head .ph-mark{width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,var(--navy),var(--now));display:grid;place-items:center;color:#fff;font-size:9px;font-weight:900}
+.p-head .ph-name{font-size:11px;font-weight:800;letter-spacing:.04em;color:var(--ink)}
+.p-head .ph-doc{font-size:10px;font-weight:800;letter-spacing:.10em;text-transform:uppercase;color:var(--now-d)}
+.p-rule{height:3px;margin:12px 30px 0 34px;border-radius:999px;background:linear-gradient(90deg,var(--now-d),var(--now) 45%,transparent)}
+.p-body{flex:1 1 auto;overflow-y:auto;padding:18px 30px 12px 34px;scrollbar-width:thin}
+.p-body::-webkit-scrollbar{width:7px}.p-body::-webkit-scrollbar-thumb{background:#d8d2c4;border-radius:999px}
+.p-foot{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 30px 16px 34px;font-size:9.5px;font-weight:600;color:var(--muted);border-top:1px solid var(--line)}
+.p-foot .pf-c{color:var(--ink);font-weight:700}
+.p-foot .pf-n{font-family:Fraunces,Georgia,serif;font-weight:600;color:var(--now-d);font-size:12px}
+
+/* typography */
+.p-body h1{font-family:Fraunces,Georgia,serif;font-size:27px;font-weight:900;letter-spacing:-.02em;line-height:1.06;margin:2px 0 12px;color:var(--ink)}
+.p-body h2{font-size:18px;font-weight:850;letter-spacing:-.02em;margin:20px 0 9px;color:var(--ink);display:flex;align-items:center;gap:9px}
+.p-body h2::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--now);box-shadow:0 0 0 3px rgba(var(--glow),.18);flex:0 0 auto}
+.p-body h3{font-size:13.5px;font-weight:800;margin:15px 0 6px;color:var(--ink-2)}
+.p-body p{font-size:12.5px;line-height:1.62;color:#26373d;margin:0 0 11px}
+.p-body ul,.p-body ol{margin:0 0 12px;padding-left:4px;list-style:none}
+.p-body li{font-size:12.5px;line-height:1.55;color:#26373d;margin:0 0 7px;padding-left:20px;position:relative}
+.p-body li::before{content:"";position:absolute;left:2px;top:7px;width:7px;height:7px;border-radius:2px;background:var(--now);transform:rotate(45deg)}
+.p-body strong{color:var(--ink);font-weight:800}
+.p-body .lead{font-size:14px;line-height:1.6;color:#1c2c32;font-weight:500}
+.p-body .eyebrow{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(var(--glow-d),.3);background:rgba(var(--glow),.10);border-radius:999px;padding:6px 13px;font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--now-d);margin-bottom:14px}
+.p-body .eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--now)}
+.callout{background:rgba(var(--glow),.07);border:1px solid rgba(var(--glow),.22);border-left:4px solid var(--now);border-radius:12px;padding:13px 16px;margin:4px 0 14px}
+.callout p{margin:0;font-size:12px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:2px 0 14px}
+.kcard{background:#fff;border:1px solid var(--line);border-radius:12px;padding:13px 14px;box-shadow:0 4px 14px rgba(4,34,47,.05)}
+.kcard .kt{font-size:11px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;color:var(--now-d);margin-bottom:5px}
+.kcard .kd{font-size:11.5px;line-height:1.5;color:#33474f}
+table{width:100%;border-collapse:separate;border-spacing:0;margin:2px 0 14px;font-size:11px;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:linear-gradient(135deg,var(--now-d),var(--now));color:#fff;font-weight:800;font-size:10px;letter-spacing:.03em}
+tr:last-child td{border-bottom:none}
+tr:nth-child(even) td{background:#faf8f2}
+/* metric cards — emerald-accented paper, NOT black */
+.metric-row{display:flex;gap:10px;flex-wrap:wrap;margin:2px 0 14px}
+.metric-row .m{flex:1 1 110px;background:#fff;border:1px solid var(--line);border-top:3px solid var(--now);border-radius:14px;padding:14px 14px 13px;box-shadow:0 8px 22px rgba(4,34,47,.07)}
+.metric-row .m .v{font-family:Fraunces,Georgia,serif;font-size:24px;font-weight:900;letter-spacing:-.01em;background:linear-gradient(120deg,var(--now-d),var(--now));-webkit-background-clip:text;background-clip:text;color:transparent}
+.metric-row .m .l{font-size:10px;font-weight:700;color:var(--muted);margin-top:3px}
+
+/* COVER / BACK (full navy pages) */
+.leaf .face.cover,.leaf .face.back-cover{background:linear-gradient(135deg,#04162f,#0c2f5a 60%,#06142a)!important;color:#fff;justify-content:space-between;padding:40px 38px;border-radius:0 var(--radius) var(--radius) 0}
+.cover .c-aurora,.back-cover .bc-aurora{position:absolute;inset:0;z-index:0;pointer-events:none}
+.cover .c-aurora{background:radial-gradient(45% 45% at 82% 10%,rgba(var(--glow),.34),transparent 70%),radial-gradient(45% 55% at 10% 96%,rgba(var(--glow-d),.22),transparent 70%)}
+.back-cover .bc-aurora{background:radial-gradient(45% 45% at 18% 12%,rgba(var(--glow),.28),transparent 70%)}
+.cover>*,.back-cover>*{position:relative;z-index:1}
+.cover .c-top{display:flex;align-items:center;justify-content:space-between}
+.cover .c-mark{width:54px;height:54px;border-radius:15px;background:linear-gradient(135deg,var(--navy),var(--now));display:grid;place-items:center;color:#fff;font-size:18px;font-weight:900;box-shadow:0 12px 30px rgba(var(--glow-d),.4)}
+.cover .c-pill{display:inline-flex;align-items:center;gap:7px;border:1px solid rgba(var(--glow),.45);background:rgba(var(--glow),.12);border-radius:999px;padding:7px 13px;font-size:11px;font-weight:800;color:#dce8ff}
+.cover .c-pill::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--now)}
+.cover .c-mid{margin-top:auto}
+.cover .c-eyebrow{font-size:11.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--now-l);margin-bottom:16px}
+.cover h1{font-family:Fraunces,Georgia,serif;font-size:clamp(34px,5vw,52px);font-weight:900;line-height:1;letter-spacing:-.02em;margin:0 0 14px}
+.cover h1 .accent{background:linear-gradient(120deg,var(--now),var(--now-l));-webkit-background-clip:text;background-clip:text;color:transparent}
+.cover .c-sub{font-size:15px;line-height:1.5;color:#d3e7ee;max-width:92%;font-weight:500}
+.cover .c-meta{margin-top:26px;padding-top:18px;border-top:1px solid rgba(255,255,255,.16);display:flex;align-items:flex-end;justify-content:space-between;gap:14px}
+.cover .c-meta .cm-l .cm-by{font-size:13px;font-weight:800;color:#eaf7f8}
+.cover .c-meta .cm-l .cm-rel{font-size:11.5px;color:#bcd6de;margin-top:3px;font-weight:600}
+.cover .c-meta .cm-r{font-size:10px;color:#9fbcc6;text-align:right;font-weight:600;max-width:46%}
+.back-cover h2{font-family:Fraunces,Georgia,serif;font-size:24px;font-weight:900;letter-spacing:-.01em;margin-bottom:12px;color:#fff}
+.back-cover h2::before{display:none}
+.back-cover p{font-size:12.5px;line-height:1.6;color:#d3e7ee;margin-bottom:11px}
+.back-cover .bc-cta{display:inline-flex;align-items:center;gap:9px;background:var(--now);color:#fff;font-weight:800;font-size:13px;border-radius:999px;padding:12px 22px;margin-top:6px}
+.back-cover .legacy{margin-top:22px;padding-top:16px;border-top:1px solid rgba(255,255,255,.16);font-size:10.5px;line-height:1.55;color:#bcd6de}
+.back-cover .legacy strong{color:#eaf7f8}
+.back-cover .disclaimer{font-size:9px;line-height:1.5;color:#7fa0ab;margin-top:12px}
+.back-cover .bc-foot{margin-top:14px;font-size:11px;font-weight:700;color:#dce8ff;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+
+/* controls */
+.controls{position:relative;z-index:6;display:flex;align-items:center;gap:16px;padding:12px 0 20px;color:#eaf7f8}
+.nav-btn{width:50px;height:50px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#fff;font-size:21px;cursor:pointer;display:grid;place-items:center;backdrop-filter:blur(8px);transition:.2s ease}
+@media(hover:hover){.nav-btn:hover:not(:disabled){background:var(--now);color:#fff;transform:translateY(-2px)}}
+.nav-btn:active:not(:disabled){background:var(--now);color:#fff;transform:scale(.92)}
+.nav-btn:disabled{opacity:.3;cursor:default}
+.counter{font-size:13px;font-weight:800;min-width:90px;text-align:center;letter-spacing:.04em}
+.counter b{color:var(--now-l)}
+.hint{position:fixed;bottom:9px;left:50%;transform:translateX(-50%);z-index:6;font-size:11px;color:#9fbcc6;font-weight:600;opacity:.8}
+
+/* mobile: single page */
+@media(max-width:860px){
+  /* iOS-safe: no 3D page flip on phones — cross-fade instead */
+  body{min-height:100svh}
+  .stage{align-items:stretch;padding:6px 0 10px;perspective:none}
+  .bookwrap{aspect-ratio:auto;width:92vw;max-width:460px;height:auto;max-height:none;flex:1}
+  .book{height:100%}
+  .bookwrap::before{inset:-8px -8px -10px -8px}
+  /* phones: linearize — every FACE becomes its own page (JS shows one at a time) */
+  .leaf{position:absolute!important;inset:0;left:0;right:auto;width:100%;transform:none!important;opacity:1;pointer-events:auto;transition:none}
+  .leaf .face{position:absolute;inset:0;transform:none!important;backface-visibility:visible;border-radius:var(--radius)}
+  .leaf .face.back{transform:none!important;border-radius:var(--radius)}
+  .leaf .face::after{display:none}
+  .leaf .face.front::before,.leaf .face.back::before{display:none}
+  .leaf.tn .face.front::after{animation:none}
+  .cover,.back-cover{border-radius:var(--radius)}
+  .book::after{display:none}
+  .facing{display:none}
+  .hint{display:none}
+  .p-head,.p-foot{padding-left:18px;padding-right:18px}.p-rule{margin-left:18px;margin-right:18px}.p-body{padding:16px 18px 12px}
+}
+
+h1,.cover h1,.cover h1 .accent,.f-word,.metric-row .m .v,.back-cover h2,.pf-n,.facing .f-num{font-variant-ligatures:none!important;font-feature-settings:"liga" 0,"clig" 0,"dlig" 0!important}
+
+.themer{position:fixed;left:14px;bottom:14px;z-index:30;display:flex;align-items:center;gap:8px;background:rgba(8,20,36,.72);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:8px 12px;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+.themer .tlabel{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#9fbcc6;margin-right:2px}
+.themer .sw{width:20px;height:20px;border-radius:50%;border:2px solid rgba(255,255,255,.25);cursor:pointer;padding:0;transition:transform .15s,box-shadow .15s}
+.themer .sw:hover{transform:scale(1.18)}
+.themer .sw.active{border-color:#fff;box-shadow:0 0 0 3px rgba(255,255,255,.30)}
+@media(max-width:860px){.themer{left:50%;transform:translateX(-50%);bottom:86px;padding:7px 10px;gap:6px}.themer .tlabel{display:none}.themer .sw{width:18px;height:18px}}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+
+<div class="topbar">
+  <a class="brand" href="https://dbaomarhuertasllc.com" style="color:#eaf7f8;text-decoration:none">
+    <span class="brand-mark">OH</span>
+    <span class="brand-lock"><span class="b-name">Omar Huertas LLC</span><span class="b-sub">ServiceNow Partner</span></span>
+  </a>
+  <span style="display:flex;align-items:center;gap:10px"><a class="toplink" href="https://dbaomarhuertasllc.com">dbaomarhuertasllc.com</a><span class="partner-pill"><span class="pp-dot"></span>ServiceNow&reg; &middot; Explained</span></span>
+</div>
+
+<div id="progress"><span></span></div>
+<div class="themer" id="themer"><span class="tlabel">Theme</span></div>
+
+<div class="stage">
+  <div class="bookwrap"><div class="book" id="book"></div></div>
+</div>
+
+<div class="controls">
+  <button class="nav-btn" id="prev" aria-label="Previous page">&larr;</button>
+  <div class="counter"><b id="cur">1</b> / <span id="tot">1</span></div>
+  <button class="nav-btn" id="next" aria-label="Next page">&rarr;</button>
+</div>
+<div class="hint">Use &larr; &rarr; keys, click the page edges, or the buttons to turn the page</div>
+
+<script>
+const DOC = "ServiceNow Lexicon";
+const PAGES = [
+{
+"cover": true,
+"html": "<div class='c-top'><div class='c-mark'>OH</div><div class='c-pill'>ServiceNow&reg; &middot; Explained</div></div><div class='c-mid'><div class='c-eyebrow'>The Field Guide &middot; ServiceNow, Explained</div><h1>The ServiceNow <span class='accent'>Lexicon</span></h1><p class='c-sub'>What ServiceNow is, what it does, every acronym and module decoded &mdash; and why your company needs it. In plain English.</p></div><div class='c-meta'><div class='cm-l'><div class='cm-by'>An educational guide by Omar Huertas LLC</div><div class='cm-rel'>2026 Edition &middot; Expanded &middot; 100 pages</div></div><div class='cm-r'>&copy; 2026 Omar Huertas LLC.</div></div>"
+},
+{
+"doc": "FOUNDATIONS",
+"html": "<span class='eyebrow'>WHAT IT IS</span><h1>ServiceNow, in One Sentence</h1><p class='lead'>ServiceNow is a single cloud platform for running the work of a whole organization.</p><p>Most companies juggle dozens of disconnected systems. ServiceNow takes that scattered work &mdash; requests, approvals, tasks, records &mdash; and puts it on one shared foundation where everything lives together and talks to itself.</p><h2>The Core Idea</h2><p>Instead of buying separate software for IT, HR, customer service, and operations, you build all of it on the same platform. One login, one data model, one way of working.</p><div class='grid2'><div class='kcard'><div class='kt'>ONE PLATFORM</div><div class='kd'>Many business functions run on the same shared system rather than separate tools.</div></div><div class='kcard'><div class='kt'>WORKFLOW ENGINE</div><div class='kd'>At its heart it moves work from person to person automatically until it is done.</div></div></div><div class='callout'><p><strong>Key:</strong> Think of ServiceNow not as one app, but as the ground everything else is built on.</p></div>"
+},
+{
+"doc": "THE PROBLEM",
+"html": "<span class='eyebrow'>WHY IT EXISTS</span><h1>The Mess It Cleans Up</h1><p class='lead'>Before a platform like this, work hides inside email threads, spreadsheets, and a dozen tools that do not talk to each other.</p><h2>Tool Sprawl</h2><p>Each team buys its own software. A request that crosses two teams falls through the cracks because the systems never share information. Nobody can see the whole picture.</p><ul><li><strong>Email chaos.</strong> Requests live in inboxes, so nothing is tracked, measured, or guaranteed to get done.</li><li><strong>Spreadsheet sprawl.</strong> Critical lists get copied, edited, and emailed until no one knows which version is true.</li><li><strong>No accountability.</strong> Without a shared record, it is impossible to say who owns what or how long it took.</li></ul><div class='callout'><p><strong>Key:</strong> The real problem is not too few tools &mdash; it is too many disconnected ones.</p></div><p>ServiceNow replaces the scattered patchwork with one trustworthy place where every request becomes a tracked, visible record.</p>"
+},
+{
+"doc": "THE NOW PLATFORM",
+"html": "<span class='eyebrow'>THE FOUNDATION</span><h1>The Now Platform</h1><p class='lead'>The Now Platform is the shared engine underneath every ServiceNow product.</p><p>Because everything sits on one platform, a customer complaint, an IT outage, and an HR onboarding task can all reference the same people, the same equipment, and the same history.</p><h2>One Data Model</h2><p>A single, shared structure stores all the information. When one team updates a record, everyone who needs it sees the change instantly. There is no copying between systems.</p><div class='grid2'><div class='kcard'><div class='kt'>ONE PLACE TO WORK</div><div class='kd'>People do their daily tasks inside the same environment, no matter which department they are in.</div></div><div class='kcard'><div class='kt'>SHARED SERVICES</div><div class='kd'>Automation, reporting, and security are built once and reused everywhere.</div></div></div><div class='callout'><p><strong>Key:</strong> The power comes from connection &mdash; everything referencing the same single source of truth.</p></div>"
+},
+{
+"doc": "INSTANCES",
+"html": "<span class='eyebrow'>WHERE IT LIVES</span><h1>Your Instance &amp; Environments</h1><p class='lead'>Each customer gets their own private copy of ServiceNow, called an instance.</p><p>An instance is a dedicated, walled-off version of the platform with your data and your customizations. Most organizations run several instances so they can build and test safely before changes reach real users.</p><h2>The Typical Lineup</h2><table><tr><th>Environment</th><th>Purpose</th></tr><tr><td>Development</td><td>Where builders create and change things.</td></tr><tr><td>Test</td><td>Where changes are verified before release.</td></tr><tr><td>Production</td><td>The live system real users depend on.</td></tr></table><p>Development and test are called <strong>sub-production</strong> instances. To keep test realistic, teams make a <strong>clone</strong> &mdash; a fresh copy of production data &mdash; so testing happens against real-world conditions.</p><div class='callout'><p><strong>Key:</strong> Build in dev, prove it in test, release to production &mdash; never experiment on the live system.</p></div>"
+},
+{
+"doc": "RELEASES",
+"html": "<span class='eyebrow'>STAYING CURRENT</span><h1>Releases &amp; Upgrades</h1><p class='lead'>ServiceNow ships major upgrades on a predictable schedule, each with a city name.</p><p>Twice a year a new family release arrives &mdash; named alphabetically after cities (for example, Washington, Xanadu, Yokohama). Each one adds features and improvements that every customer eventually adopts.</p><h2>How Support Works</h2><p>ServiceNow supports the current release and the one before it &mdash; a policy called <strong>N-1</strong>. This gives customers a window to test and upgrade on their own timeline without falling out of support.</p><div class='metric-row'><div class='m'><div class='v'>2x</div><div class='l'>major releases per year</div></div><div class='m'><div class='v'>N-1</div><div class='l'>supported versions</div></div><div class='m'><div class='v'>A&ndash;Z</div><div class='l'>city naming order</div></div></div><div class='callout'><p><strong>Key:</strong> Upgrades are expected and routine &mdash; staying within N-1 keeps you supported and secure.</p></div>"
+},
+{
+"doc": "DATA MODEL",
+"html": "<span class='eyebrow'>HOW DATA IS STORED</span><h1>Tables, Records &amp; Fields</h1><p class='lead'>Everything in ServiceNow is stored as records in tables &mdash; like a giant set of smart spreadsheets.</p><h2>The Three Building Blocks</h2><ul><li><strong>Table.</strong> A collection of similar things, such as all incidents or all employees.</li><li><strong>Record.</strong> One single item in a table &mdash; one incident, one person, one laptop.</li><li><strong>Field.</strong> A single piece of information on a record, such as its status or who it is assigned to.</li></ul><p>Tables can build on one another. A specialized table can inherit everything from a general one and add its own details &mdash; so common features are defined once and reused.</p><div class='grid2'><div class='kcard'><div class='kt'>RELATED RECORDS</div><div class='kd'>A field can point to another record, linking a request to the person who made it.</div></div><div class='kcard'><div class='kt'>ONE TRUTH</div><div class='kd'>Update a record once and every place that references it reflects the change.</div></div></div><div class='callout'><p><strong>Key:</strong> Tables hold records, records hold fields &mdash; that simple pattern underlies the entire platform.</p></div>"
+},
+{
+"doc": "THE INTERFACE",
+"html": "<span class='eyebrow'>USING IT</span><h1>Forms, Lists &amp; the UI</h1><p class='lead'>People mostly interact with ServiceNow through two simple views: lists and forms.</p><h2>Lists and Forms</h2><p>A <strong>list</strong> shows many records at once, like rows in a table &mdash; handy for scanning, sorting, and filtering. A <strong>form</strong> shows one record in detail, with all its fields laid out for reading and editing.</p><div class='grid2'><div class='kcard'><div class='kt'>LIST VIEW</div><div class='kd'>See and filter many records. Click any row to open it.</div></div><div class='kcard'><div class='kt'>FORM VIEW</div><div class='kd'>Work on a single record &mdash; fill in fields, add notes, save.</div></div></div><p>Forms guide users with required fields, helpful defaults, and sections that group related information. Most people never need to think about the tables underneath &mdash; they just open a form and do their work.</p><div class='callout'><p><strong>Key:</strong> Lists are for finding; forms are for doing. Together they cover almost all daily use.</p></div>"
+},
+{
+"doc": "NAVIGATION",
+"html": "<span class='eyebrow'>FINDING YOUR WAY</span><h1>Navigator &amp; Workspaces</h1><p class='lead'>ServiceNow offers different front doors depending on the kind of work you do.</p><h2>Two Ways In</h2><p>The classic <strong>Navigator</strong> is a searchable menu on the left that opens any list or page &mdash; flexible and powerful for builders and power users.</p><p><strong>Workspaces</strong> are modern, focused screens built for a specific job. They put everything an agent needs &mdash; lists, details, and tools &mdash; on one streamlined page.</p><div class='grid2'><div class='kcard'><div class='kt'>NAVIGATOR</div><div class='kd'>The all-purpose menu to reach any part of the platform quickly.</div></div><div class='kcard'><div class='kt'>SERVICE OPERATIONS WORKSPACE</div><div class='kd'>A unified screen for IT operations teams to triage, investigate, and resolve issues in one view.</div></div></div><div class='callout'><p><strong>Key:</strong> Navigator gives you everything; workspaces give you exactly what one role needs.</p></div>"
+},
+{
+"doc": "ACCESS CONTROL",
+"html": "<span class='eyebrow'>WHO CAN DO WHAT</span><h1>Roles, Groups &amp; Access</h1><p class='lead'>ServiceNow carefully controls who can see and change each piece of information.</p><h2>The Pieces</h2><ul><li><strong>Role.</strong> A label that grants a set of permissions, such as the ability to manage incidents.</li><li><strong>Group.</strong> A collection of people, often a team, that can be assigned roles all at once.</li><li><strong>ACL.</strong> An access control rule that decides, record by record and field by field, who may read or write.</li></ul><p>Access Control Lists (ACLs) are the gatekeepers. Before showing or saving anything, the platform checks the relevant ACL to confirm the user is allowed.</p><div class='callout'><p><strong>Key:</strong> Give people roles through groups, and let ACLs enforce the fine-grained rules automatically.</p></div><p>This layered approach means sensitive data stays protected without anyone having to police it by hand.</p>"
+},
+{
+"doc": "AUTOMATION",
+"html": "<span class='eyebrow'>MAKING IT SMART</span><h1>The Automation Primitives</h1><p class='lead'>Small, focused rules make ServiceNow react intelligently as people work.</p><h2>Three Workhorses</h2><div class='grid2'><div class='kcard'><div class='kt'>BUSINESS RULES</div><div class='kd'>Run on the server when records are saved &mdash; to validate, calculate, or trigger follow-on actions.</div></div><div class='kcard'><div class='kt'>CLIENT SCRIPTS</div><div class='kd'>Run in the browser as a user fills out a form, reacting instantly to what they type.</div></div><div class='kcard'><div class='kt'>UI POLICIES</div><div class='kd'>Show, hide, or require fields on a form based on conditions &mdash; no coding needed.</div></div><div class='kcard'><div class='kt'>WHY IT MATTERS</div><div class='kd'>Together they keep data clean and guide users without anyone watching over their shoulder.</div></div></div><div class='callout'><p><strong>Key:</strong> Business rules act behind the scenes; client scripts and UI policies shape the form in front of you.</p></div>"
+},
+{
+"doc": "LIFECYCLE",
+"html": "<span class='eyebrow'>WORK IN MOTION</span><h1>Notifications, SLAs &amp; States</h1><p class='lead'>Every record moves through a lifecycle, and ServiceNow keeps that journey on track.</p><h2>How Work Progresses</h2><p>Records carry a <strong>state</strong> &mdash; such as New, In Progress, or Closed &mdash; that shows where they are. Flows and rules move work to the right person at each step.</p><ul><li><strong>Notifications.</strong> Automatic emails or alerts tell people when something needs their attention.</li><li><strong>SLAs.</strong> Service Level Agreements set time targets &mdash; like resolving an issue within four hours &mdash; and track whether they are met.</li></ul><div class='metric-row'><div class='m'><div class='v'>States</div><div class='l'>where work stands</div></div><div class='m'><div class='v'>SLAs</div><div class='l'>time commitments</div></div><div class='m'><div class='v'>Alerts</div><div class='l'>who to nudge</div></div></div><div class='callout'><p><strong>Key:</strong> States show progress, SLAs hold it to a clock, and notifications keep everyone moving.</p></div>"
+},
+{
+"doc": "PACKAGING",
+"html": "<span class='eyebrow'>HOW IT'S BUNDLED</span><h1>Scoped Apps &amp; the Store</h1><p class='lead'>Functionality is packaged into self-contained applications that can be installed cleanly.</p><h2>Scoped Applications</h2><p>A <strong>scoped app</strong> is a bundle of tables, rules, and screens that lives in its own namespace. Because it is walled off, it cannot accidentally interfere with other apps on the same instance &mdash; making it safe to install, update, or remove.</p><div class='grid2'><div class='kcard'><div class='kt'>THE STORE</div><div class='kd'>A marketplace of ready-made apps from ServiceNow and partners that install onto your instance.</div></div><div class='kcard'><div class='kt'>BUILD YOUR OWN</div><div class='kd'>Organizations create custom scoped apps for needs unique to their business.</div></div></div><p>This packaging model is why the platform scales: capabilities arrive as tidy units instead of tangled custom code.</p><div class='callout'><p><strong>Key:</strong> Scoped apps keep features isolated and safe; the Store makes proven ones a click away.</p></div>"
+},
+{
+"doc": "CMDB",
+"html": "<span class='eyebrow'>SYSTEM OF RECORD</span><h1>The CMDB</h1><p class='lead'>The Configuration Management Database is the single, trusted inventory of everything an organization owns and runs in IT &mdash; the master list that everything else trusts.</p><p>Think of it as the company's IT census. Every server, laptop, application, database, network switch, and cloud resource is recorded once, in one place, with its key details kept current. When teams need to know what they have, who owns it, and how it connects, they look here.</p><div class='callout'><p><strong>Key:</strong> Without a CMDB, IT runs on spreadsheets and tribal knowledge. With one, every other ServiceNow capability &mdash; incidents, change, security, cost &mdash; gets accurate, shared facts.</p></div><h2>Why it is the foundation</h2><ul><li><strong>Shared truth.</strong> Support, security, and operations all read the same data.</li><li><strong>Impact awareness.</strong> Before a change, you can see what it might break.</li><li><strong>Accountability.</strong> Every item has an owner and a lifecycle.</li></ul>"
+},
+{
+"doc": "CIs",
+"html": "<span class='eyebrow'>BUILDING BLOCKS</span><h1>Configuration Items &amp; Classes</h1><p class='lead'>A Configuration Item, or CI, is a single thing the CMDB tracks &mdash; one server, one app, one database. CI classes group similar items so each kind stores the right details.</p><p>Every record in the CMDB is a CI. A class is the template that decides which fields a CI carries: a server CI tracks CPU and memory; a software CI tracks version and publisher. Classes are arranged in a family tree, from broad to specific.</p><div class='grid2'><div class='kcard'><div class='kt'>CI</div><div class='kd'>One tracked thing, with an owner, status, and identifying details.</div></div><div class='kcard'><div class='kt'>CLASS</div><div class='kd'>The category that defines what fields a CI of that type holds.</div></div></div><h3>From general to specific</h3><ul><li><strong>Hardware.</strong> A broad parent class for physical gear.</li><li><strong>Server.</strong> A child of hardware, with server-specific fields.</li><li><strong>Linux Server.</strong> A more specific child still, inheriting all the above.</li></ul><div class='callout'><p><strong>Key:</strong> Right class, right fields, no duplicates &mdash; that is a healthy CI.</p></div>"
+},
+{
+"doc": "RELATIONSHIPS",
+"html": "<span class='eyebrow'>CONNECTIONS</span><h1>Relationships &amp; Dependency Views</h1><p class='lead'>CIs rarely stand alone. Relationships record how items depend on one another &mdash; an app runs on a server, which uses a database, which sits on storage.</p><p>A list of parts is useful, but the real value is knowing how the parts connect. Relationships turn a flat inventory into a living map. A dependency view draws that map visually, so anyone can trace a chain from a customer-facing service down to the hardware beneath it.</p><h3>Why connections matter</h3><ul><li><strong>Impact analysis.</strong> Patching one server? See every app and service that rides on it first.</li><li><strong>Faster root cause.</strong> When a service breaks, follow the relationships down to the failing part.</li><li><strong>Smarter change.</strong> Plan maintenance windows around what is actually affected.</li></ul><div class='callout'><p><strong>Key:</strong> An item without relationships is an orphan &mdash; data with no story. Relationships are what make a CMDB worth having.</p></div>"
+},
+{
+"doc": "CSDM",
+"html": "<span class='eyebrow'>THE BLUEPRINT</span><h1>CSDM Overview</h1><p class='lead'>The Common Service Data Model is ServiceNow's recommended standard for how to organize your CMDB &mdash; an agreed-upon blueprint so everyone models data the same way.</p><p>Left to their own devices, teams name and structure things differently, and the data becomes a mess. CSDM is a shared rulebook: it says which classes to use, how services should be defined, and how everything links together. Follow it, and your CMDB stays consistent, reportable, and ready for advanced features.</p><div class='callout'><p><strong>Key:</strong> CSDM is not a product you install &mdash; it is a framework, a set of best practices for arranging the data you already collect.</p></div><h3>What adopting it gives you</h3><ul><li><strong>Consistency.</strong> Everyone speaks the same data language.</li><li><strong>Service focus.</strong> Technology is tied to the business services it supports.</li><li><strong>Future-ready.</strong> Cost, risk, and AI features expect CSDM-shaped data.</li></ul>"
+},
+{
+"doc": "CSDM DOMAINS",
+"html": "<span class='eyebrow'>FOUR PARTS</span><h1>CSDM's Four Domains</h1><p class='lead'>CSDM organizes data into four domains that move from raw building blocks to the services customers actually buy and use.</p><div class='grid2'><div class='kcard'><div class='kt'>FOUNDATION</div><div class='kd'>The basics everything else needs: locations, companies, people, and groups.</div></div><div class='kcard'><div class='kt'>DESIGN</div><div class='kd'>How services are planned and defined before they go live &mdash; the service portfolio.</div></div><div class='kcard'><div class='kt'>MANAGE TECHNICAL</div><div class='kd'>The real running technology: servers, apps, and the technical services IT operates.</div></div><div class='kcard'><div class='kt'>SELL / CONSUME</div><div class='kd'>The business and customer-facing services people actually request and pay for.</div></div></div><div class='callout'><p><strong>Key:</strong> Read the domains left to right &mdash; foundation supports design, design becomes managed technology, which is sold and consumed as services.</p></div>"
+},
+{
+"doc": "CMDB HEALTH",
+"html": "<span class='eyebrow'>DATA QUALITY</span><h1>CMDB Health</h1><p class='lead'>A CMDB is only as useful as it is trustworthy. CMDB Health measures data quality across three dimensions so you know whether to rely on what it says.</p><div class='metric-row'><div class='m'><div class='v'>1</div><div class='l'>Correctness</div></div><div class='m'><div class='v'>2</div><div class='l'>Completeness</div></div><div class='m'><div class='v'>3</div><div class='l'>Compliance</div></div></div><ul><li><strong>Correctness.</strong> Is the data accurate and free of duplicate records for the same thing?</li><li><strong>Completeness.</strong> Are the required fields actually filled in, not left blank?</li><li><strong>Compliance.</strong> Does the data follow the standards, like CSDM, the organization set?</li></ul><div class='callout'><p><strong>Key:</strong> Bad data is worse than no data &mdash; it leads teams to wrong decisions with confidence. Health dashboards score these dimensions so owners can fix the weakest spots first.</p></div>"
+},
+{
+"doc": "DISCOVERY",
+"html": "<span class='eyebrow'>AUTO-INVENTORY</span><h1>Discovery</h1><p class='lead'>Discovery is how ServiceNow finds out what is actually on the network and records it &mdash; automatically &mdash; so the CMDB reflects reality instead of guesswork.</p><p>Rather than asking people to enter every device by hand, Discovery scans the network, identifies each device, logs in safely to read its details, and writes accurate CIs into the CMDB. It runs on a schedule, so the inventory stays current as things change.</p><h3>How it works, in plain steps</h3><ul><li><strong>Scan.</strong> Look across a range of network addresses for live devices.</li><li><strong>Classify.</strong> Figure out what each one is &mdash; a Windows server, a switch, a database.</li><li><strong>Probe.</strong> Gather details: software installed, configuration, running services.</li><li><strong>Record.</strong> Create or update the matching CI, avoiding duplicates.</li></ul><div class='callout'><p><strong>Key:</strong> Discovery is agentless &mdash; it does not require software installed on every machine. It reaches out securely through a helper called the MID Server.</p></div>"
+},
+{
+"doc": "MID SERVER",
+"html": "<span class='eyebrow'>SECURE BRIDGE</span><h1>The MID Server</h1><p class='lead'>The MID Server is a small piece of software that runs inside your own network and acts as a secure bridge between ServiceNow's cloud and your internal systems.</p><p>ServiceNow lives in the cloud, but your servers and devices live behind your firewall. The MID Server &mdash; Management, Instrumentation, and Discovery &mdash; sits in the middle. ServiceNow hands it work to do, and it carries that work out locally, then sends results back.</p><h3>Why it matters</h3><ul><li><strong>Safe by design.</strong> The MID Server reaches out to ServiceNow; you never have to open your firewall inward.</li><li><strong>Local muscle.</strong> It does the scanning, probing, and integrating from inside the network where the devices are.</li><li><strong>Agentless enabler.</strong> It lets Discovery work without installing software on every machine.</li></ul><div class='callout'><p><strong>Key:</strong> No MID Server, no Discovery, Service Mapping, or most integrations &mdash; it is the trusted hands inside your network.</p></div>"
+},
+{
+"doc": "SERVICE MAPPING",
+"html": "<span class='eyebrow'>THE SERVICE MAP</span><h1>Service Mapping</h1><p class='lead'>Service Mapping builds a top-down picture of how a business service is delivered &mdash; tracing it from the front door all the way down to every server and database that powers it.</p><p>Discovery finds the parts; Service Mapping shows how those parts come together to deliver something people use, like an online checkout or an employee portal. It starts at an entry point, follows the actual traffic, and draws the complete map of supporting CIs and their relationships.</p><h3>What you gain</h3><ul><li><strong>Service-level visibility.</strong> See the whole service, not just scattered components.</li><li><strong>Precise impact.</strong> Know exactly which service a failing component affects.</li><li><strong>Living maps.</strong> The map updates as the environment changes.</li></ul><div class='callout'><p><strong>Key:</strong> Discovery answers what do we have; Service Mapping answers how does this service actually work and what holds it up.</p></div>"
+},
+{
+"doc": "EVENT MGMT",
+"html": "<span class='eyebrow'>SIGNAL FROM NOISE</span><h1>Event Management</h1><p class='lead'>Monitoring tools generate a flood of alerts. Event Management filters, groups, and prioritizes that noise into a short list of alerts worth acting on.</p><p>A large environment can throw off thousands of raw events an hour &mdash; most of them duplicates, blips, or symptoms of one underlying problem. Event Management collects events from many tools, removes the noise, and bundles related ones into a single meaningful alert tied to the affected service.</p><h3>From flood to focus</h3><ul><li><strong>Collect.</strong> Pull events in from monitoring tools across the environment.</li><li><strong>Deduplicate.</strong> Collapse repeats so one issue is one alert.</li><li><strong>Correlate.</strong> Group related events that point to the same root cause.</li><li><strong>Act.</strong> Raise a prioritized alert &mdash; and open an incident automatically if needed.</li></ul><div class='callout'><p><strong>Key:</strong> The goal is fewer, smarter alerts &mdash; so teams chase real problems, not noise.</p></div>"
+},
+{
+"doc": "AIOPS",
+"html": "<span class='eyebrow'>INTELLIGENT OPS</span><h1>Health Log Analytics &amp; AIOps</h1><p class='lead'>AIOps applies machine learning to operations data, spotting trouble before it becomes an outage. Health Log Analytics reads system logs to learn what normal looks like &mdash; and flags what is not.</p><p>Traditional monitoring waits for something to cross a fixed threshold. AIOps is smarter: it studies patterns over time, learns each system's normal rhythm, and surfaces unusual behavior early &mdash; often before users notice anything.</p><h3>What it brings</h3><ul><li><strong>Anomaly detection.</strong> Learns normal, then flags meaningful deviations automatically.</li><li><strong>Log insight.</strong> Health Log Analytics scans huge volumes of logs to find early warning signs.</li><li><strong>Root-cause hints.</strong> Connects related signals to point at the likely cause faster.</li></ul><div class='callout'><p><strong>Key:</strong> AIOps shifts operations from reacting after the fact to predicting and preventing &mdash; using the CMDB and service maps to understand impact.</p></div>"
+},
+{
+"doc": "CLOUD VISIBILITY",
+"html": "<span class='eyebrow'>MULTI-CLOUD</span><h1>Cloud &amp; Container Visibility</h1><p class='lead'>Modern IT runs across several cloud providers and fast-changing containers. ServiceNow extends Discovery to see all of it and keep the CMDB current with the Service Graph Connector.</p><p>Cloud resources spin up and disappear in minutes, and containers can come and go in seconds &mdash; far too fast for manual tracking. ServiceNow connects directly to cloud platforms to inventory what is running, and uses Service Graph Connectors to pull trusted data from outside tools straight into the CMDB.</p><div class='grid2'><div class='kcard'><div class='kt'>MULTI-CLOUD</div><div class='kd'>One inventory spanning multiple public cloud providers, no silos.</div></div><div class='kcard'><div class='kt'>CONTAINERS</div><div class='kd'>Visibility into short-lived, fast-moving container workloads.</div></div></div><div class='callout'><p><strong>Key:</strong> The Service Graph is the modern, governed pipeline for getting accurate data into the CMDB &mdash; so even ephemeral cloud resources show up where decisions get made.</p></div>"
+},
+{
+"doc": "ITSM",
+"html": "<span class='eyebrow'>ITSM CLUSTER</span><h1>IT Service Management</h1><p class='lead'>ITSM is the discipline of running IT like a service business &mdash; with front doors, queues, and promises &mdash; instead of a pile of cables and ad-hoc favors. It is where ServiceNow began.</p><p>Imagine a company where every laptop problem, password reset, and new-hire setup goes through one organized front desk. That front desk takes the request, routes it to the right person, tracks it to completion, and keeps a record. That is ITSM.</p><div class='callout'><p><strong>Key:</strong> ITSM treats IT support as a set of repeatable services with clear ownership, timelines, and quality measures &mdash; not random firefighting.</p></div><ul><li><strong>Why here.</strong> ServiceNow was founded to fix messy IT help desks, so ITSM is its original and strongest home.</li><li><strong>Built on ITIL.</strong> Most ITSM follows ITIL, a widely used playbook of best practices.</li><li><strong>One platform.</strong> Incidents, requests, changes, and knowledge all live in one connected system.</li></ul>"
+},
+{
+"doc": "INCIDENT",
+"html": "<span class='eyebrow'>ITSM CLUSTER</span><h1>Incident Management</h1><p class='lead'>An incident is anything that breaks or slows a service users depend on. The single goal of incident management is to restore normal service as fast as possible &mdash; even with a temporary fix.</p><p>If email is down, the job is not to find why it broke. The job is to get email working again. Investigating the deeper cause comes later, and it has its own process.</p><div class='grid2'><div class='kcard'><div class='kt'>RESTORE</div><div class='kd'>Get the user working again quickly, by any safe means.</div></div><div class='kcard'><div class='kt'>TRACK</div><div class='kd'>Log it, assign a priority, and keep the user informed.</div></div></div><ul><li><strong>Priority.</strong> Set by combining impact (how many affected) and urgency (how time-sensitive).</li><li><strong>Workaround.</strong> A temporary fix that restores service while the real cause waits.</li></ul><div class='callout'><p><strong>Key:</strong> Speed of restoration is the measure of success &mdash; not elegance of the fix.</p></div>"
+},
+{
+"doc": "MAJOR INCIDENT",
+"html": "<span class='eyebrow'>ITSM CLUSTER</span><h1>Major Incidents &amp; Swarming</h1><p class='lead'>A major incident is a high-impact outage &mdash; a store-wide checkout failure, a hospital records system down. It needs a faster, bigger, more coordinated response than an everyday ticket.</p><p>Instead of passing a ticket from team to team, the organization swarms: it pulls the right experts into one virtual room at the same time to solve it together, in real time.</p><ul><li><strong>Major incident manager.</strong> A single coordinator who runs the response and shields the experts from chaos.</li><li><strong>Swarming.</strong> Network, app, and database specialists collaborate live instead of in a relay race.</li><li><strong>War room.</strong> A bridge or chat channel where status, decisions, and updates are centralized.</li><li><strong>Communication.</strong> Frequent, plain updates go to leadership and affected users.</li></ul><div class='callout'><p><strong>Key:</strong> Major incidents trade the orderly queue for all-hands speed, with one person owning the outcome.</p></div>"
+},
+{
+"doc": "PROBLEM",
+"html": "<span class='eyebrow'>ITSM CLUSTER</span><h1>Problem Management</h1><p class='lead'>If incidents are fires, problem management is fire prevention. Its job is to find the underlying cause behind recurring incidents so they stop happening.</p><p>When the same outage returns every Monday, incident management keeps putting it out. Problem management asks why &mdash; and fixes the root so the fire never restarts.</p><div class='grid2'><div class='kcard'><div class='kt'>ROOT CAUSE</div><div class='kd'>The true underlying reason incidents keep occurring.</div></div><div class='kcard'><div class='kt'>KNOWN ERROR</div><div class='kd'>A documented cause with a proven workaround on file.</div></div></div><ul><li><strong>Reactive.</strong> Investigate after repeated incidents reveal a pattern.</li><li><strong>Proactive.</strong> Spot weak points and fix them before they cause outages.</li><li><strong>Known error database.</strong> A reference so support resolves repeat issues instantly.</li></ul><div class='callout'><p><strong>Key:</strong> Incident management restores service; problem management removes the cause for good.</p></div>"
+},
+{
+"doc": "CHANGE",
+"html": "<span class='eyebrow'>ITSM CLUSTER</span><h1>Change Management</h1><p class='lead'>Most outages are caused by changes &mdash; an upgrade, a new server, a config tweak. Change management makes change safe by reviewing, approving, and scheduling it before it happens.</p><p>It is the seatbelt for IT: it does not stop you from moving, it stops a small move from becoming a crash.</p><table><tr><th>Type</th><th>What it is</th></tr><tr><td>Standard</td><td>Low-risk, pre-approved, routine (e.g. a known password reset job)</td></tr><tr><td>Normal</td><td>Needs assessment and approval before scheduling</td></tr><tr><td>Emergency</td><td>Urgent fix for an outage; fast-tracked approval</td></tr></table><ul><li><strong>Risk assessment.</strong> Weigh likelihood and impact before saying yes.</li><li><strong>Rollback plan.</strong> A documented way to undo the change if it fails.</li></ul><div class='callout'><p><strong>Key:</strong> Change management balances progress against risk &mdash; move forward, but with a safety net.</p></div>"
+},
+{
+"doc": "CAB",
+"html": "<span class='eyebrow'>ITSM CLUSTER</span><h1>The CAB &amp; Change Calendar</h1><p class='lead'>The Change Advisory Board (CAB) is the group that reviews and approves higher-risk changes. The change calendar shows everyone what is scheduled and when.</p><p>Think of the CAB as a flight control tower: it makes sure two risky changes do not take off at once and collide.</p><ul><li><strong>CAB members.</strong> Representatives from IT, business, and security who assess risk together.</li><li><strong>Change calendar.</strong> A shared schedule that prevents conflicts and surprises.</li><li><strong>Blackout window.</strong> A protected period (like holiday sales) when no risky changes are allowed.</li><li><strong>Maintenance window.</strong> A planned time set aside for safe, expected changes.</li></ul><div class='callout'><p><strong>Key:</strong> The CAB approves; the calendar coordinates &mdash; together they keep changes from colliding.</p></div>"
+},
+{
+"doc": "REQUEST",
+"html": "<span class='eyebrow'>ITSM CLUSTER</span><h1>Request Management &amp; the Catalog</h1><p class='lead'>A request is asking for something you are entitled to &mdash; a new laptop, software access, a phone. The Service Catalog is the menu of those somethings, like an online store for the workplace.</p><p>Unlike an incident, nothing is broken. The user simply wants something delivered, and the catalog turns that into an orderly, trackable order.</p><div class='grid2'><div class='kcard'><div class='kt'>CATALOG ITEM</div><div class='kd'>A single orderable thing, with a form and clear cost.</div></div><div class='kcard'><div class='kt'>FULFILLMENT</div><div class='kd'>The behind-the-scenes steps that deliver the order.</div></div></div><ul><li><strong>Request vs. incident.</strong> Request = I want something; incident = something is broken.</li><li><strong>Workflow.</strong> Approvals and tasks fire automatically once you submit.</li></ul><div class='callout'><p><strong>Key:</strong> The catalog turns vague emails into clean, approved, trackable orders.</p></div>"
+},
+{
+"doc": "KNOWLEDGE",
+"html": "<span class='eyebrow'>ITSM CLUSTER</span><h1>Knowledge Management</h1><p class='lead'>Knowledge management captures what the team learns &mdash; how-tos, fixes, answers &mdash; so it can be reused instead of rediscovered. The dream: users help themselves.</p><p>When a good article exists, a user finds the answer and never files a ticket. That avoided ticket is called deflection, and it saves everyone time.</p><ul><li><strong>Knowledge article.</strong> A clear, searchable write-up of a solution or process.</li><li><strong>KCS.</strong> Knowledge-Centered Service &mdash; capture knowledge as you solve tickets, not afterward.</li><li><strong>Self-service deflection.</strong> Users solving their own issues via articles, reducing ticket volume.</li><li><strong>Feedback loop.</strong> Readers flag stale or unclear articles so they stay accurate.</li></ul><div class='callout'><p><strong>Key:</strong> The cheapest, fastest ticket is the one a good article prevented from ever being filed.</p></div>"
+},
+{
+"doc": "SLM",
+"html": "<span class='eyebrow'>ITSM CLUSTER</span><h1>Service Level Management</h1><p class='lead'>Service level management is about promises and proof. It sets clear targets for how fast and how well services are delivered &mdash; then measures whether those targets are met.</p><p>A Service Level Agreement (SLA) is a promise to the customer: resolve high-priority issues within four hours, for example. The system tracks the clock automatically.</p><table><tr><th>Term</th><th>Promise between</th></tr><tr><td>SLA</td><td>IT and the customer or business</td></tr><tr><td>OLA</td><td>Internal teams supporting that SLA</td></tr><tr><td>Underpinning contract</td><td>IT and an outside vendor</td></tr></table><ul><li><strong>Breach.</strong> When a target is missed &mdash; tracked and reported.</li><li><strong>Chained promises.</strong> An SLA only holds if the OLAs and contracts beneath it do.</li></ul><div class='callout'><p><strong>Key:</strong> SLAs are public promises; OLAs and underpinning contracts are the internal promises that keep them.</p></div>"
+},
+{
+"doc": "PORTAL",
+"html": "<span class='eyebrow'>ITSM CLUSTER</span><h1>The Service Portal &amp; Self-Service</h1><p class='lead'>The Service Portal is the friendly front door &mdash; a website where employees search answers, order from the catalog, report issues, and check status, all in one place.</p><p>It hides the complex system behind a clean, consumer-grade page. Most people never see the engine; they just see a search bar and a few clear buttons.</p><div class='grid2'><div class='kcard'><div class='kt'>SEARCH</div><div class='kd'>One bar that surfaces articles, items, and help.</div></div><div class='kcard'><div class='kt'>MY STUFF</div><div class='kd'>Track open tickets and orders without calling anyone.</div></div></div><ul><li><strong>Self-service.</strong> Users get help any hour without waiting for a human.</li><li><strong>Beyond IT.</strong> The same portal can serve HR, facilities, and more (Employee Service).</li></ul><div class='callout'><p><strong>Key:</strong> A good portal makes the powerful platform feel as simple as a shopping site.</p></div>"
+},
+{
+"doc": "WALK-UP",
+"html": "<span class='eyebrow'>ITSM CLUSTER</span><h1>Walk-up &amp; Omnichannel</h1><p class='lead'>Sometimes people want a human. The walk-up experience is the in-person tech bar; omnichannel means support meets users wherever they are &mdash; chat, phone, email, portal, or desk.</p><p>The point is consistency: whichever door you use, your history follows you, so you never have to repeat the whole story.</p><ul><li><strong>Walk-up.</strong> A staffed help desk where users book a slot or join a queue in person.</li><li><strong>Omnichannel.</strong> Many ways in &mdash; chat, phone, email, portal &mdash; feeding one shared record.</li><li><strong>Virtual agent.</strong> A chatbot that handles common questions instantly, day or night.</li><li><strong>Seamless handoff.</strong> When the bot is stuck, a human takes over with full context.</li></ul><div class='callout'><p><strong>Key:</strong> Meet users on their channel of choice while keeping one continuous record behind the scenes.</p></div>"
+},
+{
+"doc": "METRICS",
+"html": "<span class='eyebrow'>ITSM CLUSTER</span><h1>ITSM Metrics That Matter</h1><p class='lead'>You cannot improve what you do not measure. A few honest numbers tell you whether IT service is getting faster, cheaper, and more pleasant &mdash; or not.</p><div class='metric-row'><div class='m'><div class='v'>MTTR</div><div class='l'>mean time to resolve</div></div><div class='m'><div class='v'>FCR</div><div class='l'>first-call resolution</div></div><div class='m'><div class='v'>CSAT</div><div class='l'>customer satisfaction</div></div></div><ul><li><strong>MTTR.</strong> Average time to fix an issue &mdash; lower is better.</li><li><strong>First-call resolution.</strong> Share of issues solved on the first contact, with no bounce-around.</li><li><strong>CSAT.</strong> How happy users are, usually a quick post-ticket rating.</li></ul><div class='callout'><p><strong>Key:</strong> Speed (MTTR), efficiency (FCR), and happiness (CSAT) together tell the real story &mdash; chase all three, not just one.</p></div>"
+},
+{
+"doc": "ITAM",
+"html": "<span class='eyebrow'>IT ASSET MANAGEMENT</span><h1>Knowing What You Own</h1><p class='lead'>IT Asset Management (ITAM) is the discipline of tracking every piece of technology an organization buys, uses, and retires &mdash; from laptops to software licenses to cloud subscriptions &mdash; along with what each one costs.</p><p>Most companies own far more technology than anyone can name from memory. ITAM in ServiceNow keeps a single, trusted record of every asset, who has it, what was paid for it, and where it is in its useful life.</p><div class='grid2'><div class='kcard'><div class='kt'>HARDWARE</div><div class='kd'>Physical gear: laptops, phones, servers, monitors.</div></div><div class='kcard'><div class='kt'>SOFTWARE</div><div class='kd'>Programs and the licenses that permit their use.</div></div><div class='kcard'><div class='kt'>SAAS</div><div class='kd'>Cloud apps paid by subscription, not installed locally.</div></div><div class='kcard'><div class='kt'>CONTRACTS</div><div class='kd'>The agreements and money tied to all of the above.</div></div></div><div class='callout'><p><strong>Key:</strong> ITAM answers two simple questions executives constantly ask &mdash; what do we own, and what is it costing us?</p></div>"
+},
+{
+"doc": "HAM LIFECYCLE",
+"html": "<span class='eyebrow'>HARDWARE ASSET MANAGEMENT</span><h1>From Plan to Retire</h1><p class='lead'>Hardware Asset Management (HAM) follows a physical device through its entire life &mdash; a predictable journey ServiceNow calls the asset lifecycle.</p><p>Every laptop or server moves through the same stages. Tracking those stages prevents lost gear, surprise purchases, and equipment that lingers on the books long after it stopped working.</p><ul><li><strong>Plan.</strong> Decide what is needed and budget for it.</li><li><strong>Procure.</strong> Order and receive the hardware.</li><li><strong>Deploy.</strong> Assign it to a person or location and put it to work.</li><li><strong>Maintain.</strong> Service, repair, and track it in use.</li><li><strong>Retire.</strong> Wipe, recycle, or dispose of it securely.</li></ul><div class='callout'><p><strong>Key:</strong> Each stage has a defined owner and status, so nothing falls through the cracks &mdash; and no one buys a new device when a spare is sitting in a drawer.</p></div>"
+},
+{
+"doc": "ASSET vs CI",
+"html": "<span class='eyebrow'>CORE DISTINCTION</span><h1>Asset vs. Configuration Item</h1><p class='lead'>One of the most important ideas in ServiceNow is that a single laptop is tracked two different ways &mdash; as an asset and as a configuration item (CI) &mdash; for two different reasons.</p><p>The asset record is the financial and contractual view: cost, owner, warranty, purchase order. The CI is the operational and technical view: how it is configured and what it connects to.</p><table><tr><th>Asset</th><th>Configuration Item (CI)</th></tr><tr><td>Money &amp; ownership</td><td>Technology &amp; connections</td></tr><tr><td>Cost, contract, warranty</td><td>Specs, status, relationships</td></tr><tr><td>Lives in ITAM</td><td>Lives in the CMDB</td></tr></table><div class='callout'><p><strong>Key:</strong> Same physical device, two linked records. Finance cares about the asset; IT operations cares about the CI. ServiceNow keeps them in sync.</p></div>"
+},
+{
+"doc": "STOCKROOMS",
+"html": "<span class='eyebrow'>INVENTORY</span><h1>Stockrooms &amp; Transfer Orders</h1><p class='lead'>Before hardware reaches a person, it sits somewhere. ServiceNow models those locations as stockrooms and tracks every movement between them.</p><p>A stockroom is any place inventory is held &mdash; a warehouse, a supply closet, or a shipping dock. When equipment moves, a transfer order records the journey so the count is always accurate.</p><ul><li><strong>Stockroom.</strong> A defined location holding available inventory.</li><li><strong>Transfer order.</strong> A tracked request to move assets from one stockroom to another.</li><li><strong>Inventory count.</strong> The real-time tally of what is on hand and ready to deploy.</li></ul><div class='metric-row'><div class='m'><div class='v'>IN</div><div class='l'>received stock</div></div><div class='m'><div class='v'>OUT</div><div class='l'>deployed to users</div></div><div class='m'><div class='v'>0</div><div class='l'>surprises at audit</div></div></div><div class='callout'><p><strong>Key:</strong> Treating IT supply like a real warehouse means you always know what is available before you spend money buying more.</p></div>"
+},
+{
+"doc": "SAM",
+"html": "<span class='eyebrow'>SOFTWARE ASSET MANAGEMENT</span><h1>Managing What You Install</h1><p class='lead'>Software Asset Management (SAM) tracks the programs running across the company and the licenses that legally permit their use &mdash; making sure you have neither too few nor too many.</p><p>Software is bought as entitlements (the right to use it) but consumed as installs (where it actually runs). When those two numbers drift apart, the result is either legal risk or wasted money.</p><div class='grid2'><div class='kcard'><div class='kt'>ENTITLEMENTS</div><div class='kd'>The licenses you purchased &mdash; your right to use software.</div></div><div class='kcard'><div class='kt'>INSTALLS</div><div class='kd'>Where the software is actually running, discovered automatically.</div></div><div class='kcard'><div class='kt'>POSITION</div><div class='kd'>Entitlements minus installs &mdash; over or under licensed.</div></div><div class='kcard'><div class='kt'>OPTIMIZE</div><div class='kd'>Reclaim unused licenses and reassign them.</div></div></div><div class='callout'><p><strong>Key:</strong> SAM turns scattered software spend into a managed asset class with a clear compliance position.</p></div>"
+},
+{
+"doc": "RECONCILIATION",
+"html": "<span class='eyebrow'>LICENSE COMPLIANCE</span><h1>Reconciliation &amp; True-Ups</h1><p class='lead'>License reconciliation is the act of comparing what you are entitled to against what you have actually installed &mdash; the heart of staying compliant and cost-efficient.</p><p>ServiceNow gathers entitlements from contracts and installs from discovery, then calculates your license position automatically for each software publisher.</p><ul><li><strong>Compliant.</strong> Installs match or fall under your entitlements &mdash; no action needed.</li><li><strong>Over-licensed.</strong> You bought more than you use &mdash; an opportunity to cut cost at renewal.</li><li><strong>Under-licensed.</strong> You use more than you bought &mdash; a compliance gap to close.</li><li><strong>True-up.</strong> A purchase that buys the additional licenses needed to become compliant.</li></ul><div class='callout'><p><strong>Key:</strong> Catching gaps before the publisher does turns a feared audit into a routine, predictable check.</p></div>"
+},
+{
+"doc": "SAAS",
+"html": "<span class='eyebrow'>SAAS MANAGEMENT</span><h1>Taming Cloud Subscriptions</h1><p class='lead'>SaaS License Management tracks the cloud apps a company pays for by subscription &mdash; including the many that were bought without IT ever knowing.</p><p>Because anyone with a credit card can sign up for a cloud tool, SaaS spend sprawls quickly. ServiceNow surfaces this hidden usage and the money attached to it.</p><div class='grid2'><div class='kcard'><div class='kt'>SHADOW IT</div><div class='kd'>Apps bought outside IT, invisible until discovered.</div></div><div class='kcard'><div class='kt'>WASTE</div><div class='kd'>Paid seats no one has logged into in months.</div></div><div class='kcard'><div class='kt'>RENEWALS</div><div class='kd'>Upcoming contract dates flagged before they auto-renew.</div></div><div class='kcard'><div class='kt'>RIGHT-SIZE</div><div class='kd'>Match seats purchased to seats actually used.</div></div></div><div class='callout'><p><strong>Key:</strong> Reclaiming idle SaaS seats and catching auto-renewals early is one of the fastest ways to recover real budget.</p></div>"
+},
+{
+"doc": "NORMALIZATION",
+"html": "<span class='eyebrow'>DATA QUALITY</span><h1>Normalization &amp; Content Packs</h1><p class='lead'>Raw software data is messy &mdash; the same product can be discovered under a dozen different names. Normalization cleans it into one consistent, trustworthy record.</p><p>One application might appear as five different entries depending on version, edition, or how it was installed. Without cleanup, no count can be trusted.</p><ul><li><strong>Normalization.</strong> Mapping messy discovered names to one standard product, publisher, and version.</li><li><strong>Content pack.</strong> A regularly updated library of known publishers and products that powers that mapping.</li><li><strong>Publisher.</strong> The company that makes the software and sets its licensing rules.</li></ul><div class='metric-row'><div class='m'><div class='v'>MANY</div><div class='l'>raw names</div></div><div class='m'><div class='v'>&rarr;</div><div class='l'>normalized</div></div><div class='m'><div class='v'>ONE</div><div class='l'>clean product</div></div></div><div class='callout'><p><strong>Key:</strong> Clean data is the foundation. Reconciliation and reporting are only as accurate as the normalization beneath them.</p></div>"
+},
+{
+"doc": "CONTRACTS",
+"html": "<span class='eyebrow'>CONTRACT MANAGEMENT</span><h1>The Agreements Behind the Spend</h1><p class='lead'>Contract Management stores every agreement tied to your assets &mdash; leases, licenses, support, and warranties &mdash; in one place with the dates and dollars that matter.</p><p>Contracts are where the money and the obligations live. When they are scattered in inboxes and filing cabinets, renewals get missed and leverage is lost.</p><ul><li><strong>Terms.</strong> Start and end dates, costs, and what each party promised.</li><li><strong>Renewals.</strong> Automatic alerts before a contract expires or auto-renews.</li><li><strong>Linkage.</strong> Each contract connects to the assets and entitlements it covers.</li><li><strong>Obligations.</strong> Service levels and conditions you can hold a vendor to.</li></ul><div class='callout'><p><strong>Key:</strong> A contract you can find and act on before its deadline is a contract you can renegotiate &mdash; one you forgot is one you simply pay.</p></div>"
+},
+{
+"doc": "S2P",
+"html": "<span class='eyebrow'>SOURCING &amp; PROCUREMENT</span><h1>Source-to-Pay (S2P)</h1><p class='lead'>Source-to-Pay (S2P) is the full journey of buying something &mdash; from choosing a supplier all the way to paying the invoice &mdash; managed as one connected flow.</p><p>Procurement in ServiceNow turns scattered purchasing into a tracked process where every request, approval, order, and receipt is recorded.</p><div class='grid2'><div class='kcard'><div class='kt'>SOURCE</div><div class='kd'>Select the right supplier and negotiate terms.</div></div><div class='kcard'><div class='kt'>REQUEST</div><div class='kd'>Submit a purchase request with approvals.</div></div><div class='kcard'><div class='kt'>ORDER</div><div class='kd'>Issue a purchase order to the supplier.</div></div><div class='kcard'><div class='kt'>PAY</div><div class='kd'>Receive goods, match the invoice, and pay.</div></div></div><div class='callout'><p><strong>Key:</strong> When sourcing connects directly to asset records, every dollar spent has a clear paper trail from decision to delivery.</p></div>"
+},
+{
+"doc": "VENDORS",
+"html": "<span class='eyebrow'>SUPPLIER MANAGEMENT</span><h1>Vendors, Suppliers &amp; Risk</h1><p class='lead'>Vendor management keeps a clear picture of the companies you buy from &mdash; how well they perform, what you spend with them, and the risk they carry.</p><p>Every supplier is a relationship and a potential exposure. ServiceNow centralizes vendor records so performance and risk are managed, not guessed.</p><ul><li><strong>Performance.</strong> Are they delivering on time and meeting agreed service levels?</li><li><strong>Spend.</strong> How much flows to each vendor across all contracts?</li><li><strong>Risk.</strong> Financial, security, or compliance exposure a vendor introduces.</li><li><strong>Consolidation.</strong> Spotting overlap so you can negotiate from strength.</li></ul><div class='callout'><p><strong>Key:</strong> Knowing which vendors you depend on &mdash; and how risky each one is &mdash; turns supplier relationships from a liability into leverage.</p></div>"
+},
+{
+"doc": "ITAM VALUE",
+"html": "<span class='eyebrow'>BUSINESS VALUE</span><h1>Why ITAM Pays Off</h1><p class='lead'>Done well, IT Asset Management is not a cost &mdash; it pays for itself by avoiding waste, surviving audits, and giving leaders the truth about technology spend.</p><p>The payoff shows up in fewer surprise purchases, smaller true-up bills, and the confidence to face a vendor audit without scrambling.</p><div class='metric-row'><div class='m'><div class='v'>AVOID</div><div class='l'>buying what you already own</div></div><div class='m'><div class='v'>READY</div><div class='l'>for any audit</div></div><div class='m'><div class='v'>CLEAR</div><div class='l'>view of total spend</div></div></div><ul><li><strong>Cost avoidance.</strong> Reclaim unused licenses and redeploy idle hardware instead of buying new.</li><li><strong>Audit readiness.</strong> A defensible compliance position the moment a publisher asks.</li><li><strong>Better decisions.</strong> Trusted data on what you own, use, and pay for.</li></ul><div class='callout'><p><strong>Key:</strong> ITAM converts scattered technology spending into a managed, accountable asset base &mdash; the difference between guessing and knowing.</p></div>"
+},
+{
+"doc": "HRSD",
+"html": "<span class='eyebrow'>EMPLOYEE WORKFLOWS</span><h1>HR Service Delivery</h1><p class='lead'>HR Service Delivery (HRSD) turns the work of an HR department into organized, trackable services &mdash; so questions get answered, requests get fulfilled, and nothing falls through the cracks.</p><h2>What it solves</h2><p>Before HRSD, employee questions arrive by email, hallway, and phone, and HR juggles them in spreadsheets and inboxes. HRSD gives every request a record, an owner, and a deadline.</p><div class='grid2'><div class='kcard'><div class='kt'>ASK</div><div class='kd'>Employees submit questions or requests in one place instead of guessing who to email.</div></div><div class='kcard'><div class='kt'>ROUTE</div><div class='kd'>Each request goes automatically to the right HR specialist or team.</div></div><div class='kcard'><div class='kt'>RESOLVE</div><div class='kd'>HR tracks progress against service-level targets and closes the loop.</div></div><div class='kcard'><div class='kt'>IMPROVE</div><div class='kd'>Reports reveal what employees ask most, so HR can fix root causes.</div></div></div><div class='callout'><p><strong>Key:</strong> HRSD treats HR like a service desk &mdash; consistent, measurable, and friendly &mdash; rather than a black-box inbox.</p></div>"
+},
+{
+"doc": "EMPLOYEE CENTER",
+"html": "<span class='eyebrow'>EMPLOYEE WORKFLOWS</span><h1>The Employee Center</h1><p class='lead'>Employee Center is the single front door where staff go to get help &mdash; from HR, IT, facilities, and more &mdash; without needing to know which department owns the answer.</p><h2>One portal, many services</h2><p>Instead of separate websites for benefits, laptops, and travel, employees land on one branded page. A search box and clear categories guide them to articles, request forms, or a live agent.</p><ul><li><strong>Unified search.</strong> One box looks across knowledge articles and request catalogs from every department.</li><li><strong>Personalized.</strong> Content adapts to the employee&mdash;their location, role, and language.</li><li><strong>Self-service.</strong> Many needs are met instantly with an answer or a simple form.</li><li><strong>Status tracking.</strong> Employees see where their requests stand without re-asking.</li></ul><div class='callout'><p><strong>Key:</strong> Employee Center is the consumer-grade storefront for everything an employee might need at work.</p></div>"
+},
+{
+"doc": "JOURNEYS",
+"html": "<span class='eyebrow'>EMPLOYEE WORKFLOWS</span><h1>Employee Journeys</h1><p class='lead'>Major moments in an employee&rsquo;s career &mdash; joining, moving roles, and leaving &mdash; involve many teams at once. Journeys coordinate them all behind the scenes.</p><h2>Lifecycle events</h2><p>A new hire needs a laptop, accounts, payroll setup, training, and a desk. Each task lives in a different team. A journey orchestrates them so the right work fires at the right time.</p><div class='grid2'><div class='kcard'><div class='kt'>ONBOARDING</div><div class='kd'>Equipment, access, paperwork, and a guided first-week plan, ready on day one.</div></div><div class='kcard'><div class='kt'>TRANSITIONS</div><div class='kd'>Promotions, relocations, and team changes update access and tools automatically.</div></div><div class='kcard'><div class='kt'>OFFBOARDING</div><div class='kd'>Returning equipment and revoking access in an orderly, secure checklist.</div></div><div class='kcard'><div class='kt'>GUIDANCE</div><div class='kd'>The employee sees a clear to-do list and progress bar through each event.</div></div></div><div class='callout'><p><strong>Key:</strong> Journeys replace dozens of disconnected handoffs with one coordinated plan for life&rsquo;s big work moments.</p></div>"
+},
+{
+"doc": "HR CASES",
+"html": "<span class='eyebrow'>EMPLOYEE WORKFLOWS</span><h1>HR Cases &amp; Employee Relations</h1><p class='lead'>Some HR matters are routine; others are deeply personal or legally sensitive. The case system handles both, with extra walls around the confidential ones.</p><h2>From simple to sensitive</h2><p>A question about vacation balance and an investigation into a workplace concern are both &ldquo;cases,&rdquo; but they are not treated the same. Sensitive matters are locked down tightly.</p><ul><li><strong>Case.</strong> A tracked record of an employee request, with owner, history, and resolution.</li><li><strong>Employee Relations.</strong> A protected workspace for grievances, investigations, and disputes.</li><li><strong>Access control.</strong> Only authorized HR staff can open the most confidential records.</li><li><strong>Audit trail.</strong> Every action is logged, supporting fairness and compliance.</li></ul><div class='callout'><p><strong>Key:</strong> Strict permissions and audit logs let HR handle delicate matters with privacy and accountability.</p></div>"
+},
+{
+"doc": "CSM",
+"html": "<span class='eyebrow'>CUSTOMER WORKFLOWS</span><h1>Customer Service Management</h1><p class='lead'>Customer Service Management (CSM) helps a company solve customer problems &mdash; and fix the underlying causes &mdash; rather than just answering tickets one at a time.</p><h2>Beyond the call center</h2><p>When a customer reports an issue, the answer often lies in another department &mdash; engineering, billing, or operations. CSM connects the front-line agent to those teams so the real problem gets solved.</p><div class='metric-row'><div class='m'><div class='v'>1</div><div class='l'>place for every case</div></div><div class='m'><div class='v'>360&deg;</div><div class='l'>view of the customer</div></div><div class='m'><div class='v'>&darr;</div><div class='l'>repeat contacts</div></div></div><ul><li><strong>Connected.</strong> Front office and back office work the same case together.</li><li><strong>Proactive.</strong> Spot a product fault and notify everyone affected before they call.</li></ul><div class='callout'><p><strong>Key:</strong> CSM aims to resolve the cause of customer issues, not just close the ticket.</p></div>"
+},
+{
+"doc": "CASES &amp; ACCOUNTS",
+"html": "<span class='eyebrow'>CUSTOMER WORKFLOWS</span><h1>Cases, Accounts &amp; Contacts</h1><p class='lead'>To serve customers well, the system needs to know who they are and what they bought. Accounts, contacts, and cases are the three building blocks.</p><h2>The core records</h2><table><tr><th>Term</th><th>Plain meaning</th></tr><tr><td>Account</td><td>The customer organization &mdash; a company or household you do business with.</td></tr><tr><td>Contact</td><td>A specific person at that account who you talk to.</td></tr><tr><td>Case</td><td>A single issue or request raised by a contact.</td></tr></table><p>Linking these together means an agent instantly sees a customer&rsquo;s history, products, and past cases &mdash; no re-explaining required.</p><div class='callout'><p><strong>Key:</strong> Accounts and contacts give every case the context that turns a generic reply into informed, personal service.</p></div>"
+},
+{
+"doc": "PORTAL &amp; COMMUNITIES",
+"html": "<span class='eyebrow'>CUSTOMER WORKFLOWS</span><h1>The Customer Portal &amp; Communities</h1><p class='lead'>Many customers prefer to help themselves. A self-service portal and a community let them find answers, track cases, and learn from peers &mdash; any time of day.</p><h2>Help that scales</h2><p>The portal is the customer-facing website where people open cases, read guides, and check status. The community adds a space where customers and experts share knowledge.</p><div class='grid2'><div class='kcard'><div class='kt'>PORTAL</div><div class='kd'>Branded self-service site for cases, knowledge, and account info.</div></div><div class='kcard'><div class='kt'>COMMUNITY</div><div class='kd'>Forums where customers ask, answer, and upvote solutions.</div></div><div class='kcard'><div class='kt'>DEFLECTION</div><div class='kd'>Good answers up front reduce the volume of incoming cases.</div></div><div class='kcard'><div class='kt'>24/7</div><div class='kd'>Help is available even when agents are offline.</div></div></div><div class='callout'><p><strong>Key:</strong> Self-service portals and communities answer common questions without a single phone call.</p></div>"
+},
+{
+"doc": "FSM",
+"html": "<span class='eyebrow'>CUSTOMER WORKFLOWS</span><h1>Field Service Management</h1><p class='lead'>Field Service Management (FSM) handles work that happens in the real world &mdash; a technician driving to a site to install, repair, or inspect something.</p><h2>When the fix needs feet</h2><p>Some problems can&rsquo;t be solved over the phone. FSM coordinates the people, parts, and visits required to get the job done on-site, and ties it back to the original customer case.</p><ul><li><strong>Work order.</strong> The instruction for a job that must be done in person.</li><li><strong>Task.</strong> An individual step within that job.</li><li><strong>Parts.</strong> Tracking the inventory a technician needs to bring.</li><li><strong>Skills.</strong> Matching the right qualified person to the right job.</li></ul><div class='callout'><p><strong>Key:</strong> FSM extends customer service from the screen to the doorstep, coordinating real-world visits end to end.</p></div>"
+},
+{
+"doc": "DISPATCH",
+"html": "<span class='eyebrow'>CUSTOMER WORKFLOWS</span><h1>Dispatch, Scheduling &amp; Mobile</h1><p class='lead'>Getting the right technician to the right place at the right time is a puzzle. Scheduling tools solve it, and a mobile app puts the job in the technician&rsquo;s pocket.</p><h2>From plan to doorstep</h2><p>A dispatcher (or automated assistant) assigns jobs based on skills, location, and availability, then the technician works from a phone &mdash; even with no signal.</p><div class='grid2'><div class='kcard'><div class='kt'>DISPATCH</div><div class='kd'>Assigning jobs to the best-suited technician.</div></div><div class='kcard'><div class='kt'>SCHEDULE</div><div class='kd'>Fitting visits into the day, minimizing drive time.</div></div><div class='kcard'><div class='kt'>MOBILE</div><div class='kd'>Job details, maps, and forms on the technician&rsquo;s phone.</div></div><div class='kcard'><div class='kt'>OFFLINE</div><div class='kd'>Work continues without connectivity, syncing later.</div></div></div><div class='callout'><p><strong>Key:</strong> Smart scheduling plus a capable mobile app means fewer wasted trips and faster fixes for customers.</p></div>"
+},
+{
+"doc": "OMNI-CHANNEL",
+"html": "<span class='eyebrow'>CUSTOMER WORKFLOWS</span><h1>Omni-Channel</h1><p class='lead'>Customers and employees reach out however they like &mdash; chat, email, phone, or messaging apps. Omni-channel brings every conversation into one consistent experience.</p><h2>One conversation, any door</h2><p>Whether someone starts in web chat and follows up by email, the agent sees the whole thread. No repeating, no lost context.</p><ul><li><strong>Chat.</strong> Live or assisted conversation right on the website or portal.</li><li><strong>Email.</strong> Messages turned automatically into trackable cases.</li><li><strong>Phone.</strong> Calls connected to the caller&rsquo;s record and history.</li><li><strong>Messaging.</strong> Popular apps and texts handled in the same workspace.</li></ul><div class='callout'><p><strong>Key:</strong> Omni-channel means the channel changes but the conversation &mdash; and the context &mdash; never restarts.</p></div>"
+},
+{
+"doc": "VOICE OF CUSTOMER",
+"html": "<span class='eyebrow'>CUSTOMER WORKFLOWS</span><h1>Surveys &amp; Voice of the Customer</h1><p class='lead'>You can&rsquo;t improve what you don&rsquo;t measure. Surveys and sentiment tools capture how people feel and turn that feedback into action.</p><h2>Listening at scale</h2><p>After a case closes, a short survey asks how it went. Across thousands of responses, patterns emerge &mdash; and the system can flag unhappy customers for follow-up automatically.</p><div class='metric-row'><div class='m'><div class='v'>CSAT</div><div class='l'>satisfaction score</div></div><div class='m'><div class='v'>NPS</div><div class='l'>likelihood to recommend</div></div><div class='m'><div class='v'>&#9888;</div><div class='l'>at-risk alerts</div></div></div><ul><li><strong>Survey.</strong> A set of questions sent at the right moment.</li><li><strong>Sentiment.</strong> Reading tone in comments to gauge feeling.</li><li><strong>Action.</strong> Low scores can trigger a case to make things right.</li></ul><div class='callout'><p><strong>Key:</strong> Feedback only matters if it drives action &mdash; surveys close the loop between hearing and improving.</p></div>"
+},
+{
+"doc": "SELF-SERVICE",
+"html": "<span class='eyebrow'>SHARED FOUNDATION</span><h1>Knowledge &amp; Self-Service</h1><p class='lead'>The fastest support is the answer someone finds themselves. A shared knowledge base powers self-service for both employees and customers.</p><h2>Write once, help everywhere</h2><p>A well-written article can answer the same question for thousands of people &mdash; on the employee portal, the customer portal, inside chat, and to agents handling live cases.</p><ul><li><strong>Knowledge base.</strong> An organized, searchable library of articles.</li><li><strong>Article.</strong> A single how-to, policy, or answer, kept current.</li><li><strong>Deflection.</strong> Answering before a case is ever opened.</li><li><strong>Feedback.</strong> Readers rate articles so weak ones get fixed.</li></ul><div class='callout'><p><strong>Key:</strong> Good knowledge multiplies every expert&rsquo;s effort &mdash; one article quietly resolves countless questions across HR and customer service alike.</p></div>"
+},
+{
+"doc": "SECOPS",
+"html": "<span class='eyebrow'>SECURITY, RISK &amp; GOVERNANCE</span><h1>Security Operations (SecOps)</h1><p class='lead'>SecOps connects your security tools to your IT workflows, so threats get found, prioritized, and fixed&mdash;not lost in a flood of alerts.</p><p>Most organizations own dozens of security products that each shout warnings into separate inboxes. ServiceNow Security Operations brings those signals into one place, attaches them to the affected systems, and routes the work to the right people with clear steps to follow.</p><div class='grid2'><div class='kcard'><div class='kt'>RESPOND</div><div class='kd'>Security Incident Response handles active attacks and breaches.</div></div><div class='kcard'><div class='kt'>REDUCE</div><div class='kd'>Vulnerability Response fixes weaknesses before they are exploited.</div></div><div class='kcard'><div class='kt'>UNDERSTAND</div><div class='kd'>Threat Intelligence adds context on who and what is attacking.</div></div><div class='kcard'><div class='kt'>AUTOMATE</div><div class='kd'>Playbooks and orchestration run repetitive steps for you.</div></div></div><div class='callout'><p><strong>Key:</strong> SecOps turns scattered alerts into organized, trackable work tied to the actual business systems at risk.</p></div>"
+},
+{
+"doc": "SIR",
+"html": "<span class='eyebrow'>SECURITY, RISK &amp; GOVERNANCE</span><h1>Security Incident Response</h1><p class='lead'>When something bad is happening right now&mdash;malware, a phishing hit, a breach&mdash;Security Incident Response (SIR) coordinates the team that stops it.</p><p>A security incident is created automatically from a detection tool or manually by an analyst. From there, the platform tracks every step: who is investigating, what systems are affected, what was done, and when it was contained. Nothing depends on someone's memory or a side chat.</p><h2>What it gives the team</h2><ul><li><strong>One record.</strong> All evidence, notes, and tasks for an incident live together.</li><li><strong>Severity &amp; priority.</strong> The biggest threats rise to the top automatically.</li><li><strong>Repeatable steps.</strong> Guided response playbooks ensure nothing is skipped under pressure.</li><li><strong>A clean timeline.</strong> A full record supports after-action review and reporting.</li></ul><div class='callout'><p><strong>Key:</strong> SIR is the command center for handling active security events from first alert to full resolution.</p></div>"
+},
+{
+"doc": "VULN RESPONSE",
+"html": "<span class='eyebrow'>SECURITY, RISK &amp; GOVERNANCE</span><h1>Vulnerability Response</h1><p class='lead'>Scanners find thousands of weaknesses. Vulnerability Response helps you decide which ones actually matter and get them patched.</p><p>You can't fix everything at once, and not every weakness is dangerous. This capability pulls in results from vulnerability scanners, matches them to the real systems in your inventory, and ranks them by how likely they are to be exploited and how important the affected system is.</p><table><tr><th>Question</th><th>How it helps</th></tr><tr><td>What's vulnerable?</td><td>Matches findings to actual assets</td></tr><tr><td>How risky?</td><td>Scores by exploitability and business value</td></tr><tr><td>Who fixes it?</td><td>Routes work to the right IT owner</td></tr><tr><td>Is it done?</td><td>Tracks remediation to closure</td></tr></table><div class='callout'><p><strong>Key:</strong> Instead of an endless list, teams get a short, prioritized queue of the patches that reduce the most risk.</p></div>"
+},
+{
+"doc": "THREAT INTEL",
+"html": "<span class='eyebrow'>SECURITY, RISK &amp; GOVERNANCE</span><h1>Threat Intelligence Basics</h1><p class='lead'>Threat Intelligence adds the &ldquo;who and how&rdquo; behind an attack, so analysts understand what they're really facing.</p><p>An alert on its own says little. Threat intelligence enriches it with known indicators&mdash;suspicious web addresses, file fingerprints, attacker techniques&mdash;gathered from outside feeds and past experience. When a new incident appears, the platform can check whether its clues match known bad activity.</p><h3>Common building blocks</h3><ul><li><strong>Indicators (IOCs).</strong> Signs of compromise, like a malicious IP address or file hash.</li><li><strong>Feeds.</strong> Outside sources that supply fresh lists of known threats.</li><li><strong>Enrichment.</strong> Automatically attaching this context to an incident.</li></ul><div class='callout'><p><strong>Key:</strong> Threat intelligence turns a vague alert into an informed decision&mdash;is this a known danger, and how do others handle it?</p></div>"
+},
+{
+"doc": "IRM / GRC",
+"html": "<span class='eyebrow'>SECURITY, RISK &amp; GOVERNANCE</span><h1>Integrated Risk Management</h1><p class='lead'>Integrated Risk Management (IRM), often called GRC, gives leaders one honest view of the organization's risks, rules, and controls.</p><p>Governance, Risk, and Compliance work has historically lived in spreadsheets and email. IRM brings it onto one platform where policies, risks, controls, and audits all connect&mdash;so a single control can be linked to the rules it satisfies and the risks it reduces.</p><div class='grid2'><div class='kcard'><div class='kt'>GOVERNANCE</div><div class='kd'>The policies and rules the organization commits to follow.</div></div><div class='kcard'><div class='kt'>RISK</div><div class='kd'>The things that could go wrong, and how likely and severe they are.</div></div><div class='kcard'><div class='kt'>COMPLIANCE</div><div class='kd'>Proof that you actually follow the rules and standards.</div></div><div class='kcard'><div class='kt'>CONTROLS</div><div class='kd'>The safeguards that keep risks in check, tested over time.</div></div></div><div class='callout'><p><strong>Key:</strong> IRM connects policy, risk, and compliance so nothing is managed in isolation&mdash;and leaders see the true picture.</p></div>"
+},
+{
+"doc": "POLICY",
+"html": "<span class='eyebrow'>SECURITY, RISK &amp; GOVERNANCE</span><h1>Policy &amp; Compliance Management</h1><p class='lead'>This is how an organization keeps its rules current and proves it actually follows the laws and standards that apply to it.</p><p>Every business answers to something&mdash;industry standards, privacy laws, internal policies. Policy and Compliance Management stores those requirements, maps them to the controls that satisfy them, and tracks evidence that the controls are working.</p><h2>From rule to proof</h2><ul><li><strong>Authority documents.</strong> The external standards and regulations you must meet.</li><li><strong>Policies.</strong> Your internal rules written to satisfy those requirements.</li><li><strong>Controls.</strong> The specific safeguards put in place.</li><li><strong>Attestation.</strong> Periodic confirmation that controls are followed.</li></ul><div class='callout'><p><strong>Key:</strong> When an auditor asks &ldquo;prove it,&rdquo; the evidence is already organized&mdash;no last-minute scramble.</p></div>"
+},
+{
+"doc": "RISK MGMT",
+"html": "<span class='eyebrow'>SECURITY, RISK &amp; GOVERNANCE</span><h1>Risk Management</h1><p class='lead'>Risk Management is the disciplined habit of writing down what could go wrong, judging how serious it is, and deciding what to do about it.</p><p>At the center is the risk register&mdash;a living list of identified risks. Each risk is assessed for how likely it is and how much damage it would cause, then assigned an owner and a plan: reduce it, accept it, transfer it, or avoid it.</p><div class='metric-row'><div class='m'><div class='v'>IDENTIFY</div><div class='l'>spot the risk</div></div><div class='m'><div class='v'>ASSESS</div><div class='l'>rate likelihood &amp; impact</div></div><div class='m'><div class='v'>TREAT</div><div class='l'>decide the response</div></div><div class='m'><div class='v'>MONITOR</div><div class='l'>watch over time</div></div></div><p>Assessments can be sent out as simple questionnaires, and the results roll up so leaders see which risks are rising and which are under control.</p><div class='callout'><p><strong>Key:</strong> A good risk register turns vague worry into a prioritized, owned, trackable plan.</p></div>"
+},
+{
+"doc": "AUDIT MGMT",
+"html": "<span class='eyebrow'>SECURITY, RISK &amp; GOVERNANCE</span><h1>Audit Management</h1><p class='lead'>Audit Management plans, runs, and documents internal audits&mdash;the checkups that confirm controls actually work as claimed.</p><p>Audits are how an organization holds itself accountable. This capability helps auditors scope what to review, gather evidence, log findings, and track the fixes through to completion&mdash;all in one place instead of disconnected documents.</p><h3>The audit lifecycle</h3><ul><li><strong>Plan.</strong> Decide what to audit and focus on the highest-risk areas.</li><li><strong>Field work.</strong> Test controls and collect evidence.</li><li><strong>Findings.</strong> Record what passed, what failed, and why.</li><li><strong>Remediation.</strong> Assign and track corrective actions.</li></ul><p>Because it shares data with risk and compliance, auditors can reuse existing evidence instead of re-requesting it.</p><div class='callout'><p><strong>Key:</strong> Audit Management makes audits faster and less painful by keeping scope, evidence, and follow-up organized.</p></div>"
+},
+{
+"doc": "BCM",
+"html": "<span class='eyebrow'>SECURITY, RISK &amp; GOVERNANCE</span><h1>Business Continuity Management</h1><p class='lead'>Business Continuity Management (BCM) prepares the organization to keep running&mdash;or recover quickly&mdash;when disaster strikes.</p><p>Outages, storms, and cyberattacks happen. BCM helps you figure out which business functions matter most, how long they can be down, and exactly what to do to bring them back. The goal is a tested plan, not a panicked improvisation.</p><h2>Core ideas</h2><ul><li><strong>Impact analysis.</strong> Which processes are critical, and what depends on them.</li><li><strong>Recovery objectives.</strong> How fast you must recover and how much data loss is acceptable.</li><li><strong>Continuity plans.</strong> Step-by-step instructions for who does what during a disruption.</li><li><strong>Exercises.</strong> Practice runs that prove the plan works before it's needed.</li></ul><div class='callout'><p><strong>Key:</strong> BCM answers a simple question in advance&mdash;if this breaks, how do we keep serving customers?</p></div>"
+},
+{
+"doc": "VENDOR RISK",
+"html": "<span class='eyebrow'>SECURITY, RISK &amp; GOVERNANCE</span><h1>Third-Party Risk Management</h1><p class='lead'>Your suppliers and partners can introduce risk into your business. Third-Party Risk Management keeps track of how trustworthy and secure they are.</p><p>Modern organizations rely on many outside vendors, and each one&mdash;especially those handling your data&mdash;is a potential weak point. This capability assesses vendors before you sign, monitors them over time, and keeps a record of their security posture.</p><table><tr><th>Stage</th><th>What happens</th></tr><tr><td>Onboard</td><td>Send security questionnaires before engaging</td></tr><tr><td>Assess</td><td>Score the vendor's risk level</td></tr><tr><td>Monitor</td><td>Re-check periodically and on major changes</td></tr><tr><td>Offboard</td><td>Confirm access and data are removed</td></tr></table><div class='callout'><p><strong>Key:</strong> You're only as secure as your weakest vendor&mdash;this keeps that exposure visible and managed.</p></div>"
+},
+{
+"doc": "DATA PRIVACY",
+"html": "<span class='eyebrow'>SECURITY, RISK &amp; GOVERNANCE</span><h1>Data Privacy &amp; Responsible Handling</h1><p class='lead'>Data privacy is about knowing what personal information you hold, why you have it, and treating it with the care the law and your customers expect.</p><p>Privacy laws give people rights over their own data&mdash;to see it, correct it, or have it deleted. Responsible data handling means tracking where personal information lives, limiting who can access it, and being able to act on those requests quickly and provably.</p><h3>What good practice looks like</h3><ul><li><strong>Know your data.</strong> Maintain an inventory of what personal data you collect and where it sits.</li><li><strong>Honor requests.</strong> Handle access, correction, and deletion requests on time.</li><li><strong>Limit exposure.</strong> Only collect what you need and restrict who can see it.</li><li><strong>Document it.</strong> Keep records that show you're handling data lawfully.</li></ul><div class='callout'><p><strong>Key:</strong> Privacy isn't only a legal box to tick&mdash;it's the foundation of customer trust.</p></div>"
+},
+{
+"doc": "SOAR",
+"html": "<span class='eyebrow'>SECURITY, RISK &amp; GOVERNANCE</span><h1>Playbooks, SOAR &amp; Orchestration</h1><p class='lead'>These tools let the platform do the repetitive security work automatically, so analysts spend their time on judgment, not busywork.</p><p>SOAR stands for Security Orchestration, Automation, and Response. A playbook is a saved set of steps for handling a specific situation; orchestration is the platform reaching out to other tools to carry those steps out&mdash;like blocking an address or isolating a device&mdash;without a human doing each one by hand.</p><div class='grid2'><div class='kcard'><div class='kt'>PLAYBOOK</div><div class='kd'>A repeatable, guided response for a known scenario.</div></div><div class='kcard'><div class='kt'>AUTOMATION</div><div class='kd'>Routine steps run instantly, the same way every time.</div></div><div class='kcard'><div class='kt'>ORCHESTRATION</div><div class='kd'>Coordinating many tools to act together.</div></div><div class='kcard'><div class='kt'>RESPONSE</div><div class='kd'>Faster containment with less room for error.</div></div></div><div class='callout'><p><strong>Key:</strong> SOAR shrinks response time from hours to minutes by letting machines handle the predictable steps.</p></div>"
+},
+{
+"doc": "APP ENGINE",
+"html": "<span class='eyebrow'>BUILD &amp; AUTOMATION</span><h1>App Engine: Building Apps Without a Big Team</h1><p class='lead'>App Engine is the part of ServiceNow that lets people build custom business apps quickly &mdash; often with little or no traditional programming.</p><p>Every organization has work that spreadsheets and email cannot handle well: tracking requests, approvals, assets, or projects. App Engine gives you the building blocks &mdash; data tables, forms, workflows, and security &mdash; so a team can assemble a real working app on the platform instead of buying or coding one from scratch.</p><div class='grid2'><div class='kcard'><div class='kt'>LOW-CODE</div><div class='kd'>Drag, configure, and point-and-click your way to a working app &mdash; less hand-written code.</div></div><div class='kcard'><div class='kt'>GOVERNED</div><div class='kd'>Apps inherit the platform&rsquo;s security, audit trail, and lifecycle controls automatically.</div></div></div><div class='callout'><p><strong>Key:</strong> App Engine turns &ldquo;we need a system for that&rdquo; into something a small team can deliver in weeks, not months.</p></div>"
+},
+{
+"doc": "STUDIO",
+"html": "<span class='eyebrow'>BUILD &amp; AUTOMATION</span><h1>App Engine Studio &amp; UI Builder</h1><p class='lead'>These are the visual workspaces where builders actually create an app &mdash; the design tools, not the engine underneath.</p><p><strong>App Engine Studio</strong> is a guided, step-by-step canvas. You define your data, add the experiences users see, layer in logic, and set who can access what &mdash; all from one place, with helpful prompts along the way.</p><p><strong>UI Builder</strong> is the page designer. It lets you arrange the screens &mdash; lists, forms, charts, buttons &mdash; by dragging components onto a page and configuring how they behave, without writing front-end code.</p><ul><li><strong>App Engine Studio.</strong> The &ldquo;build the whole app&rdquo; cockpit.</li><li><strong>UI Builder.</strong> The &ldquo;design the screens&rdquo; tool inside it.</li><li><strong>Components.</strong> Reusable visual pieces you snap together.</li></ul><div class='callout'><p><strong>Key:</strong> Studio assembles the app; UI Builder makes it look and feel right for the people using it.</p></div>"
+},
+{
+"doc": "FLOW DESIGNER",
+"html": "<span class='eyebrow'>BUILD &amp; AUTOMATION</span><h1>Flow Designer: Automation Without Code</h1><p class='lead'>Flow Designer lets you automate routine work by describing it in plain steps &mdash; &ldquo;when this happens, do that&rdquo; &mdash; instead of writing scripts.</p><p>A flow is a recipe. It starts with a <strong>trigger</strong> (a record is created, a date arrives, a form is submitted) and then runs a sequence of <strong>actions</strong> (send an email, create a task, ask for approval, update a field). You build it by stacking readable steps in a visual editor.</p><div class='grid2'><div class='kcard'><div class='kt'>TRIGGER</div><div class='kd'>The event that starts the flow &mdash; the &ldquo;when.&rdquo;</div></div><div class='kcard'><div class='kt'>ACTIONS</div><div class='kd'>The steps it performs in order &mdash; the &ldquo;then.&rdquo;</div></div></div><p>Because flows are visual, the people who understand the process &mdash; not just engineers &mdash; can read, review, and adjust them.</p><div class='callout'><p><strong>Key:</strong> Flow Designer replaces manual, repetitive busywork with reliable, repeatable automation anyone can follow.</p></div>"
+},
+{
+"doc": "ACTIONS",
+"html": "<span class='eyebrow'>BUILD &amp; AUTOMATION</span><h1>Actions, Subflows &amp; the Flow Ecosystem</h1><p class='lead'>If a flow is a recipe, actions are the individual steps &mdash; and subflows are mini-recipes you can reuse across many flows.</p><ul><li><strong>Action.</strong> A single reusable step, like &ldquo;create a record&rdquo; or &ldquo;post a message.&rdquo; Ships ready-made or built custom.</li><li><strong>Subflow.</strong> A small flow packaged so other flows can call it &mdash; build once, reuse everywhere.</li><li><strong>Action Designer.</strong> The tool for making your own actions when no ready-made one fits.</li></ul><p>This matters because it keeps automation tidy. Instead of copying the same five steps into ten flows, you build a subflow once and call it. Fix it in one place and every flow improves.</p><div class='callout'><p><strong>Key:</strong> Reusable actions and subflows make automation faster to build, easier to maintain, and consistent across the business.</p></div>"
+},
+{
+"doc": "INTEGRATIONHUB",
+"html": "<span class='eyebrow'>BUILD &amp; AUTOMATION</span><h1>IntegrationHub &amp; Spokes</h1><p class='lead'>IntegrationHub lets your flows reach out and talk to other systems &mdash; email tools, chat apps, cloud services &mdash; without custom plumbing.</p><p>Most work crosses system boundaries: a request here might need to create a ticket there, message a team, or update a record in another tool. IntegrationHub provides pre-built connectors so a flow can do that as just another step.</p><div class='grid2'><div class='kcard'><div class='kt'>SPOKE</div><div class='kd'>A ready-made connector for a specific outside system &mdash; the bundle of actions that talk to it.</div></div><div class='kcard'><div class='kt'>ACTION</div><div class='kd'>One thing the spoke can do in that system, like &ldquo;send a message&rdquo; or &ldquo;create an item.&rdquo;</div></div></div><p>You drop a spoke&rsquo;s action into a flow, fill in a few details, and the connection just works &mdash; no need to learn each system&rsquo;s technical details.</p><div class='callout'><p><strong>Key:</strong> Spokes turn complex system-to-system connections into simple, reusable flow steps.</p></div>"
+},
+{
+"doc": "WEB SERVICES",
+"html": "<span class='eyebrow'>BUILD &amp; AUTOMATION</span><h1>REST, SOAP &amp; Web Services in Plain English</h1><p class='lead'>Web services are how two software systems talk to each other over the internet &mdash; one asks, the other answers.</p><p>Think of it like ordering at a counter. Your system sends a <strong>request</strong> (&ldquo;give me this customer&rsquo;s record&rdquo;), the other system sends back a <strong>response</strong> (the data, or a confirmation). The rules for how they phrase those messages are the &ldquo;protocol.&rdquo;</p><ul><li><strong>REST.</strong> The modern, lightweight style &mdash; simple, fast, the default for most connections today.</li><li><strong>SOAP.</strong> An older, more formal style still common in established enterprise systems.</li><li><strong>API.</strong> The published &ldquo;menu&rdquo; of requests a system agrees to accept.</li></ul><div class='callout'><p><strong>Key:</strong> REST and SOAP are just two dialects for the same conversation &mdash; systems exchanging requests and responses so data can flow between them.</p></div>"
+},
+{
+"doc": "ETL",
+"html": "<span class='eyebrow'>BUILD &amp; AUTOMATION</span><h1>IntegrationHub ETL &amp; Data Import</h1><p class='lead'>ETL is how messy data from outside gets cleaned up and loaded into the platform in the right place &mdash; without manual copy-paste.</p><p>ETL stands for <strong>Extract, Transform, Load</strong>: pull data in, reshape it to match how your system expects it, then save it into the correct tables.</p><div class='grid2'><div class='kcard'><div class='kt'>EXTRACT</div><div class='kd'>Pull the raw data in &mdash; a spreadsheet, an export, another system.</div></div><div class='kcard'><div class='kt'>TRANSFORM</div><div class='kd'>Map columns, fix formats, and match it to your structure.</div></div></div><p>IntegrationHub ETL gives you a guided, visual way to define those mapping rules so imports are consistent and repeatable &mdash; the same source loads correctly every time.</p><div class='callout'><p><strong>Key:</strong> ETL turns a pile of outside data into clean, correctly-filed records the platform can actually use.</p></div>"
+},
+{
+"doc": "NOW ASSIST",
+"html": "<span class='eyebrow'>AI ON THE PLATFORM</span><h1>Now Assist: Generative AI on the Platform</h1><p class='lead'>Now Assist is ServiceNow&rsquo;s generative AI helper &mdash; it drafts, summarizes, and suggests, right inside the tools people already use.</p><p>Generative AI can read and write natural language. Now Assist puts that to work on everyday tasks: summarizing a long case so an agent gets the gist instantly, drafting a reply, or even helping a builder generate part of a flow from a plain description.</p><ul><li><strong>Summarize.</strong> Condense long records, chats, or histories into a quick recap.</li><li><strong>Draft.</strong> Generate first-pass replies, resolution notes, or knowledge articles.</li><li><strong>Assist building.</strong> Help create flows and code from plain-language prompts.</li></ul><div class='callout'><p><strong>Key:</strong> Now Assist saves time on reading and writing tasks &mdash; people review and approve, but start from a draft instead of a blank page.</p></div>"
+},
+{
+"doc": "PREDICTIVE AI",
+"html": "<span class='eyebrow'>AI ON THE PLATFORM</span><h1>Predictive Intelligence: Machine Learning at Work</h1><p class='lead'>Predictive Intelligence learns from your past records to make smart guesses about new ones &mdash; like which team a request should go to.</p><p>Instead of following rigid rules, it studies thousands of resolved cases and spots patterns. When a new item arrives, it can suggest the right category, route it to the correct group, or flag similar past cases &mdash; automatically.</p><div class='grid2'><div class='kcard'><div class='kt'>CLASSIFY</div><div class='kd'>Predict the right category or priority for a new record.</div></div><div class='kcard'><div class='kt'>ROUTE</div><div class='kd'>Send work to the team most likely to resolve it.</div></div></div><p>It improves as it sees more examples, so accuracy grows over time &mdash; cutting the manual triage that slows teams down.</p><div class='callout'><p><strong>Key:</strong> Predictive Intelligence learns from your own history to sort, route, and prioritize work without someone deciding each time.</p></div>"
+},
+{
+"doc": "VIRTUAL AGENT",
+"html": "<span class='eyebrow'>AI ON THE PLATFORM</span><h1>Virtual Agent &amp; Conversational Interfaces</h1><p class='lead'>Virtual Agent is a chatbot that handles common requests through conversation &mdash; so people get answers without waiting for a human.</p><p>Users type (or speak) what they need in plain language &mdash; &ldquo;reset my password,&rdquo; &ldquo;order a laptop&rdquo; &mdash; and the Virtual Agent walks them through it, taking real action behind the scenes. When something is too complex, it hands off smoothly to a person.</p><ul><li><strong>Topic.</strong> A guided conversation for one task, built like a flow.</li><li><strong>Handoff.</strong> Passing the chat to a human when needed &mdash; with full context.</li><li><strong>Channels.</strong> Works in chat windows, messaging apps, and portals.</li></ul><div class='callout'><p><strong>Key:</strong> Virtual Agent deflects routine requests through natural conversation, freeing people for the work that truly needs them.</p></div>"
+},
+{
+"doc": "AI SEARCH",
+"html": "<span class='eyebrow'>AI ON THE PLATFORM</span><h1>AI Search &amp; the Knowledge Experience</h1><p class='lead'>AI Search helps people find the right answer fast &mdash; understanding what they mean, not just matching exact words.</p><p>Traditional search needs the perfect keyword. AI Search understands intent and context, so a question phrased in everyday language still surfaces the relevant knowledge article, catalog item, or record &mdash; often with the answer highlighted directly.</p><div class='grid2'><div class='kcard'><div class='kt'>UNDERSTANDS</div><div class='kd'>Reads the meaning behind a question, not just the literal words.</div></div><div class='kcard'><div class='kt'>SURFACES</div><div class='kd'>Ranks the most relevant results and can show the answer inline.</div></div></div><p>Paired with a solid knowledge base, it means employees and customers help themselves &mdash; fewer tickets, faster resolutions.</p><div class='callout'><p><strong>Key:</strong> AI Search turns a search box into an answer engine &mdash; people find what they need without knowing the exact words.</p></div>"
+},
+{
+"doc": "ANALYTICS",
+"html": "<span class='eyebrow'>AI ON THE PLATFORM</span><h1>Performance Analytics, Reporting &amp; Dashboards</h1><p class='lead'>These tools turn the data flowing through the platform into clear pictures &mdash; so leaders can see how things are going and where to improve.</p><p>A <strong>report</strong> is a snapshot answering one question right now (&ldquo;how many open requests?&rdquo;). A <strong>dashboard</strong> gathers several views on one screen. <strong>Performance Analytics</strong> adds the dimension of time &mdash; tracking trends so you see whether things are getting better or worse.</p><div class='metric-row'><div class='m'><div class='v'>NOW</div><div class='l'>reports snapshot</div></div><div class='m'><div class='v'>ONE VIEW</div><div class='l'>dashboards combine</div></div><div class='m'><div class='v'>OVER TIME</div><div class='l'>analytics trend</div></div></div><ul><li><strong>KPI.</strong> A key number you watch, like average resolution time.</li><li><strong>Indicator.</strong> A measure tracked day over day to reveal direction.</li></ul><div class='callout'><p><strong>Key:</strong> Reports show what&rsquo;s happening, dashboards bring it together, and Performance Analytics shows whether it&rsquo;s trending the right way.</p></div>"
+},
+{
+"doc": "SPM",
+"html": "<span class='eyebrow'>BUSINESS VALUE</span><h1>Strategic Portfolio Management</h1><p class='lead'>Once known as ITBM, Strategic Portfolio Management (SPM) is where leaders connect big-picture strategy to the day-to-day work that delivers it.</p><p>Most organizations have plenty of ideas and not enough hands. SPM is the layer that helps decide what to work on, fund it, staff it, and track whether it actually paid off &mdash; all in one place instead of scattered spreadsheets.</p><div class='grid2'><div class='kcard'><div class='kt'>STRATEGY</div><div class='kd'>Set goals and outcomes, then link every initiative back to them.</div></div><div class='kcard'><div class='kt'>PLANNING</div><div class='kd'>Build roadmaps and align budgets to priorities.</div></div><div class='kcard'><div class='kt'>DELIVERY</div><div class='kd'>Run the work as projects or agile, and watch progress live.</div></div><div class='kcard'><div class='kt'>VALUE</div><div class='kd'>Measure results against the goals you started with.</div></div></div><div class='callout'><p><strong>Key:</strong> SPM answers the questions executives actually ask &mdash; are we working on the right things, and are they worth it?</p></div>"
+},
+{
+"doc": "PLANNING",
+"html": "<span class='eyebrow'>BUSINESS VALUE</span><h1>Project, Demand &amp; Resource Management</h1><p class='lead'>Three connected disciplines that turn a flood of requests into an organized, staffed plan of work.</p><ul><li><strong>Demand Management.</strong> A single front door for new ideas and requests. Each one is captured, scored, and reviewed so good ideas rise and weak ones are filtered early.</li><li><strong>Project Management.</strong> Once a demand is approved, it becomes a project with tasks, timelines, milestones, and a budget &mdash; tracked the same way every time.</li><li><strong>Resource Management.</strong> Matches the people you have to the work you committed to, so teams aren&rsquo;t overbooked or sitting idle.</li></ul><div class='callout'><p><strong>Key:</strong> The platform supports both traditional (waterfall) and agile ways of working, so teams aren&rsquo;t forced into one style.</p></div><p>Because demand, projects, and resources live together, a leader can see &mdash; in real time &mdash; what&rsquo;s requested, what&rsquo;s approved, who&rsquo;s assigned, and what&rsquo;s at risk.</p>"
+},
+{
+"doc": "LICENSING",
+"html": "<span class='eyebrow'>BUSINESS VALUE</span><h1>Editions &amp; Licensing, in Plain English</h1><p class='lead'>ServiceNow is sold as a subscription. What you pay for depends on which products you turn on and how many people use them.</p><p>Rather than buying software outright, you license the right to use specific applications for a period of time. Pricing generally follows a few common patterns.</p><table><tr><th>Model</th><th>What it means</th></tr><tr><td>Per user</td><td>You pay for named people who log in to do work (the &ldquo;fulfillers&rdquo;).</td></tr><tr><td>Per transaction</td><td>You pay based on volume &mdash; for example, automated actions or events processed.</td></tr><tr><td>Per device / asset</td><td>You pay by the number of things being managed.</td></tr></table><div class='callout'><p><strong>Key:</strong> People who simply submit requests (end users) usually don&rsquo;t need a paid seat. You pay for the staff who fulfill the work.</p></div><p>Products are bundled into tiers &mdash; often labeled Standard, Professional, and Enterprise &mdash; where higher tiers unlock more automation, AI, and advanced features.</p>"
+},
+{
+"doc": "PERSONAS",
+"html": "<span class='eyebrow'>PEOPLE</span><h1>The People Who Use ServiceNow</h1><p class='lead'>The platform serves very different audiences. Knowing the personas makes every other concept click into place.</p><ul><li><strong>End User.</strong> Anyone in the organization who requests help or services &mdash; resets a password, orders a laptop, asks HR a question. They want it fast and simple.</li><li><strong>Fulfiller.</strong> The staff member who does the work behind a request &mdash; an IT agent, an HR specialist, a facilities tech.</li><li><strong>Process Owner.</strong> Owns how a process should run and is accountable for its quality and outcomes.</li><li><strong>Developer.</strong> Builds and customizes applications, workflows, and integrations on the platform.</li><li><strong>Administrator.</strong> Keeps the platform healthy, secure, and configured &mdash; the &ldquo;admin&rdquo; role with the keys.</li></ul><div class='callout'><p><strong>Key:</strong> One person can wear several hats, but the platform is designed so each role sees only what it needs.</p></div>"
+},
+{
+"doc": "CERTS",
+"html": "<span class='eyebrow'>REFERENCE</span><h1>The Certification Path</h1><p class='lead'>ServiceNow offers official exams that prove a person knows the platform. Here&rsquo;s what the common acronyms mean.</p><ul><li><strong>CSA &mdash; Certified System Administrator.</strong> The foundation. Proves you can configure and manage the platform&rsquo;s core. Almost everyone starts here.</li><li><strong>CAD &mdash; Certified Application Developer.</strong> Shows you can build custom applications and write platform code.</li><li><strong>CIS &mdash; Certified Implementation Specialist.</strong> Proves deep skill in a specific product area (such as IT Service Management, HR, or Security) &mdash; the &ldquo;CIS&rdquo; comes in many flavors.</li><li><strong>CTA &mdash; Certified Technical Architect.</strong> The most advanced. Proves you can design large, healthy, enterprise-scale solutions.</li></ul><div class='callout'><p><strong>Key:</strong> CSA is the prerequisite for nearly everything else. Think of it as the front door to the whole certification ladder.</p></div>"
+},
+{
+"doc": "IMPLEMENTATION",
+"html": "<span class='eyebrow'>REFERENCE</span><h1>How an Implementation Actually Goes</h1><p class='lead'>Standing up ServiceNow follows a repeatable set of phases &mdash; whether the project is small or company-wide.</p><div class='grid2'><div class='kcard'><div class='kt'>1. DISCOVER</div><div class='kd'>Understand goals, current processes, and pain points.</div></div><div class='kcard'><div class='kt'>2. DESIGN</div><div class='kd'>Decide how the platform will be configured to meet those goals.</div></div><div class='kcard'><div class='kt'>3. BUILD</div><div class='kd'>Configure and develop in a safe sub-production environment.</div></div><div class='kcard'><div class='kt'>4. TEST</div><div class='kd'>Validate everything works and users sign off.</div></div></div><p>After testing comes <strong>Deploy</strong> &mdash; moving the work into the live (production) system &mdash; and then <strong>Operate</strong>, where the platform is supported and improved over time.</p><div class='callout'><p><strong>Key:</strong> A good implementation favors configuring over heavy customizing, which keeps future upgrades smooth and cheap.</p></div>"
+},
+{
+"doc": "PARTNERS",
+"html": "<span class='eyebrow'>REFERENCE</span><h1>The Partner Ecosystem</h1><p class='lead'>ServiceNow rarely sells and implements alone. A network of certified partner firms does much of the hands-on work.</p><p>Partners are independent companies trained and authorized to plan, build, and deliver ServiceNow solutions. They are graded into tiers based on certifications, customer success, and experience.</p><ul><li><strong>Why a partner matters.</strong> They have done it before &mdash; bringing proven methods, reusable patterns, and lessons learned that an in-house team would have to discover the hard way.</li><li><strong>Speed and risk.</strong> Experienced partners shorten timelines and avoid costly missteps.</li><li><strong>Specialization.</strong> Many partners go deep in one area &mdash; a product, an industry, or a region &mdash; matching the right expertise to your need.</li></ul><div class='callout'><p><strong>Key:</strong> The right partner is a force multiplier: they transfer knowledge to your team so you&rsquo;re stronger after they leave, not dependent forever.</p></div>"
+},
+{
+"doc": "CAREER",
+"html": "<span class='eyebrow'>PEOPLE</span><h1>Building a ServiceNow Career</h1><p class='lead'>The platform powers a thriving job market. Here&rsquo;s how people grow from beginner to expert.</p><div class='metric-row'><div class='m'><div class='v'>CSA</div><div class='l'>where most start</div></div><div class='m'><div class='v'>7,000+</div><div class='l'>partner firms hiring</div></div><div class='m'><div class='v'>Admin&rarr;Architect</div><div class='l'>typical path</div></div></div><p>A common journey: learn the basics and earn the CSA, gain hands-on experience as an administrator or fulfiller, then specialize &mdash; toward development, a product area, or solution architecture.</p><ul><li><strong>Core skills.</strong> Understanding processes, configuring forms and flows, and clear communication matter as much as code.</li><li><strong>Growth skills.</strong> Scripting, integrations, and architecture open senior, higher-paying roles.</li><li><strong>Never stop.</strong> The platform updates twice a year, so continuous learning is the job.</li></ul><div class='callout'><p><strong>Key:</strong> Free training is available to anyone &mdash; the biggest barrier to starting is simply beginning.</p></div>"
+},
+{
+"doc": "ROI",
+"html": "<span class='eyebrow'>BUSINESS VALUE</span><h1>The Business Case &amp; ROI</h1><p class='lead'>Leaders don&rsquo;t buy a platform &mdash; they buy outcomes. Here&rsquo;s how value is typically measured.</p><p>Return on investment (ROI) compares what you spend on the platform against the savings and gains it produces. The strongest cases blend hard dollars with softer, strategic wins.</p><div class='grid2'><div class='kcard'><div class='kt'>FASTER</div><div class='kd'>Requests resolved in less time through automation.</div></div><div class='kcard'><div class='kt'>CHEAPER</div><div class='kd'>Fewer manual steps and retired legacy tools.</div></div><div class='kcard'><div class='kt'>BETTER</div><div class='kd'>Higher employee and customer satisfaction.</div></div><div class='kcard'><div class='kt'>SAFER</div><div class='kd'>Consistent, auditable, compliant processes.</div></div></div><div class='callout'><p><strong>Key:</strong> Measure a baseline before you start &mdash; you can&rsquo;t prove improvement if you never recorded where you began.</p></div><p>The best business cases also count avoided cost: problems prevented, outages shortened, and hours given back to staff for higher-value work.</p>"
+},
+{
+"doc": "READINESS",
+"html": "<span class='eyebrow'>BUSINESS VALUE</span><h1>Is Your Company Ready?</h1><p class='lead'>You don&rsquo;t need to be a giant to benefit. A few honest signs reveal when a platform is the right move.</p><ul><li><strong>Spreadsheet sprawl.</strong> Critical work is tracked in scattered spreadsheets and email threads no one trusts.</li><li><strong>Tool overload.</strong> A dozen disconnected systems that don&rsquo;t talk to each other.</li><li><strong>Repeated requests.</strong> The same questions and tasks handled manually over and over.</li><li><strong>No visibility.</strong> Leaders can&rsquo;t answer simple questions like &ldquo;how many open requests do we have?&rdquo;</li><li><strong>Growth strain.</strong> Processes that worked at 50 people are breaking at 500.</li></ul><div class='metric-row'><div class='m'><div class='v'>3+</div><div class='l'>signs? worth a look</div></div><div class='m'><div class='v'>1</div><div class='l'>platform to unify</div></div></div><div class='callout'><p><strong>Key:</strong> Readiness is less about size and more about pain &mdash; when manual work is holding you back, the platform pays for itself.</p></div>"
+},
+{
+"doc": "GLOSSARY A",
+"html": "<span class='eyebrow'>REFERENCE</span><h1>Quick Glossary &mdash; Part 1</h1><p class='lead'>Plain-English definitions of the terms you&rsquo;ll hear most often. Part one of two.</p><ul><li><strong>Instance.</strong> Your own private copy of ServiceNow running in the cloud.</li><li><strong>Table.</strong> A structured list that stores records &mdash; like a smart spreadsheet.</li><li><strong>Record.</strong> A single entry in a table, such as one ticket or one user.</li><li><strong>Form.</strong> The screen you fill in to view or edit a record.</li><li><strong>Workflow / Flow.</strong> An automated series of steps the platform runs for you.</li><li><strong>Catalog.</strong> The &ldquo;store&rdquo; where users request services and items.</li><li><strong>Incident.</strong> A record of something broken that needs fixing.</li><li><strong>Request.</strong> A record of something a user wants.</li><li><strong>CMDB.</strong> A map of your technology and how the pieces connect.</li><li><strong>SLA.</strong> A promised timeframe for getting work done.</li><li><strong>Role.</strong> A permission setting that controls what a user can see and do.</li><li><strong>Scope.</strong> A boundary that keeps one application&rsquo;s data and code separate.</li></ul>"
+},
+{
+"doc": "GLOSSARY B",
+"html": "<span class='eyebrow'>REFERENCE</span><h1>Quick Glossary &mdash; Part 2</h1><p class='lead'>More everyday terms to round out your vocabulary. Part two of two.</p><ul><li><strong>ITSM.</strong> IT Service Management &mdash; running IT support the organized way.</li><li><strong>Fulfiller.</strong> The staff member who does the work behind a request.</li><li><strong>Knowledge Base.</strong> A searchable library of help articles and answers.</li><li><strong>Update Set.</strong> A bundle of changes moved safely between environments.</li><li><strong>Production.</strong> The live system real users depend on every day.</li><li><strong>Sub-production.</strong> Safe copies (dev and test) for building and trying things.</li><li><strong>Integration.</strong> A connection that lets ServiceNow exchange data with another system.</li><li><strong>API.</strong> The doorway through which systems talk to each other.</li><li><strong>Virtual Agent.</strong> A chatbot that answers questions and takes action automatically.</li><li><strong>Now Assist.</strong> The platform&rsquo;s generative-AI helper built into the tools.</li><li><strong>Upgrade.</strong> The twice-a-year refresh that adds new features.</li><li><strong>Service Portal.</strong> The friendly website where end users get help.</li></ul>"
+},
+{
+"back": true,
+"html": "<h2>Now you speak ServiceNow.</h2><p>Knowing the words is the first step. Putting the platform to work &mdash; CMDB, ITSM, ITOM, ITAM, Integrations, AI, and beyond &mdash; is what we do.</p><p>Omar Huertas LLC is a Registered ServiceNow Build, Consulting &amp; Implementation Partner. We help organizations turn the Now Platform into real outcomes.</p><a class='bc-cta'>Work with us &rarr;</a><div class='legacy'>&#9670; In honor of <strong>Michael Lombardo</strong>, the Mayor of ServiceNow (1987&ndash;2024). Everything we build is for his legacy.</div><div class='disclaimer'>ServiceNow, the ServiceNow logo, Now, Now Platform, and related product names are trademarks of ServiceNow, Inc. This independent educational guide is provided by Omar Huertas LLC and is not affiliated with, authorized, or endorsed by ServiceNow, Inc. All trademarks are the property of their respective owners.</div><div class='bc-foot'><span>omar@dbaomarhuertasllc.com</span><span>dbaomarhuertasllc.com</span></div>"
+}
+];   // linear order: [cover, ...content, back-cover]
+
+const book=document.getElementById('book');
+
+// Build the HTML for one physical page (face), given its content spec + the
+// page number printed in the footer.
+function faceMarkup(pg,pageNo){
+  if(pg.cover) return ['cover','<div class="c-aurora"></div>'+pg.html];
+  if(pg.back)  return ['back-cover','<div class="bc-aurora"></div>'+pg.html];
+  return ['content',
+    '<div class="p-head"><span class="ph-brand"><span class="ph-mark">OH</span><span class="ph-name">Omar Huertas LLC</span></span>'+
+    '<span class="ph-doc">'+(pg.doc||DOC)+'</span></div><div class="p-rule"></div>'+
+    '<div class="p-body">'+pg.html+'</div>'+
+    '<div class="p-foot"><span class="pf-c">&copy; 2026 Omar Huertas LLC</span><span class="pf-n">'+String(pageNo).padStart(2,'0')+'</span></div>'];
+}
+function buildFace(side,pg,pageNo){
+  const f=document.createElement('div');f.className='face '+side;
+  if(pg){const [cls,html]=faceMarkup(pg,pageNo);if(cls!=='content')f.classList.add(cls);f.innerHTML=html;}
+  else{ // blank verso filler (odd page count) — decorative
+    f.classList.add('blankback');
+    f.innerHTML='<div class="facing"><div class="f-mark">OH</div><div class="f-word">The ServiceNow<br><b>Lexicon</b></div><div class="f-rule"></div><div class="f-sub">An Omar Huertas LLC Field Guide</div></div>';
+  }
+  return f;
+}
+
+// Each LEAF (sheet) carries TWO pages: front = recto (right), back = verso (left).
+// Linear reading order across the book is front0, back0, front1, back1, ...
+const leaves=[], faceSeq=[];
+const L=Math.ceil(PAGES.length/2);
+for(let i=0;i<L;i++){
+  const fp=PAGES[2*i], bp=PAGES[2*i+1];
+  const leaf=document.createElement('div');leaf.className='leaf';
+  const front=buildFace('front',fp,2*i+1);
+  const back =buildFace('back', bp,bp?2*i+2:null);
+  leaf.appendChild(front);leaf.appendChild(back);
+  book.appendChild(leaf);leaves.push(leaf);
+  faceSeq.push(front); if(bp) faceSeq.push(back);   // real pages only (skip blank filler)
+}
+const N=leaves.length;     // desktop spreads
+const M=faceSeq.length;    // mobile pages (every face)
+
+const elCur=document.getElementById('cur'), elTot=document.getElementById('tot');
+const elBar=document.getElementById('progress').firstElementChild;
+const elPrev=document.getElementById('prev'), elNext=document.getElementById('next');
+const mq=window.matchMedia('(max-width:860px)');
+function isMobile(){return mq.matches;}
+
+let cur=0;   // desktop: right-hand leaf index
+let mi=0;    // mobile: face index
+
+function renderDesktop(){
+  book.querySelectorAll('.face').forEach(f=>f.style.display='');   // clear mobile show/hide
+  leaves.forEach((el,i)=>{
+    const turned=i<cur;
+    el.classList.toggle('turned',turned);
+    el.style.zIndex = turned ? i : (N - i);
+    el.style.display = Math.abs(i-cur)<=1 ? '' : 'none';
+  });
+  book.classList.toggle('closed', cur===0);
+  elCur.textContent=cur+1; elTot.textContent=N;
+  elBar.style.width=(N>1?cur/(N-1)*100:0)+'%';
+  elPrev.disabled=cur<=0; elNext.disabled=cur>=N-1;
+}
+const allFaces=Array.prototype.slice.call(book.querySelectorAll('.face'));
+function renderMobile(){
+  leaves.forEach(el=>{el.classList.remove('turned');el.style.zIndex='';el.style.display='block';});
+  allFaces.forEach(f=>{f.style.display='none';});      // hide every face incl. blank filler
+  if(faceSeq[mi]) faceSeq[mi].style.display='flex';    // show only the active page
+  book.classList.toggle('closed', mi===0);
+  elCur.textContent=mi+1; elTot.textContent=M;
+  elBar.style.width=(M>1?mi/(M-1)*100:0)+'%';
+  elPrev.disabled=mi<=0; elNext.disabled=mi>=M-1;
+}
+function render(){ isMobile()?renderMobile():renderDesktop(); }
+
+function flash(el){el.classList.add('tn');setTimeout(()=>el.classList.remove('tn'),950);}
+let busy=false;
+function next(){
+  if(busy)return;
+  if(isMobile()){ if(mi>=M-1)return; busy=true; mi++; render(); }
+  else{ if(cur>=N-1)return; busy=true; flash(leaves[cur]); cur++; render(); }
+  setTimeout(()=>busy=false,440);
+}
+function prev(){
+  if(busy)return;
+  if(isMobile()){ if(mi<=0)return; busy=true; mi--; render(); }
+  else{ if(cur<=0)return; busy=true; cur--; flash(leaves[cur]); render(); }
+  setTimeout(()=>busy=false,440);
+}
+elNext.onclick=next; elPrev.onclick=prev;
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')next();if(e.key==='ArrowLeft')prev();});
+let _sw=0;
+book.addEventListener('click',e=>{if(Date.now()-_sw<450)return;const r=book.getBoundingClientRect();(e.clientX-r.left)/r.width>0.5?next():prev();});
+let _tx=0,_ty=0;
+book.addEventListener('touchstart',e=>{const t=e.changedTouches[0];_tx=t.clientX;_ty=t.clientY;},{passive:true});
+book.addEventListener('touchend',e=>{const t=e.changedTouches[0],dx=t.clientX-_tx,dy=t.clientY-_ty;if(Math.abs(dx)>45&&Math.abs(dx)>Math.abs(dy)*1.3){_sw=Date.now();dx<0?next():prev();}},{passive:true});
+// keep the two indices roughly in sync when crossing the breakpoint
+mq.addEventListener('change',()=>{ if(isMobile()) mi=Math.min(M-1,Math.max(0,cur*2)); else cur=Math.min(N-1,Math.max(0,Math.floor(mi/2))); render(); });
+
+// ---- theme switcher: 8 colors that pop ----
+const THEMES={
+  Sapphire:['#2f6df6','#2456c9','#8fb4ff','47,109,246','36,86,201'],
+  Emerald :['#10b981','#059669','#6ee7b7','16,185,129','5,150,105'],
+  Violet  :['#8b5cf6','#6d28d9','#c4b5fd','139,92,246','109,40,217'],
+  Magenta :['#ec4899','#be185d','#f9a8d4','236,72,153','190,24,93'],
+  Amber   :['#f59e0b','#b45309','#fbbf24','245,158,11','180,83,9'],
+  Crimson :['#ef4444','#b91c1c','#fca5a5','239,68,68','185,28,28'],
+  Cyan    :['#06b6d4','#0e7490','#67e8f9','6,182,212','14,116,144'],
+  Lime    :['#84cc16','#4d7c0f','#bef264','132,204,22','77,124,15']
+};
+const themer=document.getElementById('themer');
+function applyTheme(n){const t=THEMES[n];if(!t)return;const r=document.documentElement.style;
+  r.setProperty('--now',t[0]);r.setProperty('--now-d',t[1]);r.setProperty('--now-l',t[2]);
+  r.setProperty('--glow',t[3]);r.setProperty('--glow-d',t[4]);
+  try{localStorage.setItem('lexTheme',n);}catch(e){}
+  themer.querySelectorAll('.sw').forEach(b=>b.classList.toggle('active',b.dataset.t===n));}
+Object.keys(THEMES).forEach(n=>{const b=document.createElement('button');b.className='sw';b.dataset.t=n;b.title=n;b.setAttribute('aria-label','Theme: '+n);b.style.background=THEMES[n][0];b.onclick=()=>applyTheme(n);themer.appendChild(b);});
+let _sv='Sapphire';try{_sv=localStorage.getItem('lexTheme')||'Sapphire';}catch(e){}
+applyTheme(_sv);
+
+render();
+</script>
+</body>
+</html>
