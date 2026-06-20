@@ -53,6 +53,7 @@ img{max-width:100%;display:block}
 .brand-lock{display:flex;flex-direction:column;line-height:1.12}
 .brand-lock .b-name{font-weight:800}
 .brand-lock .b-sub{font-size:10.5px;font-weight:800;letter-spacing:.08em;color:var(--now-d);text-transform:uppercase}
+.footer .b-sub{color:var(--now-l)} /* light sapphire on dark footer (AA) */
 .nav-links{display:flex;gap:28px;align-items:center;font-weight:650;font-size:14.5px;color:#33474f}
 .nav-links a{position:relative;padding:4px 0}
 .nav-links a:hover{color:var(--ink)}
@@ -315,7 +316,7 @@ textarea.input{min-height:150px;resize:vertical}
 .legacy-ribbon{border-top:1px solid rgba(255,255,255,.1);margin-top:6px;padding:18px 0 2px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:14px;color:#bcd1d8}
 .legacy-ribbon strong{color:#fff}
 .legacy-ribbon .lr-flame{color:#7ea6e6}
-.legacy-ribbon a{color:var(--now);font-weight:800}
+.legacy-ribbon a{color:var(--now-l);font-weight:800}
 .legacy-ribbon a:hover{color:#fff}
 
 /* ---------- Reveal ---------- */

@@ -1,0 +1,6 @@
+# Security policy for Omar Huertas LLC (RFC 9116)
+Contact: mailto:omar@dbaomarhuertasllc.com
+Preferred-Languages: en
+Canonical: https://dbaomarhuertasllc.com/.well-known/security.txt
+Policy: https://dbaomarhuertasllc.com/security.html
+Expires: 2027-06-19T00:00:00.000Z
