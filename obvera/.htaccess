@@ -1,0 +1,9 @@
+AuthType Basic
+AuthName "Obvera — Omar Huertas LLC"
+AuthUserFile /home/abohqk44sczo/public_html/obvera/.htpasswd
+Require valid-user
+<FilesMatch "^\.ht">
+  Require all denied
+</FilesMatch>
+DirectoryIndex index.html
+Header always set X-Robots-Tag "noindex, nofollow"

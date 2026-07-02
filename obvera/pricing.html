@@ -73,8 +73,8 @@
 <section class="calc">
   <div class="container">
     <div class="cn">
-      <h3 style="margin:0 0 4px;font-size:22px;color:#fff">Build your own</h3>
-      <p style="margin:0 0 18px;color:#9adcc8;font-size:14px">Quick estimate. Edit the count and watch the total.</p>
+      <h3 style="margin:0 0 4px;font-size:22px;color:#fff">Build your own — see what you save</h3>
+      <p style="margin:0 0 18px;color:#9adcc8;font-size:14px">Tick the modules you need. We show Obvera's flat price vs. what those tools typically cost a small business — honest numbers, no inflated enterprise list prices.</p>
       <div id="calc-rows" style="display:grid;gap:8px"></div>
       <div style="margin-top:24px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(255,255,255,.15);padding-top:18px"><div style="color:#9adcc8;font-size:13px;font-weight:800;letter-spacing:.05em;text-transform:uppercase">Estimated monthly</div><div class="total" id="calc-total">$0</div></div>
     </div>
@@ -86,7 +86,7 @@
     <h2 style="text-align:center;font-size:30px;letter-spacing:-.02em;margin:0 0 12px">Every à la carte SKU</h2>
     <p style="text-align:center;color:var(--muted);font-size:15px;margin:0 0 24px">Buy any one. Buy any combination. Toggle on/off per tenant in your settings.</p>
     <table class="sku-table" id="full-sku">
-      <thead><tr><th>SKU</th><th>Module</th><th>Group</th><th class="pr">$/mo</th></tr></thead>
+      <thead><tr><th>Module</th><th>Group</th><th>Typical tool (SMB)</th><th class="pr">Their $/mo</th><th class="pr">Obvera $/mo</th><th class="pr">You save</th></tr></thead>
       <tbody></tbody>
     </table>
   </div>
@@ -105,73 +105,84 @@
 <script src="../assets/main.js"></script>
 <script>
 // SKU catalog (kept in sync w/ server MODULES[]). When this drifts, regenerate from /sku-catalog.
+// [sku, label, group, obvera $/mo, typical real SMB market $/mo (~15-20 users), what it compares to]
 const SKUS = [
-  ['OBV-ADD-SERVICEDESK','Service Desk','Service Mgmt',29],
-  ['OBV-ADD-KNOWLEDGE','Knowledge','Service Mgmt',15],
-  ['OBV-ADD-ASSETS','Assets / CMDB-lite','Service Mgmt',19],
-  ['OBV-ADD-SERVICE-PORTAL','Service Request Portal','Service Mgmt',49],
-  ['OBV-ADD-ASSET-LIFECYCLE','Asset Lifecycle','IT Asset',39],
-  ['OBV-ADD-DEVICES','Devices (MDM) — per device','Endpoint',4],
-  ['OBV-ADD-COMPLIANCE','Compliance Baselines','Endpoint',19],
-  ['OBV-ADD-PROFILES','Config Profiles','Endpoint',15],
-  ['OBV-ADD-APPS','App Catalog','Endpoint',15],
-  ['OBV-ADD-CMDB','CMDB · CSDM · PPM','CMDB',149],
-  ['OBV-ADD-DISCOVERY','Discovery','CMDB',49],
-  ['OBV-ADD-BOARD','Board (Kanban/Scrum)','Agile',9],
-  ['OBV-ADD-PROJECTS','Projects','Agile',25],
-  ['OBV-ADD-RESOURCING','Resource Management','Agile',29],
-  ['OBV-ADD-PROCUREMENT','Procurement (PR/PO/Receipt/Match)','Finance',79],
-  ['OBV-ADD-FIN-PO','Purchase Orders','Finance',39],
-  ['OBV-ADD-FIN-INVOICES','Invoices (AP/AR)','Finance',39],
-  ['OBV-ADD-FIN-EXPENSES','Expenses','Finance',29],
-  ['OBV-ADD-FIN-BUDGETS','Budgets','Finance',29],
-  ['OBV-ADD-FIN-CONTRACTS','Contracts','Finance',49],
-  ['OBV-ADD-CRM','CRM / Sales','CRM',49],
-  ['OBV-ADD-HR','HR / People','HR',79],
-  ['OBV-ADD-MARKETING','Marketing','Marketing',39],
-  ['OBV-ADD-CSM','Customer Service','CSM',59],
-  ['OBV-ADD-INV-STOCKROOMS','Stockrooms','Inventory',29],
-  ['OBV-ADD-INV-SAM','Software Asset Mgmt','Inventory',39],
-  ['OBV-ADD-PAM','Privileged Access Mgmt','Security',149],
-  ['OBV-ADD-VULN-MGMT','Vulnerability Management','Security',89],
-  ['OBV-ADD-COMPLIANCE-REPORTS','Compliance Reports','Security',99],
-  ['OBV-ADD-RBAC','Access Control (RBAC + Personas)','Platform',79],
-  ['OBV-ADD-DOMAIN-SEP','Domain Separation','Platform',99],
-  ['OBV-ADD-OBSERVABILITY','Observability (Splunk-class)','Data',79],
-  ['OBV-ADD-DATA-WORKSPACES','Data Workspaces (Databricks-class)','Data',99],
-  ['OBV-ADD-TMF','TMF Open APIs','TMF',99],
-  ['OBV-ADD-VRT-NONPROFIT','Non-profit pack','Verticals',49],
-  ['OBV-ADD-VRT-RETAIL','Retail pack','Verticals',49],
-  ['OBV-ADD-VRT-HEALTHCARE','Healthcare pack','Verticals',79],
-  ['OBV-ADD-VRT-TRAINING','Training pack','Verticals',39],
-  ['OBV-ADD-VRT-PROPERTY','Property pack','Verticals',79],
-  ['OBV-ADD-AUDIT','Audit Log','Platform',9],
-  ['OBV-ADD-SUBSCRIPTION','Subscription &amp; Billing','Platform',9],
+  ['OBV-ADD-SERVICEDESK','Service Desk','Service Mgmt',29,300,'Freshservice / Zendesk'],
+  ['OBV-ADD-KNOWLEDGE','Knowledge','Service Mgmt',15,90,'Confluence'],
+  ['OBV-ADD-ASSETS','Assets / CMDB-lite','Service Mgmt',19,100,'Asset Panda / Snipe-IT Pro'],
+  ['OBV-ADD-SERVICE-PORTAL','Service Request Portal','Service Mgmt',49,150,'ITSM self-service'],
+  ['OBV-ADD-ASSET-LIFECYCLE','Asset Lifecycle','IT Asset',39,120,'IT asset lifecycle tool'],
+  ['OBV-ADD-DEVICES','Devices (MDM) — per device','Endpoint',4,5,'Jamf / Kandji (per device)'],
+  ['OBV-ADD-COMPLIANCE','Compliance Baselines','Endpoint',19,80,'endpoint baseline tool'],
+  ['OBV-ADD-PROFILES','Config Profiles','Endpoint',15,50,'MDM profiles'],
+  ['OBV-ADD-APPS','App Catalog','Endpoint',15,50,'managed app catalog'],
+  ['OBV-ADD-CMDB','CMDB · CSDM · PPM','CMDB',149,800,'ServiceNow CMDB (SMB)'],
+  ['OBV-ADD-DISCOVERY','Discovery','CMDB',49,300,'Lansweeper / Device42'],
+  ['OBV-ADD-BOARD','Board (Kanban/Scrum)','Agile',9,120,'Jira'],
+  ['OBV-ADD-PROJECTS','Projects','Agile',25,150,'Monday / Asana'],
+  ['OBV-ADD-RESOURCING','Resource Management','Agile',29,200,'resource/capacity tool'],
+  ['OBV-ADD-PROCUREMENT','Procurement (PR/PO/Receipt/Match)','Finance',79,400,'procure-to-pay tool'],
+  ['OBV-ADD-FIN-PO','Purchase Orders','Finance',39,150,'PO module'],
+  ['OBV-ADD-FIN-INVOICES','Invoices (AP/AR)','Finance',39,90,'QuickBooks tier'],
+  ['OBV-ADD-FIN-EXPENSES','Expenses','Finance',29,150,'Expensify'],
+  ['OBV-ADD-FIN-BUDGETS','Budgets','Finance',29,100,'budgeting add-on'],
+  ['OBV-ADD-FIN-CONTRACTS','Contracts','Finance',49,250,'contract mgmt'],
+  ['OBV-ADD-CRM','CRM / Sales','CRM',49,300,'HubSpot / Salesforce (SMB)'],
+  ['OBV-ADD-HR','HR / People','HR',79,250,'BambooHR'],
+  ['OBV-ADD-MARKETING','Marketing','Marketing',39,200,'marketing tool'],
+  ['OBV-ADD-CSM','Customer Service','CSM',59,300,'Zendesk CS'],
+  ['OBV-ADD-INV-STOCKROOMS','Stockrooms','Inventory',29,100,'inventory tool'],
+  ['OBV-ADD-INV-SAM','Software Asset Mgmt','Inventory',39,200,'SAM tool'],
+  ['OBV-ADD-PAM','Privileged Access Mgmt','Security',149,400,'Delinea / 1Password PAM (SMB)'],
+  ['OBV-ADD-VULN-MGMT','Vulnerability Management','Security',89,200,'Tenable / Qualys (SMB)'],
+  ['OBV-ADD-COMPLIANCE-REPORTS','Compliance Reports','Security',99,400,'Vanta / Drata (entry)'],
+  ['OBV-ADD-RBAC','Access Control (RBAC + Personas)','Platform',79,150,'IGA add-on'],
+  ['OBV-ADD-DOMAIN-SEP','Domain Separation','Platform',99,200,'multi-BU isolation'],
+  ['OBV-ADD-OBSERVABILITY','Observability (logs + search)','Data',79,300,'Splunk / Datadog logs (SMB)'],
+  ['OBV-ADD-DATA-WORKSPACES','Data Workspaces','Data',99,400,'analytics workspace (SMB)'],
+  ['OBV-ADD-TMF','TMF Open APIs','TMF',99,300,'telco API layer'],
+  ['OBV-ADD-VRT-NONPROFIT','Non-profit pack','Verticals',49,200,'donor/CRM nonprofit tool'],
+  ['OBV-ADD-VRT-RETAIL','Retail pack','Verticals',49,200,'retail ops tool'],
+  ['OBV-ADD-VRT-HEALTHCARE','Healthcare pack','Verticals',79,300,'practice mgmt'],
+  ['OBV-ADD-VRT-TRAINING','Training pack','Verticals',39,200,'LMS'],
+  ['OBV-ADD-VRT-PROPERTY','Property pack','Verticals',79,300,'property mgmt tool'],
+  ['OBV-ADD-DEFECTS','Defect Tracker','Platform',19,50,'bug / defect tracker'],
+  ['OBV-ADD-AUDIT','Audit Log','Platform',9,0,'usually bundled'],
+  ['OBV-ADD-SUBSCRIPTION','Subscription &amp; Billing','Platform',9,0,'usually bundled'],
 ];
 
 const tb = document.querySelector('#full-sku tbody');
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]);
-SKUS.forEach(([sku, label, group, price]) => {
+SKUS.forEach(([sku, label, group, price, market, compares]) => {
+  const save = Math.max(0, market - price);
   const tr = document.createElement('tr');
-  tr.innerHTML = '<td><span class="sk">'+esc(sku)+'</span></td><td>'+label+'</td><td class="gr">'+esc(group)+'</td><td class="pr">$'+price+'</td>';
+  tr.innerHTML = '<td>'+label+'<div style="font-size:10px;color:var(--muted)">'+esc(sku)+'</div></td>'
+    + '<td class="gr">'+esc(group)+'</td>'
+    + '<td style="color:var(--muted);font-size:13px">'+esc(compares||'—')+'</td>'
+    + '<td class="pr" style="color:var(--muted)">'+(market?'$'+market:'—')+'</td>'
+    + '<td class="pr"><b>$'+price+'</b></td>'
+    + '<td class="pr" style="color:#10b981;font-weight:800">'+(save?'$'+save:'—')+'</td>';
   tb.appendChild(tr);
 });
 
+// Build-your-own: pick modules, see Obvera total vs typical market total vs savings.
 const cr = document.getElementById('calc-rows');
-const popular = SKUS.filter(s => ['OBV-ADD-SERVICEDESK','OBV-ADD-DEVICES','OBV-ADD-CMDB','OBV-ADD-PROCUREMENT','OBV-ADD-PAM','OBV-ADD-COMPLIANCE-REPORTS','OBV-ADD-OBSERVABILITY','OBV-ADD-RBAC'].includes(s[0]));
-popular.forEach(([sku, label, group, price]) => {
+SKUS.filter(s => s[4] > 0).forEach(([sku, label, group, price, market]) => {
   const row = document.createElement('div');
-  row.style.cssText = 'display:flex;justify-content:space-between;gap:14px;align-items:center;padding:7px 0;border-bottom:1px dashed rgba(255,255,255,.15)';
-  row.innerHTML = '<span style="font-size:14px;color:#dff7f7">'+label+' <small style="color:#9adcc8">($'+price+' ea)</small></span><span><input type="number" min="0" value="0" data-price="'+price+'" /></span>';
+  row.style.cssText = 'display:flex;justify-content:space-between;gap:14px;align-items:center;padding:6px 0;border-bottom:1px dashed rgba(255,255,255,.12)';
+  row.innerHTML = '<label style="font-size:13px;color:#dff7f7;display:flex;gap:8px;align-items:center;cursor:pointer"><input type="checkbox" data-price="'+price+'" data-market="'+market+'" style="width:16px;height:16px"/> '+label+'</label>'
+    + '<span style="font-size:12px"><span style="color:#9adcc8">$'+price+'</span> <span style="color:#6b8b86">vs $'+market+'</span></span>';
   cr.appendChild(row);
 });
-
 const recalc = () => {
-  let t = 0;
-  cr.querySelectorAll('input').forEach(i => { t += (parseFloat(i.value) || 0) * parseFloat(i.dataset.price); });
-  document.getElementById('calc-total').textContent = '$' + t.toLocaleString();
+  let ob = 0, mk = 0;
+  cr.querySelectorAll('input:checked').forEach(i => { ob += +i.dataset.price; mk += +i.dataset.market; });
+  const save = Math.max(0, mk - ob);
+  const pct = mk ? Math.round((save / mk) * 100) : 0;
+  document.getElementById('calc-total').innerHTML = '$' + ob.toLocaleString() + '/mo'
+    + '<div style="font-size:14px;color:#9adcc8;font-weight:600;margin-top:6px">typical elsewhere: <s>$' + mk.toLocaleString() + '/mo</s> &nbsp;·&nbsp; <span style="color:#10b981">you save $' + save.toLocaleString() + '/mo (' + pct + '%)</span></div>';
 };
-cr.addEventListener('input', recalc);
+cr.addEventListener('input', recalc); recalc();
 </script>
 </body>
 </html>
