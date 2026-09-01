@@ -3,3 +3,13 @@
 deploy.sh
 .DS_Store
 HANDOFF.md
+
+node_modules/
+build/
+DerivedData/
+.env
+.env.*
+*.p8
+*.pem
+*.key
+*.p12
