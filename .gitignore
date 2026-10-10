@@ -1,5 +1,4 @@
 .ftp-credentials
-.github/
 deploy.sh
 .DS_Store
 HANDOFF.md
@@ -13,3 +12,4 @@ DerivedData/
 *.pem
 *.key
 *.p12
+_site/

@@ -1,0 +1,42 @@
+name: ci
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+jobs:
+  build-and-check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: HTML + internal link check
+        run: python3 scripts/check_site.py .
+      - name: Build site artifact (dry run)
+        run: |
+          mkdir _site
+          tar --exclude=./_site --exclude=./.git --exclude=./.github --exclude=./docs --exclude=./scripts --exclude='./*.md' -cf - . | tar -xf - -C _site
+          test -f _site/index.html
+          echo "files in artifact: $(find _site -type f | wc -l)"
+  secrets-scan:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - name: gitleaks
+        env:
+          GITLEAKS_VERSION: "8.30.1"
+        run: |
+          set -euo pipefail
+          base="https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}"
+          curl -sSfL "$base/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz" -o "gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz"
+          curl -sSfL "$base/gitleaks_${GITLEAKS_VERSION}_checksums.txt" -o gl.sum
+          grep " gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz\$" gl.sum | sha256sum -c -
+          tar -xzf "gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz" gitleaks
+          ./gitleaks git --redact --no-banner --verbose .
