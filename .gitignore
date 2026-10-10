@@ -13,3 +13,6 @@ DerivedData/
 *.key
 *.p12
 _site/
+
+# basic-auth hash files live only on the server
+.htpasswd
