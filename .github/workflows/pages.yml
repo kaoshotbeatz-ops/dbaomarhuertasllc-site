@@ -1,0 +1,53 @@
+name: pages
+# PR   -> build + upload preview artifact (download from the run page, open index.html locally). Never deploys.
+# main -> build, then deploy via environment "github-pages" - ONLY when repo variable PAGES_DEPLOY == 'true'
+#         (set it after switching Settings > Pages > Source to "GitHub Actions"; see docs/PIPELINE.md).
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Check
+        run: python3 scripts/check_site.py .
+      - name: Assemble site
+        run: |
+          mkdir _site
+          tar --exclude=./_site --exclude=./.git --exclude=./.github --exclude=./docs --exclude=./scripts --exclude='./*.md' -cf - . | tar -xf - -C _site
+          touch _site/.nojekyll
+      - name: Upload PR preview artifact
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-preview-${{ github.event.pull_request.number }}
+          path: _site
+          retention-days: 7
+      - name: Upload Pages artifact
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+  deploy:
+    if: github.event_name != 'pull_request' && vars.PAGES_DEPLOY == 'true'
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
