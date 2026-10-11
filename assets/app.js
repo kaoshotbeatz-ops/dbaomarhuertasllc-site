@@ -2,6 +2,33 @@
    1. Contact / support forms post to Web3Forms without leaving the page (the form also works as a plain HTML post).
    2. The accessibility toolbar (light mode, high contrast, larger text, reduced motion), remembered per visitor.
    Everything visual lives in assets/rt.js islands. */
+/* ============ HEADER: condenses on scroll; full-screen menu sheet (focus-trapped, Esc closes) ============ */
+(function(){
+  var hdr = document.querySelector('[data-hdr]');
+  if(hdr){
+    var on = false, raf = 0;
+    var check = function(){ raf = 0; var s = window.scrollY > 24; if(s !== on){ on = s; hdr.classList.toggle('is-scrolled', s); } };
+    window.addEventListener('scroll', function(){ if(!raf) raf = requestAnimationFrame(check); }, {passive:true}); check();
+  }
+  var sheet = document.querySelector('[data-sheet]'), opener = document.querySelector('[data-sheet-open]');
+  if(!sheet || !opener) return;
+  var last = null, FOCUS = 'a[href],button:not([disabled]),[tabindex]:not([tabindex="-1"])';
+  function open(){ last = document.activeElement; sheet.hidden = false; document.documentElement.classList.add('sheet-open'); opener.setAttribute('aria-expanded','true'); requestAnimationFrame(function(){ sheet.classList.add('open'); var f = sheet.querySelector(FOCUS); if(f) f.focus(); }); }
+  function close(){ sheet.classList.remove('open'); document.documentElement.classList.remove('sheet-open'); opener.setAttribute('aria-expanded','false'); var done = function(){ sheet.hidden = true; }; var m = matchMedia('(prefers-reduced-motion: reduce)').matches; if(m) done(); else setTimeout(done, 420); if(last && last.focus) last.focus(); }
+  opener.addEventListener('click', function(){ sheet.hidden ? open() : close(); });
+  sheet.addEventListener('click', function(e){ if(e.target.closest('[data-sheet-close]') || e.target.closest('a[href]')) close(); });
+  document.addEventListener('keydown', function(e){
+    if(sheet.hidden) return;
+    if(e.key === 'Escape'){ e.preventDefault(); close(); return; }
+    if(e.key !== 'Tab') return;
+    var f = sheet.querySelectorAll(FOCUS); if(!f.length) return;
+    var first = f[0], end = f[f.length-1];
+    if(e.shiftKey && document.activeElement === first){ e.preventDefault(); end.focus(); }
+    else if(!e.shiftKey && document.activeElement === end){ e.preventDefault(); first.focus(); }
+  });
+  matchMedia('(min-width: 901px)').addEventListener('change', function(m){ if(m.matches && !sheet.hidden) close(); });
+})();
+
 (function(){
   document.querySelectorAll('[data-year]').forEach(function(el){ el.textContent = new Date().getFullYear(); });
 
