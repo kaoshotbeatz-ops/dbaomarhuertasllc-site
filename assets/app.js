@@ -1,40 +1,23 @@
-/* Omar Huertas LLC: progressive enhancements that work on every page.
-   1. Contact / support forms post to Web3Forms without leaving the page (the form also works as a plain HTML post).
-   2. The accessibility toolbar (high contrast, larger text, reduced motion), remembered per visitor.
-   3. The engraved plates draw themselves once they scroll into view (still when motion is reduced). */
-/* ============ PLATES ============ */
+/* Omar Huertas LLC: progressive enhancements that work on every page (the family shell shared with albena.ai).
+   1. Nav: border on scroll, the menu panel, the In-development menu, reveal-on-scroll (off when motion is reduced).
+   2. Contact / support forms post to Web3Forms without leaving the page (the form also works as a plain HTML post).
+   3. The accessibility toolbar (high contrast, larger text, reduced motion), remembered per visitor. */
+/* ============ NAV: border on scroll; menu panel; the "In development" menu closes on outside click; reveal-on-scroll ============ */
 (function(){
-  var plates = document.querySelectorAll('[data-plate]'); if(!plates.length) return;
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches || document.documentElement.classList.contains('a11y-nomotion');
-  if(reduce || !('IntersectionObserver' in window)){ plates.forEach(function(p){ p.classList.add('in'); }); return; }
-  var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); }, {threshold:.25});
-  plates.forEach(function(p){ if(p.classList.contains('hero-plate')) setTimeout(function(){ p.classList.add('in'); }, 700); else io.observe(p); });
-})();
-/* ============ HEADER: condenses on scroll; full-screen menu sheet (focus-trapped, Esc closes) ============ */
-(function(){
-  var hdr = document.querySelector('[data-hdr]');
-  if(hdr){
-    var on = false, raf = 0;
-    var check = function(){ raf = 0; var s = window.scrollY > 24; if(s !== on){ on = s; hdr.classList.toggle('is-scrolled', s); } };
-    window.addEventListener('scroll', function(){ if(!raf) raf = requestAnimationFrame(check); }, {passive:true}); check();
-  }
-  var sheet = document.querySelector('[data-sheet]'), opener = document.querySelector('[data-sheet-open]');
-  if(!sheet || !opener) return;
-  var last = null, FOCUS = 'a[href],button:not([disabled]),[tabindex]:not([tabindex="-1"])';
-  function open(){ last = document.activeElement; sheet.hidden = false; document.documentElement.classList.add('sheet-open'); opener.setAttribute('aria-expanded','true'); requestAnimationFrame(function(){ sheet.classList.add('open'); var f = sheet.querySelector(FOCUS); if(f) f.focus(); }); }
-  function close(){ sheet.classList.remove('open'); document.documentElement.classList.remove('sheet-open'); opener.setAttribute('aria-expanded','false'); var done = function(){ sheet.hidden = true; }; var m = matchMedia('(prefers-reduced-motion: reduce)').matches; if(m) done(); else setTimeout(done, 420); if(last && last.focus) last.focus(); }
-  opener.addEventListener('click', function(){ sheet.hidden ? open() : close(); });
-  sheet.addEventListener('click', function(e){ if(e.target.closest('[data-sheet-close]') || e.target.closest('a[href]')) close(); });
-  document.addEventListener('keydown', function(e){
-    if(sheet.hidden) return;
-    if(e.key === 'Escape'){ e.preventDefault(); close(); return; }
-    if(e.key !== 'Tab') return;
-    var f = sheet.querySelectorAll(FOCUS); if(!f.length) return;
-    var first = f[0], end = f[f.length-1];
-    if(e.shiftKey && document.activeElement === first){ e.preventDefault(); end.focus(); }
-    else if(!e.shiftKey && document.activeElement === end){ e.preventDefault(); first.focus(); }
-  });
-  matchMedia('(min-width: 901px)').addEventListener('change', function(m){ if(m.matches && !sheet.hidden) close(); });
+  var els = document.querySelectorAll('.reveal, .stage');
+  if(reduce || !('IntersectionObserver' in window)){ els.forEach(function(e){ e.classList.add('in'); }); }
+  else { var io = new IntersectionObserver(function(en){ en.forEach(function(x){ if(x.isIntersecting){ x.target.classList.add('in'); io.unobserve(x.target); } }); }, {threshold:.08, rootMargin:'0px 0px -4% 0px'}); els.forEach(function(e){ io.observe(e); }); }
+  var nav = document.querySelector('[data-nav]'); if(!nav) return;
+  var onScroll = function(){ nav.classList.toggle('scrolled', scrollY > 8); };
+  addEventListener('scroll', onScroll, {passive:true}); onScroll();
+  var t = document.querySelector('[data-nav-toggle]'), p = document.getElementById('nav-panel');
+  var set = function(o){ p.classList.toggle('open', o); t.setAttribute('aria-expanded', String(o)); };
+  t.addEventListener('click', function(){ set(!p.classList.contains('open')); });
+  var lab = nav.querySelector('[data-lab]');
+  document.addEventListener('keydown', function(e){ if(e.key !== 'Escape') return; if(lab && lab.open){ lab.open = false; lab.querySelector('summary').focus(); } else if(p.classList.contains('open')){ set(false); t.focus(); } });
+  document.addEventListener('click', function(e){ if(lab && lab.open && !lab.contains(e.target)) lab.open = false; });
+  p.addEventListener('click', function(e){ if(e.target.closest('a')) set(false); });
 })();
 
 (function(){
