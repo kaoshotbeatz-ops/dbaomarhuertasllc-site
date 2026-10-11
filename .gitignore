@@ -18,3 +18,5 @@ _site/
 .htpasswd
 dist/
 .wrangler/
+.cloudflare/
+node_modules/
