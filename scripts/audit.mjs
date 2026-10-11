@@ -2,7 +2,7 @@
 // a11y + overflow audit: node scripts/audit.mjs <baseUrl>
 import {createRequire} from 'node:module';import {homedir} from 'node:os';import {join} from 'node:path';import {readFileSync} from 'node:fs';
 const require=createRequire(import.meta.url);const root=join(homedir(),'.albena-a11y-tools/node_modules/');const pw=require(root+'playwright-core');const axe=readFileSync(root+'axe-core/axe.min.js','utf8');
-const base=process.argv[2];const paths=['/','/about.html','/services.html','/industries.html','/support.html','/contact.html','/security.html','/servicenow-lexicon/','/privacy-policy.html','/terms.html','/legal.html','/accessibility.html','/no-such-page'];
+const base=process.argv[2];const paths=process.env.PATHS?process.env.PATHS.split(','):['/','/about.html','/services.html','/industries.html','/support.html','/contact.html','/security.html','/servicenow-lexicon/','/privacy-policy.html','/terms.html','/legal.html','/accessibility.html','/no-such-page'];
 const b=await pw.chromium.launch({executablePath:'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'});let bad=0;
 for(const [name,vp] of [['320',{width:320,height:700}],['1440',{width:1440,height:900}]]){const ctx=await b.newContext({viewport:vp,reducedMotion:'reduce',bypassCSP:true});const p=await ctx.newPage();
  for(const u of paths){await p.goto(base+u,{waitUntil:'networkidle'});await p.addScriptTag({content:axe});

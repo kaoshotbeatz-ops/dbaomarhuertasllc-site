@@ -5,9 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Obvera — Pricing · Editions + 35 à la carte SKUs</title>
   <meta name="description" content="6 editions from $19/mo to $1499/mo. 35 à la carte SKUs from $4/mo. Pick anything. Mix anything. Cancel anytime.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="preload" href="../assets/fonts/Geist-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../assets/fonts/fonts.css">
   <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../assets/styles.css">
   <style>
@@ -15,28 +14,28 @@
     .ed{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px;position:relative;transition:.18s ease}
     .ed:hover{border-color:var(--now);box-shadow:0 18px 40px rgba(5,150,105,.13)}
     .ed.feat{background:linear-gradient(180deg,#fff,#f0fbf6);border:1.5px solid var(--now)}
-    .ed-tag{position:absolute;top:-10px;left:18px;background:var(--now);color:#fff;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:6px}
+    .ed-tag{position:absolute;top:-10px;left:18px;background:var(--now);color:#fff;font-size:11px;font-weight:620;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:6px}
     .ed h3{margin:0;font-size:20px;letter-spacing:-.02em}
-    .ed .ed-price{font-size:38px;font-weight:900;letter-spacing:-.03em;margin-top:10px}
+    .ed .ed-price{font-size:38px;font-weight:620;letter-spacing:-.03em;margin-top:10px}
     .ed .ed-price small{font-size:14px;color:var(--muted);font-weight:600}
-    .ed .ed-sku{font-family:ui-monospace,Menlo,monospace;font-size:11px;background:#f1f7f9;padding:3px 8px;border-radius:5px;color:var(--ink);display:inline-block;margin-top:8px}
+    .ed .ed-sku{font-family:'Geist Mono',ui-monospace,Menlo,monospace;font-size:11px;background:#f1f7f9;padding:3px 8px;border-radius:5px;color:var(--ink);display:inline-block;margin-top:8px}
     .ed ul{list-style:none;padding:0;margin:16px 0 0;font-size:14px;color:var(--ink)}
     .ed li{padding:5px 0;display:flex;gap:8px;align-items:flex-start}
-    .ed li:before{content:"✓";color:var(--now-d);font-weight:900;flex:none}
-    .ed .ed-btn{display:block;text-align:center;margin-top:18px;padding:12px;background:var(--ink);color:#fff;border-radius:10px;text-decoration:none;font-weight:800;font-size:14px}
+    .ed li:before{content:"✓";color:var(--now-d);font-weight:620;flex:none}
+    .ed .ed-btn{display:block;text-align:center;margin-top:18px;padding:12px;background:var(--ink);color:#fff;border-radius:10px;text-decoration:none;font-weight:620;font-size:14px}
     .ed.feat .ed-btn{background:var(--now)}
     .sku-table{width:100%;border-collapse:collapse;font-size:14px;background:#fff;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
-    .sku-table th{background:#f8fbfa;text-align:left;padding:12px 14px;font-weight:850;color:var(--muted);text-transform:uppercase;font-size:11.5px;letter-spacing:.08em;border-bottom:1px solid var(--line)}
+    .sku-table th{background:#f8fbfa;text-align:left;padding:12px 14px;font-weight:620;color:var(--muted);text-transform:uppercase;font-size:11.5px;letter-spacing:.08em;border-bottom:1px solid var(--line)}
     .sku-table td{padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
     .sku-table tr:last-child td{border-bottom:0}
     .sku-table tr:hover td{background:#f8fbfa}
-    .sku-table .sk{font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--ink);font-weight:700}
-    .sku-table .pr{text-align:right;font-weight:900;color:var(--now-d);font-size:15px;white-space:nowrap}
-    .sku-table .gr{font-size:11px;color:var(--muted);text-transform:uppercase;font-weight:800;letter-spacing:.05em}
+    .sku-table .sk{font-family:'Geist Mono',ui-monospace,Menlo,monospace;font-size:12px;color:var(--ink);font-weight:700}
+    .sku-table .pr{text-align:right;font-weight:620;color:var(--now-d);font-size:15px;white-space:nowrap}
+    .sku-table .gr{font-size:11px;color:var(--muted);text-transform:uppercase;font-weight:620;letter-spacing:.05em}
     .calc{background:linear-gradient(135deg,#06302f,#04222f);color:#fff;padding:60px 0}
     .calc .cn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:18px;padding:30px;max-width:760px;margin:0 auto}
     .calc input[type="number"]{width:80px;padding:8px 10px;border-radius:8px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.08);color:#fff;font-size:15px;font-weight:700}
-    .calc .total{font-size:42px;font-weight:900;letter-spacing:-.03em;color:#10b981;margin-top:18px}
+    .calc .total{font-size:42px;font-weight:620;letter-spacing:-.03em;color:#10b981;margin-top:18px}
   </style>
 </head>
 <body>
@@ -76,7 +75,7 @@
       <h3 style="margin:0 0 4px;font-size:22px;color:#fff">Build your own — see what you save</h3>
       <p style="margin:0 0 18px;color:#9adcc8;font-size:14px">Tick the modules you need. We show Obvera's flat price vs. what those tools typically cost a small business — honest numbers, no inflated enterprise list prices.</p>
       <div id="calc-rows" style="display:grid;gap:8px"></div>
-      <div style="margin-top:24px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(255,255,255,.15);padding-top:18px"><div style="color:#9adcc8;font-size:13px;font-weight:800;letter-spacing:.05em;text-transform:uppercase">Estimated monthly</div><div class="total" id="calc-total">$0</div></div>
+      <div style="margin-top:24px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(255,255,255,.15);padding-top:18px"><div style="color:#9adcc8;font-size:13px;font-weight:620;letter-spacing:.05em;text-transform:uppercase">Estimated monthly</div><div class="total" id="calc-total">$0</div></div>
     </div>
   </div>
 </section>
@@ -161,7 +160,7 @@ SKUS.forEach(([sku, label, group, price, market, compares]) => {
     + '<td style="color:var(--muted);font-size:13px">'+esc(compares||'—')+'</td>'
     + '<td class="pr" style="color:var(--muted)">'+(market?'$'+market:'—')+'</td>'
     + '<td class="pr"><b>$'+price+'</b></td>'
-    + '<td class="pr" style="color:#10b981;font-weight:800">'+(save?'$'+save:'—')+'</td>';
+    + '<td class="pr" style="color:#10b981;font-weight:620">'+(save?'$'+save:'—')+'</td>';
   tb.appendChild(tr);
 });
 
