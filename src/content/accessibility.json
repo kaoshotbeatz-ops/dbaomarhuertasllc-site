@@ -1,0 +1,25 @@
+{
+ "doc": "Accessibility",
+ "pages": [
+  {
+   "cover": true,
+   "html": "\n  <div class=\"c-top\"><span class=\"c-mark\">OH</span><span class=\"c-pill\">Omar Huertas LLC</span></div>\n  <div class=\"c-mid\">\n    <div class=\"c-eyebrow\">Accessibility &middot; Our commitment</div>\n    <h1>Built for <span class=\"accent\">everyone.</span></h1>\n    <p class=\"c-sub\">Accessibility isn&rsquo;t a checkbox here &mdash; it&rsquo;s personal. This site is designed to work for every visitor, however you browse.</p>\n    <div class=\"c-meta\"><div class=\"cm-l\"><div class=\"cm-by\">Omar Huertas LLC</div><div class=\"cm-rel\">Last updated June 13, 2026</div></div><div class=\"cm-r\">&copy; 2026 Omar Huertas LLC. All rights reserved.</div></div>\n  </div>"
+  },
+  {
+   "doc": "Accessibility",
+   "html": "<div class=\"eyebrow\">What's inside</div><h1>Contents</h1><ul><li>Our commitment</li><li>What we&rsquo;ve built in</li><li>Ongoing work</li><li>Tell us</li></ul>"
+  },
+  {
+   "doc": "Accessibility",
+   "html": "<h2>Our commitment</h2><p>Omar Huertas LLC is committed to digital accessibility for people of all abilities. We aim to conform to the <strong>Web Content Accessibility Guidelines (WCAG) 2.1, Level AA</strong>, and we treat accessibility as an ongoing practice, not a one-time task.</p><h2>What we&rsquo;ve built in</h2><ul>\n <li><strong>Built-in accessibility toolbar</strong> &mdash; tap the &#9855; button (bottom-right of every page) to turn on <em>High contrast</em>, <em>Larger text</em>, or <em>Reduce motion</em>. Your choices are remembered on your device.</li>\n <li><strong>Keyboard support</strong> &mdash; every interactive element is reachable by keyboard, with a visible focus indicator and a &ldquo;Skip to content&rdquo; link.</li>\n <li><strong>Color contrast</strong> &mdash; text and controls meet WCAG AA contrast ratios; a high-contrast mode is available.</li>\n <li><strong>Motion</strong> &mdash; animations respect your system &ldquo;Reduce Motion&rdquo; setting and can be paused manually.</li>\n <li><strong>Media</strong> &mdash; video includes descriptive captions and labels; images include meaningful alternative text.</li>\n <li><strong>Structure</strong> &mdash; semantic headings, landmarks, and labels for assistive technology.</li>\n </ul>"
+  },
+  {
+   "doc": "Accessibility",
+   "html": "<h2>Ongoing work</h2><p>Accessibility is never &ldquo;done.&rdquo; We continue to test with keyboards, screen readers, and real devices, and we welcome feedback that helps us do better.</p><h2>Tell us</h2><p>If you encounter any barrier on this site, please email omar@dbaomarhuertasllc.com and we&rsquo;ll work to fix it promptly and, if needed, provide the information another way.</p>"
+  },
+  {
+   "back": true,
+   "html": "\n  <h2>Found a barrier?</h2>\n  <p>Tell us &mdash; we want everyone to have a great experience, and we fix issues quickly.</p>\n  <a class=\"bc-cta\" href=\"mailto:omar@dbaomarhuertasllc.com\">omar@dbaomarhuertasllc.com &rarr;</a>\n  <div class=\"legacy\">&#9670; Omar Huertas LLC &mdash; a Registered ServiceNow Build, Consulting &amp; Implementation Partner.</div>\n  <div class=\"disclaimer\">General information only; not legal advice.</div>\n  <div class=\"bc-foot\"><span>omar@dbaomarhuertasllc.com</span><span>dbaomarhuertasllc.com</span></div>"
+  }
+ ]
+}
