@@ -192,6 +192,8 @@ kbd{font:500 12px var(--mono);color:var(--fg-2);border:1px solid var(--line-2);b
 .bcard h3 a{color:inherit}
 .bcard p{color:var(--mut);font-size:14px;line-height:1.55;margin-top:6px;position:relative}
 .bcard .txt{margin-top:auto;position:relative}
+.bcard:not(:has(.ill)){min-height:0;gap:0}
+.bcard:not(:has(.ill)) .txt{margin-top:0}
 .bcard ul.pts{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
 .bcard ul.pts li{font-size:12px;color:var(--fg-2);padding:3px 10px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.02)}
 .stretch::after{content:'';position:absolute;inset:-400px}
@@ -443,16 +445,26 @@ blockquote.q cite{display:block;margin-top:16px;font-style:normal;font-size:14px
 .faq p a{color:var(--fg);text-decoration:underline;text-underline-offset:3px}
 .times{margin-top:32px}
 .times .rows-dl dd strong{color:var(--fg);font-weight:500}
+.support-grid h2.h-section{margin:44px 0 8px;font-size:clamp(26px,3vw,34px)}
 @media(min-width:960px){.support-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:64px;align-items:start}.support-grid .contact{position:sticky;top:88px}}
 
 /* ---- documents (legal, privacy, terms, accessibility) with a contents rail ---- */
 .doc{display:grid;gap:28px;padding-top:40px;padding-bottom:96px}
 .doc-body{max-width:720px;overflow-wrap:anywhere;min-width:0}
-.doc-body section{scroll-margin-top:80px}
+.doc-body .doc-sec{scroll-margin-top:80px;padding:28px 0 36px;border-top:1px solid var(--line)}
+.doc-body .doc-sec:first-child{border-top:0;padding-top:0}
+.doc-body .doc-sec h2{margin-top:0}
+.doc-body .feat{list-style:none;padding:0;display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+.doc-body .feat li{margin:0;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--panel);color:var(--fg-2);font-size:14px;line-height:1.5}
+.doc-end{margin-top:40px;padding:28px;border:1px solid var(--line);border-radius:18px;background:var(--panel)}
+.doc-end h2{margin:0 0 10px;font-size:22px;letter-spacing:-.025em}
+.doc-end .legacy,.doc-end .disclaimer{color:var(--mut);font-size:13px;margin-top:12px}
+.doc-end .btn{margin-top:14px;text-decoration:none;color:#08090a}
+.doc-end .bc-foot,.doc-end .c-top{display:none}
 .doc-body h2{font-size:20px;line-height:1.3;letter-spacing:-.015em;font-weight:600;margin:40px 0 12px;scroll-margin-top:80px}
 .doc-body h3{font-size:16px;margin:24px 0 8px;font-weight:550}
 .doc-body h4{font-size:15px;margin:16px 0 6px;font-weight:550}
-.doc-body p,.doc-body li{color:var(--mut);font-size:15px;line-height:1.7}
+.doc-body p,.doc-body li{color:var(--mut);font-size:15px;line-height:1.75}
 .doc-body p+p,.doc-body p+ul,.doc-body p+ol{margin-top:12px}
 .doc-body ul{list-style:disc;padding-left:22px;margin-top:12px}
 .doc-body ol{list-style:decimal;padding-left:22px;margin-top:12px}
@@ -468,11 +480,17 @@ blockquote.q cite{display:block;margin-top:16px;font-style:normal;font-size:14px
 .doc-body .callout,.doc-body blockquote{margin:16px 0;padding:14px 18px;border:1px solid var(--line);border-radius:12px;background:var(--panel)}
 .doc-body .c-top,.doc-body .c-meta,.doc-body .bc-cta,.doc-body .foot-note,.doc-body .pg-num,.doc-body .running{display:none}
 .toc{border:1px solid var(--line);background:var(--panel);border-radius:14px;padding:18px 20px;align-self:start}
-.toc h2{font-size:13px;font-weight:500;color:var(--mut);margin:0 0 10px}
+.toc summary,.lex-toc summary{font-size:13px;font-weight:500;color:var(--mut);margin:0 0 10px;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;min-height:24px}
+.toc summary::-webkit-details-marker,.lex-toc summary::-webkit-details-marker{display:none}
+.toc summary::after,.lex-toc summary::after{content:'+';font-size:18px;line-height:1}
+.toc[open] summary::after,.lex-toc[open] summary::after{content:'\2212'}
+@media(min-width:1100px){.toc summary::after,.lex-toc summary::after{display:none}.toc summary,.lex-toc summary{pointer-events:none}}
+.toc:not([open]) summary,.lex-toc:not([open]) summary{margin:0}
 .toc ol{list-style:decimal;padding-left:20px}
 .toc li{margin-top:2px;font-size:14px;color:var(--mut)}
 .toc li::marker{color:var(--mut);font-size:12px}
-.toc a{color:var(--mut);display:inline-block;padding:4px 0;min-height:24px;transition:color .15s}
+.toc a{color:var(--mut);display:block;padding:4px 0;min-height:24px;transition:color .15s}
+.toc li{padding-left:4px}
 .toc a:hover{color:var(--fg)}
 .toc .meta{margin-top:14px;padding-top:12px;border-top:1px solid var(--line);font-size:12.5px;color:var(--mut);display:grid;gap:4px}
 @media(min-width:600px) and (max-width:1099px){.toc ol{columns:2;column-gap:32px}.toc li{break-inside:avoid}}
@@ -489,24 +507,27 @@ blockquote.q cite{display:block;margin-top:16px;font-style:normal;font-size:14px
 .phero.center .lex-search{margin:28px auto 0}
 .lex-layout{display:grid;gap:32px;padding-top:24px;padding-bottom:96px}
 .lex-toc{border:1px solid var(--line);background:var(--panel);border-radius:14px;padding:18px 20px;align-self:start}
-.lex-toc>p{font-size:13px;font-weight:500;color:var(--mut);margin-bottom:10px}
 .lex-groups>li{margin-top:12px}
 .lex-groups>li>b{display:block;font-weight:550;font-size:13.5px;margin-bottom:4px}
 .lex-groups>li>b a{color:var(--fg)}
 .lex-groups ol{display:grid}
 .lex-groups ol a{display:block;font-size:13px;color:var(--mut);padding:3px 0;min-height:24px}
 .lex-groups ol a:hover{color:var(--fg)}
-.lex-body{min-width:0}
+.lex-body{min-width:0;overflow:hidden}
+.lex-paper pre,.lex-paper code{white-space:pre-wrap;overflow-wrap:anywhere}
 .lex-group{font-size:13px;font-weight:500;color:var(--acc-hi);margin:40px 0 8px;scroll-margin-top:80px}
 .lex-group:first-child{margin-top:0}
 .lex{border-bottom:1px solid var(--line);scroll-margin-top:80px}
-.lex summary{cursor:pointer;list-style:none;display:grid;grid-template-columns:auto 1fr auto;gap:4px 14px;align-items:baseline;padding:14px 4px;min-height:48px;border-radius:6px}
+.lex summary{cursor:pointer;list-style:none;display:grid;grid-template-columns:auto 1fr auto;gap:4px 14px;align-items:baseline;padding:16px 4px;min-height:52px;border-radius:6px}
+@media(max-width:759px){.lex summary{grid-template-columns:1fr auto}.lex-title{grid-column:1/-1}.lex-doc{font-size:16.5px}.lex-paper p,.lex-paper li{font-size:15.5px}.doc-body p,.doc-body li{font-size:15.5px}}
 .lex summary::-webkit-details-marker{display:none}
-.lex-doc{font-weight:550;font-size:15.5px;letter-spacing:-.01em}
+.lex-doc{font-weight:550;font-size:15.5px;letter-spacing:-.01em;text-transform:none}
 .lex-title{color:var(--mut);font-size:14px}
 .lex-n{font:500 12px var(--mono);color:var(--mut)}
 .lex[open] summary .lex-doc{color:var(--acc-hi)}
-.lex-paper{padding:4px 4px 22px;max-width:720px}
+.lex-paper{padding:4px 4px 22px;max-width:720px;overflow-wrap:anywhere}
+.lex-paper table{display:block;overflow-x:auto}
+.lex-paper h4,.lex-paper strong.eyebrow{text-transform:none}
 .lex-paper h2,.lex-paper .eyebrow,.lex-paper .c-top,.lex-paper .running,.lex-paper .pg-num{display:none}
 .lex-paper h3{font-size:16px;margin:18px 0 6px;font-weight:550}
 .lex-paper h4{font-size:15px;margin:14px 0 4px;font-weight:550}
