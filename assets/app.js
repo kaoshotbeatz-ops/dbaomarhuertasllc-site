@@ -8,7 +8,6 @@
   var els = document.querySelectorAll('.reveal, .stage');
   if(reduce || !('IntersectionObserver' in window)){ els.forEach(function(e){ e.classList.add('in'); }); }
   else { var io = new IntersectionObserver(function(en){ en.forEach(function(x){ if(x.isIntersecting){ x.target.classList.add('in'); io.unobserve(x.target); } }); }, {threshold:.08, rootMargin:'0px 0px -4% 0px'}); els.forEach(function(e){ io.observe(e); }); }
-  if(innerWidth < 1100) document.querySelectorAll('details.toc[open], details.lex-toc[open]').forEach(function(d){ d.open = false; });
   var nav = document.querySelector('[data-nav]'); if(!nav) return;
   var onScroll = function(){ nav.classList.toggle('scrolled', scrollY > 8); };
   addEventListener('scroll', onScroll, {passive:true}); onScroll();
