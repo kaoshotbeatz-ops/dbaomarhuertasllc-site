@@ -1,2 +1,4 @@
-# Old host (.htaccess): only http->https (Cloudflare 'Always Use HTTPS' on the zone) + ErrorDocument 404 /404.html (Pages serves 404.html automatically).
-# No path redirects existed. .html URLs are kept 200 by functions/_middleware.js (Pages would otherwise 308 them to extensionless).
+/ /index.html 200
+/servicenow-lexicon/ /servicenow-lexicon/index.html 200
+/obvera/ /obvera/index.html 200
+/whitepapers/ /whitepapers/index.html 200
