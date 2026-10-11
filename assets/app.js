@@ -1,7 +1,15 @@
 /* Omar Huertas LLC: progressive enhancements that work on every page.
    1. Contact / support forms post to Web3Forms without leaving the page (the form also works as a plain HTML post).
-   2. The accessibility toolbar (light mode, high contrast, larger text, reduced motion), remembered per visitor.
-   Everything visual lives in assets/rt.js islands. */
+   2. The accessibility toolbar (high contrast, larger text, reduced motion), remembered per visitor.
+   3. The engraved plates draw themselves once they scroll into view (still when motion is reduced). */
+/* ============ PLATES ============ */
+(function(){
+  var plates = document.querySelectorAll('[data-plate]'); if(!plates.length) return;
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches || document.documentElement.classList.contains('a11y-nomotion');
+  if(reduce || !('IntersectionObserver' in window)){ plates.forEach(function(p){ p.classList.add('in'); }); return; }
+  var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); }, {threshold:.25});
+  plates.forEach(function(p){ if(p.classList.contains('hero-plate')) setTimeout(function(){ p.classList.add('in'); }, 700); else io.observe(p); });
+})();
 /* ============ HEADER: condenses on scroll; full-screen menu sheet (focus-trapped, Esc closes) ============ */
 (function(){
   var hdr = document.querySelector('[data-hdr]');
@@ -74,7 +82,7 @@
 (function(){
   var root = document.documentElement, store;
   try { store = window.localStorage; } catch(e){ store = { getItem:function(){return null}, setItem:function(){} }; }
-  var OPTS = [['light','Light mode'],['contrast','High contrast'],['large','Larger text'],['nomotion','Reduce motion']];
+  var OPTS = [['contrast','High contrast'],['large','Larger text'],['nomotion','Reduce motion']];
   OPTS.forEach(function(o){ try{ if(store.getItem('a11y-'+o[0])==='1') root.classList.add('a11y-'+o[0]); }catch(e){} });
 
   var fab = document.createElement('button');
