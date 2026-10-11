@@ -5,9 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Obvera — Get Started · See it live or spin up your tenant</title>
   <meta name="description" content="Three ways to try Obvera: book a 20-min demo, spin up a free tenant, or read the live release notes.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="preload" href="../assets/fonts/Geist-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../assets/fonts/fonts.css">
   <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../assets/styles.css">
   <style>
@@ -15,20 +14,20 @@
     .opt{background:#fff;border:1px solid var(--line);border-radius:18px;padding:28px;position:relative;transition:.18s ease}
     .opt:hover{border-color:var(--now);box-shadow:0 18px 40px rgba(5,150,105,.13);transform:translateY(-4px)}
     .opt.feat{background:linear-gradient(180deg,#fff,#f0fbf6);border:1.5px solid var(--now)}
-    .opt .ot{font-size:13px;font-weight:850;letter-spacing:.06em;text-transform:uppercase;color:var(--now-d);margin-bottom:8px}
+    .opt .ot{font-size:13px;font-weight:620;letter-spacing:.06em;text-transform:uppercase;color:var(--now-d);margin-bottom:8px}
     .opt h3{margin:0 0 8px;font-size:22px;letter-spacing:-.02em}
     .opt p{color:var(--muted);font-size:14px;line-height:1.55;margin:0 0 18px}
-    .opt .ob{display:block;text-align:center;padding:13px;background:var(--ink);color:#fff;border-radius:10px;text-decoration:none;font-weight:800;font-size:14px}
+    .opt .ob{display:block;text-align:center;padding:13px;background:var(--ink);color:#fff;border-radius:10px;text-decoration:none;font-weight:620;font-size:14px}
     .opt.feat .ob{background:var(--now)}
     .form-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:30px;max-width:680px;margin:0 auto}
     .form-card .fld{margin-bottom:16px}
-    .form-card label{display:block;font-weight:800;font-size:13px;color:var(--ink);margin-bottom:6px}
+    .form-card label{display:block;font-weight:620;font-size:13px;color:var(--ink);margin-bottom:6px}
     .form-card input,.form-card textarea,.form-card select{width:100%;padding:11px 14px;font-size:15px;border:1px solid var(--line);border-radius:10px;background:#fff;font-family:inherit}
     .form-card input:focus,.form-card textarea:focus,.form-card select:focus{outline:0;border-color:var(--now);box-shadow:0 0 0 3px rgba(5,150,105,.15)}
     .form-card .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-    .form-card button{width:100%;padding:14px;background:var(--now);color:#fff;border:0;border-radius:10px;font-weight:800;font-size:15px;cursor:pointer}
+    .form-card button{width:100%;padding:14px;background:var(--now);color:#fff;border:0;border-radius:10px;font-weight:620;font-size:15px;cursor:pointer}
     .faq{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 22px;margin-bottom:10px}
-    .faq summary{cursor:pointer;font-weight:800;font-size:16px;color:var(--ink);letter-spacing:-.01em}
+    .faq summary{cursor:pointer;font-weight:620;font-size:16px;color:var(--ink);letter-spacing:-.01em}
     .faq[open]{box-shadow:0 8px 22px rgba(5,150,105,.10)}
     .faq p{color:var(--muted);font-size:14.5px;line-height:1.6;margin:10px 0 0}
   </style>
@@ -87,7 +86,7 @@
         <div class="fld"><label>Company</label><input name="company" required></div>
         <div class="fld"><label>Preferred tenant slug</label><input name="slug" placeholder="acme" pattern="[a-z0-9-]+" required></div>
       </div>
-      <div class="fld"><label>Your portal will be</label><div style="padding:12px 14px;background:#f1f7f9;border:1px solid var(--line);border-radius:10px;font-family:ui-monospace,Menlo,monospace;font-size:14px;color:var(--ink)"><span id="slug-preview">acme</span>-obvera.dbaomarhuertasllc.com</div></div>
+      <div class="fld"><label>Your portal will be</label><div style="padding:12px 14px;background:#f1f7f9;border:1px solid var(--line);border-radius:10px;font-family:'Geist Mono',ui-monospace,Menlo,monospace;font-size:14px;color:var(--ink)"><span id="slug-preview">acme</span>-obvera.dbaomarhuertasllc.com</div></div>
       <div class="row">
         <div class="fld"><label>Team size</label><select name="size"><option>1-10</option><option>11-50</option><option>51-200</option><option>201-1000</option><option>1000+</option></select></div>
         <div class="fld"><label>Primary use case</label><select name="usecase"><option>ITSM &amp; Help Desk</option><option>Apple MDM</option><option>Asset Management</option><option>Procurement / Source-to-Pay</option><option>Security &amp; Compliance</option><option>All of it</option></select></div>
