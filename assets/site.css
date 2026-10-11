@@ -744,3 +744,27 @@ body.home .proto{font-size:1rem;color:var(--ivory);opacity:.86;max-width:44ch;ma
 .soon>span:last-child{font:500 .8125rem/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--champ)}
 body.home .pillars .status{margin:0}
 @media(prefers-reduced-motion:no-preference){.status i{animation:stp 2.4s ease-in-out infinite}@keyframes stp{50%{opacity:.45}}}
+
+/* Home focus restructure: ServiceNow, Web Design Studio, Obvera, then Also in development */
+body.home .hero-ai .giant{font-size:clamp(2.7rem,10.6vw,10rem);line-height:.96;letter-spacing:-.045em}
+body.home .hero-ai .eyebrow{margin-bottom:var(--s5)}
+body.home .hero-ai{min-height:min(88svh,820px);padding-bottom:var(--s9)}
+body.home .chap-copy h2.long{font-size:clamp(2.6rem,5vw,4.8rem);line-height:.98}
+body.home .links{display:flex;flex-wrap:wrap;gap:var(--s3) var(--s6);margin:0}
+.consult-cta{display:flex;flex-wrap:wrap;gap:var(--s4);margin:var(--s7) 0 0}
+.navmenu-end .navpanel{left:auto;right:0}
+.navmenu-end .navmenu-t{color:var(--mute);font-size:.875rem}
+body.home .also{padding-top:var(--s9)!important;padding-bottom:var(--s8)!important;border-top:1px solid var(--hair)}
+body.home .also .statement{max-width:22ch;font-size:clamp(1.8rem,3.6vw,3.2rem);line-height:1.08;margin-bottom:var(--s7)}
+.also-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(32px,5vw,72px)}
+.also-grid article{border-top:1px solid var(--hair-2);padding-top:var(--s5);display:flex;flex-direction:column;gap:var(--s4);align-items:flex-start}
+.also-grid h3{font-size:clamp(2rem,3.4vw,3rem);margin:0;letter-spacing:-.035em}
+.also-lede{margin:0;color:var(--ivory);font-size:1.125rem;max-width:36ch}
+.also-list{list-style:none;margin:0;padding:0;display:grid;gap:var(--s3);color:var(--mute);font-size:1rem}
+.also-list b{color:var(--ivory);font-weight:550}
+.also-grid .mat{width:100%;max-width:520px}
+.also-grid .result{width:100%;margin:0}
+.also-grid .proto{margin:0}
+.obv-flow{margin-top:var(--s6)}
+@media(max-width:900px){.also-grid{grid-template-columns:1fr}}
+@media(max-width:760px){body.home .hero-ai .giant{font-size:clamp(2.5rem,12.4vw,4.4rem)}body.home .hero-ai{min-height:0}}
