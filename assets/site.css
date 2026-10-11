@@ -901,3 +901,41 @@ main.wrap>section.page-intro:first-child{padding-top:clamp(40px,7vh,88px)}
 .foot{margin-top:clamp(56px,8vh,112px)}
 @media(max-width:1000px){.ix-n{position:static;translate:none;display:block;margin-bottom:6px}.ix h3{padding-left:0}}
 main.wrap>section.lab-intro{width:100vw;margin-inline:calc(50% - 50vw);padding-inline:max(var(--gut),calc(50vw - var(--max) / 2 + var(--gut)))}
+/* round 2 after critique: quieter lab, three different dossiers, a bigger header, varied endings */
+.lab-bg:after{display:none}
+.dossier:before{display:none}
+.also-grid{grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--s5)}
+.d-wide{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:var(--s6);align-items:center}
+.d-wide .d-copy{display:flex;flex-direction:column;gap:var(--s4);align-items:flex-start}
+.d-wide .d-visual{aspect-ratio:16/10;margin-right:calc(clamp(24px,3vw,48px) * -1);margin-top:calc(clamp(24px,3vw,48px) * -1);margin-bottom:calc(clamp(24px,3vw,48px) * -1);height:calc(100% + clamp(24px,3vw,48px) * 2);box-shadow:none}
+.d-tall{grid-column:1/7;background:linear-gradient(170deg,rgba(10,46,34,.55),rgba(8,9,12,.92))}
+.d-tall .frost{aspect-ratio:4/3;order:-1;margin:calc(clamp(24px,3vw,48px) * -1) calc(clamp(24px,3vw,48px) * -1) 0;width:auto;align-self:stretch}
+.d-data{grid-column:7/-1;box-shadow:inset 0 0 0 1px rgba(230,213,168,.28),0 60px 120px -50px #000}
+.d-data .codename{color:var(--em-300)}
+.stamp{rotate:-4deg}
+@media(max-width:1180px){.also-grid .dossier:first-child{grid-column:1/-1}.d-tall{grid-column:1/7}.d-data{grid-column:7/-1}}
+@media(max-width:1000px){.d-wide{grid-template-columns:1fr}.d-wide .d-visual{height:auto;margin:0 calc(clamp(24px,3vw,48px) * -1) calc(clamp(24px,3vw,48px) * -1)}}
+@media(max-width:760px){.d-tall,.d-data{grid-column:1/-1}}
+.hdr{--h:72px}.hdr-nav>a,.hdr-nav .navmenu>a{font-size:.9375rem;padding:8px 14px}
+.foot-head{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:var(--s6);align-items:end;margin-bottom:clamp(40px,6vh,80px)}
+.foot-head .foot-mark{margin:0}
+.foot-head .legacy-ribbon{margin:0;padding:0 0 var(--s3);border:0;max-width:40ch;font-size:1rem;line-height:1.6}
+@media(max-width:1000px){.foot-head{grid-template-columns:1fr}}
+/* the process strip: three unequal beats */
+.band-steps{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr) minmax(0,.9fr)}
+.band-steps li:nth-child(2){margin-top:clamp(16px,3vw,48px)}.band-steps li:nth-child(3){margin-top:clamp(32px,6vw,96px)}
+@media(max-width:1000px){.band-steps li:nth-child(n){margin-top:0}}
+/* services: the catalogue as a two-column index, the signature service across the top */
+.svc-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:0 var(--s7)}
+.svc{display:block;padding:var(--s7) 0}
+.svc:last-child{border-bottom:0}
+.svc h2{position:static;margin-bottom:var(--s4)}
+.svc.signature{grid-column:1/-1;position:relative;isolation:isolate;padding:clamp(56px,8vh,110px) var(--gut);margin-inline:calc(var(--gut) * -1);border:0;background:radial-gradient(70% 60% at 85% 15%,rgba(16,185,129,.26),transparent 70%),linear-gradient(170deg,#07291d,#051c13 55%,#07120d)}
+.svc.signature h2{font-size:clamp(2.6rem,6vw,6.4rem)}
+.svc.signature:after{content:"CMDB" / "";position:absolute;right:-1vw;top:-.1em;font:600 min(22vw,20rem)/1 var(--display);letter-spacing:-.06em;color:transparent;-webkit-text-stroke:1px rgba(110,231,183,.18);pointer-events:none;z-index:-1}
+@media(max-width:900px){.svc-list{grid-template-columns:1fr}}
+/* endings: each page closes differently */
+body.p-about .cta{flex-direction:column;text-align:center;align-items:center}body.p-about .cta>div:last-child{align-items:center}body.p-about .cta h2{margin-inline:auto}
+body.p-services .cta{background:var(--ivory);color:#1b1a16;border:0}body.p-services .cta h2{color:#1b1a16}body.p-services .cta p{color:#4a463c}body.p-services .cta:before{display:none}body.p-services .cta .button{background:#1b1a16;color:#f4f0e6}body.p-services .cta .text-link{color:#5c4a20;border-color:#8f7a48}
+body.p-ind .cta{display:grid;grid-template-columns:minmax(0,1fr) auto;background:none;border-block:1px solid var(--hair-2)}body.p-ind .cta:before{display:none}
+body.p-support .cta,body.p-security .cta{background:#06070a;border-color:rgba(110,231,183,.25)}
