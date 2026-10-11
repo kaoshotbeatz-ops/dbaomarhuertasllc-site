@@ -4,7 +4,7 @@ Every font served by dbaomarhuertasllc.com (assets/fonts/) is self-hosted here a
 
 | Family | Version | License | Files | Source |
 |---|---|---|---|---|
-| Fraunces (variable: opsz 9-144, wght 100-900) | 1.000 | SIL OFL 1.1, (c) The Fraunces Project Authors | Fraunces-latin-9e509503.woff2, Fraunces-latin-ext-ed6f8e85.woff2 | https://github.com/undercasetype/Fraunces (via Google Fonts, https://fonts.google.com/specimen/Fraunces); license: OFL-Fraunces.txt |
-| Inter (variable: wght 100-900) | 4.001 | SIL OFL 1.1, (c) The Inter Project Authors | Inter-latin-bec94a4d.woff2, Inter-latin-ext-367ba69a.woff2 | https://github.com/rsms/inter (via Google Fonts, https://fonts.google.com/specimen/Inter); license: OFL-Inter.txt |
+| Geist (variable: wght 100-900) | Google Fonts v5 | SIL OFL 1.1, (c) The Geist Project Authors | Geist-latin.woff2, Geist-latin-ext.woff2 | https://github.com/vercel/geist-font (via Google Fonts, https://fonts.google.com/specimen/Geist); license: OFL-Geist.txt |
+| Geist Mono (variable: wght 400-600) | Google Fonts v6 | SIL OFL 1.1, (c) The Geist Project Authors | GeistMono-latin.woff2, GeistMono-latin-ext.woff2 | https://github.com/vercel/geist-font (via Google Fonts, https://fonts.google.com/specimen/Geist+Mono); license: OFL-GeistMono.txt |
 
-The files are Google Fonts woff2 subsets (latin and latin-ext, selected by `unicode-range` in `fonts.css`), so visitors download only the subset they need. The font name tables carry the original OFL copyright and license URLs. Audited 2026-10-11. Do not add a font without adding its row and license text here.
+The files are Google Fonts woff2 subsets (latin and latin-ext, selected by `unicode-range` in `fonts.css`), so visitors download only the subset they need. The font name tables carry the original OFL copyright and license URLs. Audited 2026-10-11; Fraunces and Cormorant Garamond removed, Geist adopted 2026-10-11. Do not add a font without adding its row and license text here.
