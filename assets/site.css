@@ -619,3 +619,29 @@ html.a11y-nomotion .js .reveal,html.a11y-nomotion .js .stage{opacity:1;transform
   .field canvas{display:none}
 }
 @media print{.nav,.a11y-fab,.a11y-panel,#cmd,.family,.field,.stage{display:none!important}body{background:#fff;color:#000}}
+
+/* ===== Apps showcase (/apps.html) ===== */
+.chips{display:none;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.js .chips:not([hidden]){display:flex}
+.js .nojs-only{display:none}
+.fchip{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 16px;border-radius:999px;border:1px solid var(--line-2);background:rgba(255,255,255,.04);color:var(--fg-2);font:500 14px/1 'Geist',system-ui,sans-serif;cursor:pointer;transition:background .15s,color .15s,border-color .15s}
+.fchip span{color:var(--mut);font-size:12px}
+.fchip:hover{background:rgba(255,255,255,.09);color:var(--fg)}
+.fchip[aria-pressed=true]{background:#f7f8f8;color:#08090a;border-color:transparent}
+.fchip[aria-pressed=true] span{color:#3d4147}
+.app-count{color:var(--mut);font-size:14px;margin-bottom:8px}
+.app-group{margin-top:40px}
+.app-group:first-of-type{margin-top:16px}
+.app-group[hidden],.app[hidden]{display:none}
+.app-group>h2{margin-bottom:16px}
+.app-grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr;gap:16px}
+@media(min-width:640px){.app-grid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1000px){.app-grid{grid-template-columns:repeat(3,1fr)}}
+.app-card{height:100%;display:flex;flex-direction:column;gap:14px;padding:20px;border:1px solid var(--line);border-radius:16px;background:var(--panel)}
+.app-top{display:flex;align-items:center;gap:14px}
+.app-top h3{font-size:16px;font-weight:600;line-height:1.3;letter-spacing:-.01em}
+.app-genre{color:var(--mut);font-size:13px}
+.app-ico{flex:none;width:64px;height:64px;border-radius:14px;border:1px solid var(--line-2);background:var(--panel-2)}
+.app-desc{color:var(--fg-2);font-size:14.5px;line-height:1.55;flex:1}
+.app-vid{width:100%;max-width:240px;height:auto;aspect-ratio:332/720;margin:0 auto;border-radius:14px;background:#000;border:1px solid var(--line-2)}
+.app-dl{align-self:flex-start}

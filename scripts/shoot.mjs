@@ -4,7 +4,7 @@
 import {createRequire} from 'node:module';import {homedir} from 'node:os';import {join} from 'node:path';import {mkdir} from 'node:fs/promises';
 const require=createRequire(import.meta.url);const pw=require(process.env.PLAYWRIGHT_CORE||join(homedir(),'.albena-a11y-tools/node_modules/playwright-core'));
 const [base,out,prefix,only,widths]=process.argv.slice(2);await mkdir(out,{recursive:true});
-export const ALL={home:'/',services:'/services.html',about:'/about.html',industries:'/industries.html','operations-platform':'/operations-platform.html',support:'/support.html',contact:'/contact.html',security:'/security.html',lexicon:'/servicenow-lexicon/',privacy:'/privacy-policy.html',terms:'/terms.html',legal:'/legal.html',accessibility:'/accessibility.html','404':'/404.html'};
+export const ALL={home:'/',services:'/services.html',about:'/about.html',industries:'/industries.html',apps:'/apps.html','operations-platform':'/operations-platform.html',support:'/support.html',contact:'/contact.html',security:'/security.html',lexicon:'/servicenow-lexicon/',privacy:'/privacy-policy.html',terms:'/terms.html',legal:'/legal.html',accessibility:'/accessibility.html','404':'/404.html'};
 const pages=only?Object.fromEntries(only.split(',').map(k=>[k,ALL[k]])):ALL;
 const ws=(widths||'1440,390').split(',').map(Number);
 const b=await pw.chromium.launch({executablePath:'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'});
