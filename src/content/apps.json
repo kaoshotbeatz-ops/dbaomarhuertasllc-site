@@ -1,0 +1,250 @@
+[
+ {
+  "id": "6779426241",
+  "name": "HexCalc: Programmer Calc",
+  "genre": "Developer Tools",
+  "url": "https://apps.apple.com/app/id6779426241",
+  "desc": "Hex, decimal, octal and binary side by side, with real bitwise operations and a bit grid.",
+  "video": true
+ },
+ {
+  "id": "6779426361",
+  "name": "RegexLab: Regex Tester",
+  "genre": "Developer Tools",
+  "url": "https://apps.apple.com/app/id6779426361",
+  "desc": "A live regular-expression workbench: type a pattern and watch matches light up.",
+  "video": true
+ },
+ {
+  "id": "6779425467",
+  "name": "SubnetPro: IP Calculator",
+  "genre": "Developer Tools",
+  "url": "https://apps.apple.com/app/id6779425467",
+  "desc": "A fast, complete subnet calculator for IPv4 and basic IPv6, one tap from your clipboard.",
+  "video": true
+ },
+ {
+  "id": "6775607804",
+  "name": "BankerzDevKidz",
+  "genre": "Education",
+  "url": "https://apps.apple.com/app/id6775607804",
+  "desc": "Money skills for ages 4 to 17, taught as a game."
+ },
+ {
+  "id": "6776822808",
+  "name": "BuildzDevKidz",
+  "genre": "Education",
+  "url": "https://apps.apple.com/app/id6776822808",
+  "desc": "Teaches engineering to kids through creative building challenges."
+ },
+ {
+  "id": "6779765519",
+  "name": "Racial Equity Institute",
+  "genre": "Education",
+  "url": "https://apps.apple.com/app/id6779765519",
+  "desc": "The official app of the Racial Equity Institute, a national organization addressing structural racism."
+ },
+ {
+  "id": "6775608079",
+  "name": "ReaderzDevKidz",
+  "genre": "Education",
+  "url": "https://apps.apple.com/app/id6775608079",
+  "desc": "Turns reading skills into a game, with fresh quizzes every round."
+ },
+ {
+  "id": "6775699079",
+  "name": "DrinkMyCraft",
+  "genre": "Food & Drink",
+  "url": "https://apps.apple.com/app/id6775699079",
+  "desc": "A craft beer companion: discover styles, log what you taste, find your next pour."
+ },
+ {
+  "id": "6775257729",
+  "name": "MixThatCocktail",
+  "genre": "Food & Drink",
+  "url": "https://apps.apple.com/app/id6775257729",
+  "desc": "Your personal bartender: cocktail recipes and what you can make with what is in your bar."
+ },
+ {
+  "id": "6779426010",
+  "name": "FitForge: Workout Builder",
+  "genre": "Health & Fitness",
+  "url": "https://apps.apple.com/app/id6779426010",
+  "desc": "A free workout logger with a haptic rest timer: no ads, no account, no nags."
+ },
+ {
+  "id": "6779062634",
+  "name": "Mend: Recovery Tracker",
+  "genre": "Health & Fitness",
+  "url": "https://apps.apple.com/app/id6779062634",
+  "desc": "Day-by-day guidance for recovering from surgery, injury or a sprain."
+ },
+ {
+  "id": "6775302093",
+  "name": "RaiseThatBaby",
+  "genre": "Health & Fitness",
+  "url": "https://apps.apple.com/app/id6775302093",
+  "desc": "Track baby growth, milestones, feedings, diapers, sleep and tummy time in one place."
+ },
+ {
+  "id": "6779847354",
+  "name": "Black Wall Street Greensboro",
+  "genre": "Lifestyle",
+  "url": "https://apps.apple.com/app/id6779847354",
+  "desc": "The official app of the Black Wall Street community, with a homeownership toolkit and real tools."
+ },
+ {
+  "id": "6779063007",
+  "name": "EchoJournal: Voice Diary",
+  "genre": "Lifestyle",
+  "url": "https://apps.apple.com/app/id6779063007",
+  "desc": "Talk for two minutes; get a transcribed, titled, mood-tagged journal entry, on device."
+ },
+ {
+  "id": "6775002143",
+  "name": "GrowThatGarden",
+  "genre": "Lifestyle",
+  "url": "https://apps.apple.com/app/id6775002143",
+  "desc": "Grow real food organically, guided by your location and the season."
+ },
+ {
+  "id": "6775062557",
+  "name": "ManThatGrass",
+  "genre": "Lifestyle",
+  "url": "https://apps.apple.com/app/id6775062557",
+  "desc": "Seasonal schedules, mowing tips, fertilizer guides and weed ID for a great lawn."
+ },
+ {
+  "id": "6779062548",
+  "name": "FocusFlow: ADHD Daily Planner",
+  "genre": "Productivity",
+  "url": "https://apps.apple.com/app/id6779062548",
+  "desc": "A gentle daily planner built for ADHD brains: no guilt, no streak-shaming."
+ },
+ {
+  "id": "6779424617",
+  "name": "MeetingScribe: Meeting Notes",
+  "genre": "Productivity",
+  "url": "https://apps.apple.com/app/id6779424617",
+  "desc": "Records and transcribes meetings, then hands you minutes, decisions and action items."
+ },
+ {
+  "id": "6779424739",
+  "name": "PromptPad: Prompt Library",
+  "genre": "Productivity",
+  "url": "https://apps.apple.com/app/id6779424739",
+  "desc": "A distraction-free scratchpad with one-tap rewrites: clearer, friendlier, shorter, longer."
+ },
+ {
+  "id": "6779425076",
+  "name": "SoundBed: Focus Sound Mixer",
+  "genre": "Productivity",
+  "url": "https://apps.apple.com/app/id6779425076",
+  "desc": "Calm, endless ambient sound synthesized live on your device to focus, relax or sleep."
+ },
+ {
+  "id": "6775009692",
+  "name": "LeafLore: Cannabis Guide",
+  "genre": "Reference",
+  "url": "https://apps.apple.com/app/id6775009692",
+  "desc": "A clean, organized guide to cannabis strains, cannabinoids, terpenes and products."
+ },
+ {
+  "id": "6779211177",
+  "name": "BatteryBuddy: Charge Pet",
+  "genre": "Utilities",
+  "url": "https://apps.apple.com/app/id6779211177",
+  "desc": "Turns charging your phone into a game with a little creature that lives off your battery."
+ },
+ {
+  "id": "6779423774",
+  "name": "ClipStash: Clipboard History",
+  "genre": "Utilities",
+  "url": "https://apps.apple.com/app/id6779423774",
+  "desc": "A fast, beautiful clipboard history for Mac, iPhone and iPad."
+ },
+ {
+  "id": "6779210577",
+  "name": "CountThatDay",
+  "genre": "Utilities",
+  "url": "https://apps.apple.com/app/id6779210577",
+  "desc": "Keeps score of your life's big dates: countdowns to weddings, milestones and more."
+ },
+ {
+  "id": "6779210890",
+  "name": "CussJar",
+  "genre": "Utilities",
+  "url": "https://apps.apple.com/app/id6779210890",
+  "desc": "The classic swear jar, minus the jar, plus a leaderboard."
+ },
+ {
+  "id": "6779211539",
+  "name": "DaysOld: Age Day Counter",
+  "genre": "Utilities",
+  "url": "https://apps.apple.com/app/id6779211539",
+  "desc": "See your age in days, and find out what weekday day 13,000 lands on."
+ },
+ {
+  "id": "6779062762",
+  "name": "Decode: Label Scanner AI",
+  "genre": "Utilities",
+  "url": "https://apps.apple.com/app/id6779062762",
+  "desc": "Scan labels and ingredient lists and get plain-English answers, entirely on your device."
+ },
+ {
+  "id": "6779209393",
+  "name": "FlipThatCoin: Coin Flip",
+  "genre": "Utilities",
+  "url": "https://apps.apple.com/app/id6779209393",
+  "desc": "A big, beautiful coin with a springy 3D flip you can feel."
+ },
+ {
+  "id": "6779210542",
+  "name": "MeasureThatNoise",
+  "genre": "Utilities",
+  "url": "https://apps.apple.com/app/id6779210542",
+  "desc": "A live sound-level meter with an animated gauge that explains what the number means."
+ },
+ {
+  "id": "6779210134",
+  "name": "PickThatFinger",
+  "genre": "Utilities",
+  "url": "https://apps.apple.com/app/id6779210134",
+  "desc": "Everyone touches the screen; three seconds later it picks, with zero arguments."
+ },
+ {
+  "id": "6779210097",
+  "name": "RollThatDice: Dice Roller",
+  "genre": "Utilities",
+  "url": "https://apps.apple.com/app/id6779210097",
+  "desc": "A gorgeous dice tray for board games, tabletop RPGs, classrooms and bar bets."
+ },
+ {
+  "id": "6779423853",
+  "name": "SnapText: OCR Text Grabber",
+  "genre": "Utilities",
+  "url": "https://apps.apple.com/app/id6779423853",
+  "desc": "Pull text out of screenshots, documents, whiteboards and receipts in seconds."
+ },
+ {
+  "id": "6779425249",
+  "name": "SolarScope: Solar Estimator",
+  "genre": "Utilities",
+  "url": "https://apps.apple.com/app/id6779425249",
+  "desc": "Estimates what a solar array will actually produce before you spend a dime."
+ },
+ {
+  "id": "6779209667",
+  "name": "SpinThatWheel",
+  "genre": "Utilities",
+  "url": "https://apps.apple.com/app/id6779209667",
+  "desc": "Spin the wheel and settle the debate."
+ },
+ {
+  "id": "6779210288",
+  "name": "SplitThatBill: Tip Splitter",
+  "genre": "Utilities",
+  "url": "https://apps.apple.com/app/id6779210288",
+  "desc": "Split the check and the tip in ten seconds."
+ }
+]
