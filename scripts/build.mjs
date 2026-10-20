@@ -16,6 +16,7 @@ const WEB3FORMS_KEY='6ea6366a-77ee-4e88-9767-deb9aabd4d29';
 const CITY='Greensboro, North Carolina';
 const STUDIO='https://webdesign.dbaomarhuertasllc.com/';
 const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+import {DEMO,CAPS,PROOF} from './home-proof.mjs';
 const json=async n=>JSON.parse(await readFile(join(ROOT,'src/content',n+'.json'),'utf8'));
 
 const NAV=[['/services.html','ServiceNow'],[STUDIO,'Web Design'],['/apps.html','Apps'],['/about.html','About'],['/contact.html','Contact']];
@@ -147,9 +148,11 @@ function home(){
 <div class="grid-bg" aria-hidden="true"></div>
 <div class="hero-in">
 <a class="announce reveal" href="/services.html"><span class="dot" aria-hidden="true"></span>Registered ServiceNow Build &amp; Consulting Partner</a>
-<h1 class="h-display reveal">ServiceNow,<br class="br"> built properly.</h1>
+<h1 class="h-display reveal">ServiceNow,<br class="br"> <span class="ul">built properly.</span></h1>
 <p class="lead reveal">Omar Huertas LLC designs and builds on the Now Platform: scoped applications, a CMDB you can trust, ITSM and ITOM that fit how your teams work, and integrations that survive the next upgrade.<span class="hide-s"> In scope, tested and documented before it goes live.</span></p>
-<div class="cta reveal">${btn('/contact.html','Talk to us','btn btn-primary')}${btn('#services','See what we build','btn btn-ghost')}</div>
+<div class="cta reveal">${btn('/contact.html','Free 30-minute architecture review','btn btn-primary')}${btn('#demo','See it work','btn btn-ghost')}</div>
+<p class="cta-note reveal">No cost, no commitment. You leave with notes on what we would change, whether or not we work together.</p>
+<ol class="rail reveal" aria-label="Our delivery standard"><li class="i0"><i><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5 6.5 11.5 12.5 5"/></svg></i>Scoped</li><li class="i1"><i><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5 6.5 11.5 12.5 5"/></svg></i>Tested</li><li class="i2"><i><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5 6.5 11.5 12.5 5"/></svg></i>Documented</li><li class="i3"><i><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5 6.5 11.5 12.5 5"/></svg></i>Approved by you</li></ol>
 </div>
 <div class="stage" role="img" aria-label="Illustration of a ServiceNow workspace: a sidebar with scoped apps, CMDB, changes and integrations; a release checklist with status rows; and a change window waiting for approval.">
 <div class="stage-glow" aria-hidden="true"></div>
@@ -167,12 +170,18 @@ function home(){
 
 <section class="works" aria-label="What we work with"><div class="wrap"><p class="works-h">Working across the Now Platform</p><ul class="works-list"><li>Scoped applications</li><li>CMDB and CSDM</li><li>ITSM</li><li>ITOM and Discovery</li><li>IntegrationHub</li><li>Automated Test Framework</li><li>Store readiness</li><li><a href="/services.html">All services</a></li></ul></div></section>
 
+${DEMO}
+
 ${sec('services',`${head('ServiceNow','What we build on the Now Platform','Four kinds of work, one standard: in scope, tested, documented, and handed over so your team can run it without us.','sv-h')}${BENTO()}
 <ol class="ledger" aria-label="Facts about the company"><li class="reveal"><b>2017</b><span>At ServiceNow Knowledge every year since</span></li><li class="reveal"><b>20<small>+</small></b><span>Years in IT and on the platform</span></li><li class="reveal"><b>6<small>+</small></b><span>ServiceNow certifications</span></li></ol>
 <p class="note">Built by a ServiceNow architect who has delivered for some of the largest telecom carriers in the world. Engaged by leading ServiceNow partners for enterprise and government clients; clients are kept confidential by design. <a href="/services.html">All services</a>, <a href="/industries.html">industries</a>.</p>`,{label:'sv-h'})}
 
+${CAPS}
+
 ${sec('how',`<p class="eyebrow reveal">How we work</p><p class="statement reveal" id="how-h">Small team, direct access. <b>Everything is built in scope</b> so upgrades stay boring. <b>Every change is tested</b> before it reaches production. <b>Nothing goes live without your approval</b>, and the documentation is part of the work, not an extra.</p>
 <ul class="ways reveal"><li><a href="#webdesign"><strong>Web Design Studio</strong><span>Fast, accessible websites for small businesses, built and hosted with the same care.</span></a></li><li><a href="#lab"><strong>In development</strong><span>Obvera (IT operations platform), Albena (private local AI assistant) and AgentGate.</span></a></li><li><a href="/contact.html"><strong>Start a conversation</strong><span>Tell us what you are trying to get done on ServiceNow. We reply within a business day.</span></a></li></ul>`,{label:'how-h'})}
+
+${PROOF}
 
 ${sec('webdesign',`<div class="split"><div class="head reveal"><p class="eyebrow">Web Design Studio</p><h2 id="wd-h" class="h-section">Websites, made with the same care</h2><p class="sub">Websites for small businesses, built with the discipline of our ServiceNow work: fast, accessible, secure, and scoped in writing before anything is built. Browse the live demos, see the price first, then start.</p>
 <ol class="steps"><li><span class="num">1</span><div><h3>Start from a live demo</h3><p>Browse 54 live demo sites and pick the direction closest to your business.</p></div></li><li><span class="num">2</span><div><h3>See the price first</h3><p>Plans and an instant estimate before you commit to anything.</p></div></li><li><span class="num">3</span><div><h3>Scope agreed in writing</h3><p>Fast, accessible, secure sites on Cloudflare, with the scope settled up front.</p></div></li></ol>
@@ -192,7 +201,7 @@ ${sec('story',`<div class="split even"><div class="reveal"><p class="eyebrow">Ou
 <details class="kmore" id="trusted"><summary>Partners, organizations and industries served</summary><dl class="rows-dl"><div><dt>Delivered for</dt><dd><ul class="inline-list"><li>Fortune 500 telecom</li><li>State government</li><li>Leading ServiceNow partners</li></ul><p>Platform-aligned guidance, proven build patterns, and a single accountable owner from design through delivery. Clients are kept confidential by design.</p></dd></div><div><dt>Partners &amp; organizations</dt><dd><ul class="inline-list"><li>ServiceNow</li><li><a href="https://blackwallstreetllc.org/" rel="noopener">Black Wall Street</a></li><li>Racial Equity Institute</li><li>Greensboro Civil Rights Museum</li><li>Local government</li></ul></dd></div><div><dt>Industries served</dt><dd><ul class="inline-list"><li>Telecommunications</li><li>Industrial distribution</li><li>Healthcare systems</li><li>Higher education</li><li>Manufacturing</li><li>Financial services &amp; banking</li><li>Building products distribution</li><li>Health insurance</li><li>Legal</li><li>Public sector</li></ul></dd></div></dl></details></div></div>`,{label:'st-h'})}
 
 ${TRIBUTE()}
-${closing('Let&rsquo;s build something honest.','Start with a focused assessment, integration design, CMDB review, or advisory conversation.')}`;
+${closing('Let&rsquo;s build something honest.','Start with a free 30-minute architecture review: bring a CMDB, integration or release problem and we will tell you plainly what we would do. No cost, no commitment.','Book the free review')}`;
  return page({path:'/index.html',bodyClass:'home',title:'Omar Huertas LLC | ServiceNow, built properly',description:'Omar Huertas LLC is a Registered ServiceNow Build & Consulting Partner: scoped apps, CMDB, ITSM, ITOM and integrations. Plus a web design studio, and three projects in development: Obvera, Albena and AgentGate.',body});
 }
 
@@ -243,7 +252,7 @@ ${sec('knowledge',`${head('In the community since 2017','At ServiceNow Knowledge
 <figure class="kfeature reveal"><img src="/assets/knowledge/k_2026_a.jpg" alt="ServiceNow Knowledge 2026 keynote, Las Vegas" loading="lazy" decoding="async" width="1600" height="1067"><figcaption><b>ServiceNow Knowledge 2026,</b> Las Vegas. Back from the platform&rsquo;s biggest stage: AI, the Now Platform, and where ServiceNow is headed next.</figcaption></figure>
 <ul class="photos reveal">${knowledge.slice(0,3).map(photo).join('')}</ul><details class="kmore"><summary>All ${knowledge.length} photos, 2017 to 2026</summary><ul class="photos">${knowledge.slice(3).map(photo).join('')}</ul></details>`,{label:'kn-h'})}
 ${TRIBUTE()}
-${closing('Let&rsquo;s build something honest.','Start with a focused assessment, integration design, CMDB review, or advisory conversation.')}`.replace(' style-note=""','');
+${closing('Let&rsquo;s build something honest.','Start with a free 30-minute architecture review: bring a CMDB, integration or release problem and we will tell you plainly what we would do. No cost, no commitment.','Book the free review')}`.replace(' style-note=""','');
  return page({path:'/about.html',bodyClass:'p-about',title:'Our Story | Omar Huertas LLC',description:'The story behind Omar Huertas LLC: skill first, honest work, and the people who opened doors. WCAG 2.1 AA, keyboard support, captions, and a built-in accessibility toolbar.',body});
 }
 
